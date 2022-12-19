@@ -101,7 +101,7 @@ console.log(x, y);
 
 const averageAge = (ageJonas + ageSarah) / 2;
 console.log(ageJonas, ageSarah, averageAge);
-*/
+
 
 // Coding Challenge #1
 // Data 1:
@@ -127,3 +127,78 @@ const johnBMI2 = johnMass2 / johnHeight2 ** 2;
 const markHigherBMI2 = markBMI2 > johnBMI2;
 console.log(markBMI2, johnBMI2, markHigherBMI2);
 
+
+// Template Literals
+const firstName = 'Jonas';
+const job = 'Programmer';
+const birthYear = 1991;
+const year = 2037;
+
+const jonas = "I'm " + firstName + ', a ' + (year - birthYear) + ' years old ' + job + '!' ;
+console.log(jonas);
+
+const jonasNew = `I'm ${firstName}, a ${year - birthYear} years old ${job}!`;
+console.log(jonasNew);
+
+console.log(`Just a regular string...`);
+
+// Multiline string
+console.log('String with \n\
+multiple \n\
+lines'); // before ES6
+
+console.log(`String with
+multiple
+lines`);
+
+
+const age = 15;
+// Control structure
+if(age>= 18) {
+    console.log('Sarah can start driving licence');
+} else {
+    const yearsLeft = 18 - age;
+    console.log(`Sarah is too young. Wait another ${yearsLeft} years`);
+}
+
+const birthYear = 2001;
+let century;
+if(birthYear <= 2000) {
+ century = 20;
+} else {
+ century = 21;
+}
+console.log(century);
+
+*/
+
+// Coding Challenge #2
+
+// Data 1:
+const massMark= 78;
+const heightMark = 1.69;
+const massJohn = 92;
+const heightJohn = 1.95;
+
+const markBMI = massMark / heightMark ** 2;
+const johnBMI = massJohn / heightJohn ** 2;
+
+if(markBMI > johnBMI) {
+    console.log(`Mark's BMI (${markBMI}) is higher than John's (${johnBMI}) !`);
+} else {
+    console.log(`John's BMI (${johnBMI}) is higher than Mark's (${markBMI}) !`);
+}
+// Data 2:
+const massMarkNew = 95;
+const heightMarkNew = 1.88;
+const massJohnNew = 85;
+const heightJohnNew = 1.76;
+
+const markBMINew = massMarkNew / heightMarkNew ** 2;
+const johnBMINew = massJohnNew / heightJohnNew ** 2;
+
+if(markBMINew > johnBMINew) {
+    console.log(`Mark's BMI (${markBMINew}) is higher than John's (${johnBMINew}) !`);
+} else {
+    console.log(`John's BMI (${johnBMINew}) is higher than Mark's (${markBMINew}) !`);
+}
