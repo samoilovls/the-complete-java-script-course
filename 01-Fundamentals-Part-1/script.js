@@ -161,6 +161,7 @@ if(age>= 18) {
     console.log(`Sarah is too young. Wait another ${yearsLeft} years`);
 }
 
+// Any variable that we declare inside of these blocks will not be accessible outside of the block!
 const birthYear = 2001;
 let century;
 if(birthYear <= 2000) {
@@ -303,7 +304,6 @@ console.log(hasDriverLicense && hasGoodVision && isTired);
 if(hasDriverLicense && hasGoodVision && !isTired) {
     console.log('Sara is able to drive!');
 } else console.log('Someone else should drive...');
-*/
 
 
 // Coding Challenge #3
@@ -381,3 +381,68 @@ if (averageKoalasScore2>averageDolphinsScore2&&minimumKoalasScore2) {
 } else {
     console.log('LOSE!');
 }
+
+// The switch statement
+const day = 'friday';
+switch(day) {
+    case 'monday': // day === 'monday'
+        console.log('Plan course structure');
+        console.log('Go to coding meetup');
+        break;
+    case 'tuesday':
+        console.log('Prepare theory videos');
+        break;
+    case 'Wednesday':
+    case 'thursday':
+        console.log('Write code examples');
+        break;
+    case 'friday':
+        console.log('Record videos');
+        break;
+    case 'saturday':
+    case 'sunday':
+        console.log("Enjoy the weekend");
+        break;
+    default:
+        console.log("Not a valid day!");
+}
+
+if(day === 'monday') {
+    console.log('Plan course structure');
+    console.log('Go to coding meetup');
+} else if(day === 'tuesday') {
+    console.log('Prepare theory videos');
+} else if(day === 'wednesday' || day === 'thursday') {
+    console.log('Write code examples');
+} else if(day === 'friday') {
+    console.log('Record videos');
+} else if(day === 'saturday' || day === 'sunday') {
+    console.log("Enjoy the weekend");
+} else {
+    console.log("Not a valid day!");
+}
+
+// Conditional(Ternary) operator
+const age = 22;
+// age >= 18 ? console.log('I like to drink beer') : console.log('I like to drink water');
+
+const drink = age >= 18 ? 'beer' : 'water';
+console.log(drink);
+
+let drink1;
+if (age >= 18) {
+    drink1 = 'beer';
+} else {
+    drink1 = 'water';
+}
+console.log(drink1);
+
+console.log(`I like to drink ${age >= 18 ? 'beer' : 'water'}`);
+
+// Coding Challenge #4
+
+const bill = 430;
+const tip = bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
+console.log(`The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`);
+*/
+
