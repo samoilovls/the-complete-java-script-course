@@ -158,6 +158,7 @@ if(age>= 18) {
     console.log('Sarah can start driving licence');
 } else {
     const yearsLeft = 18 - age;
+    // Any variable that we declare inside of these blocks will not be accessible outside of the block!
     console.log(`Sarah is too young. Wait another ${yearsLeft} years`);
 }
 
