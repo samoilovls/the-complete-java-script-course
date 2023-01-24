@@ -107,3 +107,28 @@ yearsUntilRetirement1(1991, 'Jonas');
 console.log(yearsUntilRetirement1(1991, 'Jonas'));
 // console.log(yearsUntilRetirement1(1950, 'Mike'));
 */
+
+// Coding Challenge 1
+
+const calcAverage = (score1, score2, score3) => (score1 + score2 + score3)/3;
+
+// Data 1
+const avgDolphins = calcAverage(44,23,71);
+const avgKoalas = calcAverage(65,54,49);
+
+// Data 2
+const avgDolphins2 = calcAverage(85,54,41);
+const avgKoalas2 = calcAverage(23,34,27);
+
+function checkWinner (avgDolphins,avgKoalas) {
+    if(avgDolphins >= avgKoalas*2) {
+        return `Dolphins win (${avgDolphins} vs. ${avgKoalas})`;
+    } else if (avgKoalas >= avgDolphins*2) {
+        return `Koalas win (${avgKoalas} vs. ${avgDolphins})`;
+    } else {
+        return `NO ONE WINS`
+    }
+}
+
+console.log(checkWinner(avgDolphins,avgKoalas));
+console.log(checkWinner(avgDolphins2,avgKoalas2));
