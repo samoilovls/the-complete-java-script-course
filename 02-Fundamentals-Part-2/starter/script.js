@@ -173,7 +173,6 @@ console.log(age1, age2, age3);
 
 const ages = [calcAge(years[0]), calcAge(years[1]), calcAge(years[years.length-1])];
 console.log(ages);
-*/
 
 
 // Basic Array methods:
@@ -202,4 +201,38 @@ console.log(friends.includes('Bob')); // return true if the element is in the ar
 
 if (friends.includes('Steven')) {
     console.log('You have a friend called Steven');
+
+
+// Coding Challenge 2
+
+// const bill = 430;
+// const tip = bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
+// console.log(`The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`);
+
+const calcTip = function(bill) {
+    return bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
 }
+const tip = calcTip(100);
+console.log(tip);
+
+const bills = [125,555,44];
+const tips = [calcTip(bills[0]),calcTip(bills[1]),calcTip(bills[2])];
+console.log(tips);
+
+const calcTotal = function (bill,tip) {
+    return bill + tip;
+}
+const total = [calcTotal(bills[0],tips[0]), calcTotal(bills[1],tips[1]), calcTotal(bills[2],tips[2])];
+
+console.log(total);
+
+
+function calcTip1 (bill) {
+    return bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
+}
+
+const tips2 = [calcTip1(bills[0]),calcTip1(bills[1])];
+console.log(tips2);
+
+console.log(`${calcTip1(150)}`);
+
