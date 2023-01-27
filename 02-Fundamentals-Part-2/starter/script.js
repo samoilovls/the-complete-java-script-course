@@ -201,6 +201,7 @@ console.log(friends.includes('Bob')); // return true if the element is in the ar
 
 if (friends.includes('Steven')) {
     console.log('You have a friend called Steven');
+}
 
 
 // Coding Challenge 2
@@ -236,3 +237,58 @@ console.log(tips2);
 
 console.log(`${calcTip1(150)}`);
 
+
+// Objects:
+
+const jonasArray = [
+    'Jonas',
+    'Schmedtmann',
+    2037 - 1991,
+    'teacher',
+    ['Michael','Peter' ,'Steven']
+];
+console.log(jonasArray[4][1]);
+const friends = jonasArray[4];
+console.log(friends[1]);
+
+const jonasObject = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    age: 2037-1991,
+    job: 'teacher',
+    friends: ['Michael','Peter' ,'Steven']
+}
+*/
+
+//  Retrieve data from objects:
+const jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    age: 2037-1991,
+    job: 'teacher',
+    friends: ['Michael','Peter' ,'Steven']
+}
+console.log(jonas);
+
+console.log(jonas.lastName);
+console.log(jonas['lastName']); // we can put any expression 
+
+const nameKey = 'Name';
+console.log(jonas['first' + nameKey]);
+console.log(jonas['last' + nameKey]);
+
+// const interestedIn = prompt('What do you want to know about Jonas? Choose between firstName, lastName, age, job and friends');
+// if(jonas[interestedIn]) {
+//     console.log(jonas[interestedIn]);
+// } else {
+//     console.log('Not enough information');
+// }
+
+// Add new properties to object:
+jonas.location = 'Portugal';
+jonas['twitter'] = '@jonasschmedtman';
+console.log(jonas);
+console.log(jonas.location);
+
+// Challenge:
+console.log(`${jonas.firstName} has ${jonas.friends.length} friends, and his best friend is called ${jonas.friends[0]}`);
