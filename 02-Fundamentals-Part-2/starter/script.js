@@ -258,7 +258,6 @@ const jonasObject = {
     job: 'teacher',
     friends: ['Michael','Peter' ,'Steven']
 }
-*/
 
 //  Retrieve data from objects:
 const jonas = {
@@ -292,3 +291,252 @@ console.log(jonas.location);
 
 // Challenge:
 console.log(`${jonas.firstName} has ${jonas.friends.length} friends, and his best friend is called ${jonas.friends[0]}`);
+
+// Object methods 
+
+const jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    birthYear: 1991,
+    job: 'teacher',
+    friends: ['Michael','Peter' ,'Steven'],
+    hasDriversLicense: true,
+    // First:
+    // calcAge: function (birthYear) {
+    //     return 2037 - birthYear;
+    // }
+    
+    // Second:
+    // calcAge: function () { 
+    //     return 2037 - this.birthYear; // this variable or this keyword
+    // }
+
+    calcAge: function () {
+        this.age = 2037 - this.birthYear;
+        return this.age; // not necessary
+    }
+};
+
+console.log(jonas.calcAge());
+console.log(jonas.age);
+console.log(jonas.age);
+
+
+// Second:
+// jonas.age = jonas.calcAge();
+// console.log(jonas);
+// console.log(jonas.calcAge()); // the object calling the method
+
+// First:
+// console.log(jonas['calcAge'](1991));
+// console.log(jonas.calcAge(jonas.birthYear));
+
+
+// Challenge
+
+const jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    birthYear: 1991,
+    job: 'teacher',
+    friends: ['Michael','Peter' ,'Steven'],
+    hasDriversLicense: true,
+    calcAge: function () {
+        this.age = 2037 - this.birthYear;
+        return this.age; // not necessary
+    },
+    // getSummary: function () {
+    //     if(this.hasDriversLicense) {
+    //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has a driver's license`
+    //     } else {
+    //         return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has no driver's license`
+    //     }
+    // }
+
+    getSummary: function () {
+        return `${this.firstName} is a ${this.calcAge()} year old ${this.job}, and he has ${this.hasDriversLicense ? 'a' : 'no'} driver's license.`; // WE CAN USE Conditional(Ternary) operator IN ${}
+    }
+};
+// console.log(jonas.calcAge());
+console.log(jonas.getSummary());
+console.log(jonas.age);
+
+
+
+
+
+function doSomething() {
+    return 'Hello';
+}
+const name = 'Kelvin';
+const sentence = doSomething`My name is ${name}`;
+console.log(sentence);
+
+// Challenge #3 
+
+const mark = {
+    fullName: 'Mark Miller',
+    mass: 78,
+    height: 1.69,
+    calcBMI: function() {
+        this.bmi = this.mass/this.height**2;
+        return this.bmi;
+    }
+};
+
+const john = {
+    fullName: 'John Smith',
+    mass: 92,
+    height: 1.95,
+    calcBMI: function() {
+        this.bmi = this.mass/this.height**2;
+        return this.bmi;
+    }
+};
+
+console.log(`${john.calcBMI() > mark.calcBMI() ? john.fullName : mark.fullName}'s BMI (${john.bmi > mark.bmi ? john.bmi : mark.bmi}) is higher than ${john.bmi > mark.bmi ? mark.fullName : john.fullName}'s BMI (${john.bmi > mark.bmi ? mark.bmi : john.bmi})`);
+
+
+// Loop
+// console.log('Lifting weights repetition 1');
+// console.log('Lifting weights repetition 2');
+// console.log('Lifting weights repetition 3');
+// console.log('Lifting weights repetition 4');
+// console.log('Lifting weights repetition 5');
+// console.log('Lifting weights repetition 6');
+// console.log('Lifting weights repetition 7');
+// console.log('Lifting weights repetition 8');
+// console.log('Lifting weights repetition 9');
+// console.log('Lifting weights repetition 10');
+
+// for loop keeps running while condition is TRUE
+for(let rep = 1; rep <=10; rep++) {
+    console.log(`Lifting weights repetition ${rep}`);
+}
+
+const jonasArray = [
+    'Jonas',
+    'Schmedtmann',
+    2037 - 1991,
+    'teacher',
+    ['Michael','Peter' ,'Steven'],
+    true
+];
+const types = [];
+
+for(let i = 0; i < jonasArray.length ; i++ ) {
+    // Reading from array
+    console.log(jonasArray[i], typeof jonasArray[i]);
+
+    // Filling array
+    // types[i] = typeof jonasArray[i];
+    types.push(typeof jonasArray[i]);
+}
+console.log(jonasArray.length);
+console.log(types);
+
+const years = [1991,2007,1969,2020];
+const ages = [];
+for(let i = 0; i < years.length; i++) {
+    ages.push(2037 - years[i]);
+}
+console.log(ages);
+
+// continue and break Loop
+for(let i = 0; i < jonasArray.length ; i++ ) {
+    if(typeof jonasArray[i] !== 'string') continue;
+
+    console.log(jonasArray[i], typeof jonasArray[i]);
+}
+for(let i = 0; i < jonasArray.length ; i++ ) {
+    if(typeof jonasArray[i] === 'number') break;
+
+    console.log(jonasArray[i], typeof jonasArray[i]);
+}
+
+// Loop over array backwards
+const jonasArray = [
+    'Jonas',
+    'Schmedtmann',
+    2037 - 1991,
+    'teacher',
+    ['Michael','Peter' ,'Steven'],
+    true
+];
+for(let i = jonasArray.length-1; i>=0 ; i--) {
+    console.log(jonasArray[i]);
+}
+
+// Loop in loop
+for(let exercise = 1; exercise <=3; exercise++ ) {
+    console.log(`Starting exercise ${exercise}`);
+    for(let rep = 1; rep<=5; rep++){
+        console.log(`Exercise ${exercise}: Lifting weight repetition ${rep}`);
+    }
+}
+
+
+// While Loop
+
+for(let rep = 1; rep <=10; rep++) {
+    console.log(`Lifting weights repetition ${rep}`);
+}
+
+let rep = 1;
+while(rep <=10) {
+    console.log(`Lifting weights repetition ${rep}`);
+    rep++
+}
+
+let dice = Math.trunc(Math.random()*6) + 1;
+while(dice !== 6){
+    console.log(`You rolled a ${dice}`);
+    dice = Math.trunc(Math.random()*6) + 1;
+    if (dice ===6) console.log('finish');
+}
+*/
+
+
+// Challenge #4
+const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+const tips = [];
+const totals = [];
+const calcTip = function(bill) {
+    return bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
+}
+const calcTotal = function (bill) {
+    return bill + calcTip(bill);
+}
+console.log(calcTotal(bills[0]));
+
+for(let i = 0 ; i < bills.length ; i++ ) {
+    // const tip = calcTip(bills[i]);
+    // tips.push(tip);
+    // totals.push(tip + bills[i]);
+    tips.push(calcTip(bills[i]));
+    totals.push(calcTotal(bills[i]));
+}
+console.log(tips,totals);
+
+
+// const calcTotal1 = function (bill,tip) {
+//     return bill + tip;
+// }
+// console.log(calcTotal1(bills[0],calcTip(bills[0])));
+// const calcTotal2 = function (bill) {
+//     const calcTip1 = function(bill) {
+//     return bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
+// }
+// return bill + calcTip1(bill);
+// }
+// console.log(calcTotal2(bills[0]),calcTip1(bills[0])); // нет доступа к функции calcTip1
+
+// BONUS 
+const calcAverage = function (arr){
+    let sum = 0;
+    for (let i = 0; i<arr.length; i++){
+        sum += arr[i]; // sum = arr[i] + sum;
+    }
+    return sum / arr.length;
+}
+console.log(calcAverage(totals)); // takes an array as an argument
