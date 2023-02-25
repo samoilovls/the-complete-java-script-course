@@ -362,16 +362,6 @@ console.log(jonas.getSummary());
 console.log(jonas.age);
 
 
-
-
-
-function doSomething() {
-    return 'Hello';
-}
-const name = 'Kelvin';
-const sentence = doSomething`My name is ${name}`;
-console.log(sentence);
-
 // Challenge #3 
 
 const mark = {
