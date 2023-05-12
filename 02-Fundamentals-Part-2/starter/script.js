@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /*
 let hasDriversLicense = false;
 const passTest = true;
@@ -308,7 +308,7 @@ const jonas = {
     
     // Second:
     // calcAge: function () { 
-    //     return 2037 - this.birthYear; // this variable or this keyword
+    //     return 2037 - this.birthYear; // this variable or this keyword = to the object calling the method
     // }
 
     calcAge: function () {
@@ -323,9 +323,9 @@ console.log(jonas.age);
 
 
 // Second:
+// console.log(jonas.calcAge()); // the object calling the method
 // jonas.age = jonas.calcAge();
 // console.log(jonas);
-// console.log(jonas.calcAge()); // the object calling the method
 
 // First:
 // console.log(jonas['calcAge'](1991));
@@ -486,28 +486,26 @@ while(dice !== 6){
 }
 */
 
-
 // Challenge #4
 const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
 const tips = [];
 const totals = [];
-const calcTip = function(bill) {
-    return bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
-}
+const calcTip = function (bill) {
+  return bill >= 50 && bill <= 300 ? (bill * 15) / 100 : (bill * 20) / 100;
+};
 const calcTotal = function (bill) {
-    return bill + calcTip(bill);
-}
+  return bill + calcTip(bill);
+};
 console.log(calcTotal(bills[0]));
 
-for(let i = 0 ; i < bills.length ; i++ ) {
-    // const tip = calcTip(bills[i]);
-    // tips.push(tip);
-    // totals.push(tip + bills[i]);
-    tips.push(calcTip(bills[i]));
-    totals.push(calcTotal(bills[i]));
+for (let i = 0; i < bills.length; i++) {
+  // const tip = calcTip(bills[i]);
+  // tips.push(tip);
+  // totals.push(tip + bills[i]);
+  tips.push(calcTip(bills[i]));
+  totals.push(calcTotal(bills[i]));
 }
-console.log(tips,totals);
-
+console.log(tips, totals);
 
 // const calcTotal1 = function (bill,tip) {
 //     return bill + tip;
@@ -521,12 +519,12 @@ console.log(tips,totals);
 // }
 // console.log(calcTotal2(bills[0]),calcTip1(bills[0])); // нет доступа к функции calcTip1
 
-// BONUS 
-const calcAverage = function (arr){
-    let sum = 0;
-    for (let i = 0; i<arr.length; i++){
-        sum += arr[i]; // sum = arr[i] + sum;
-    }
-    return sum / arr.length;
-}
+// BONUS
+const calcAverage = function (arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i]; // sum = arr[i] + sum;
+  }
+  return sum / arr.length;
+};
 console.log(calcAverage(totals)); // takes an array as an argument
