@@ -1,6 +1,8 @@
 // Remember, we're gonna use strict mode in all scripts now!
 'use strict';
 
+/*
+
 // PROBLEM 1:
 // Given am array of temperatures of one day, calculate the temperature amplitude. Keep in mind that sometimes there might be a sensor error.
 
@@ -25,8 +27,8 @@ const calcTempAmplitude = function (arr) {
   return max - min;
 };
 const amplitude = calcTempAmplitude(temperature);
-console.log(amplitude);
 console.log(temp);
+console.log(amplitude);
 
 // let max = Math.max(...temp);
 // console.log(max);
@@ -91,3 +93,68 @@ const calcTempAmplitudeNew = function (t1, t2) {
 };
 const amplitudeNew = calcTempAmplitudeNew([3, 5, 1], [9, 0, 5]);
 console.log(amplitudeNew);
+
+// debugger;
+const measureKelvin = function () {
+  const measurement = {
+    type: 'temp',
+    unit: 'celsius',
+    // value: Number(prompt('Degrees celsius:')),
+    value: 10,
+  };
+
+  console.table(measurement);
+
+  console.log(measurement.value);
+  // console.warn(measurement.value);
+  // console.error(measurement.value);
+
+  const kelvin = measurement.value + 273;
+  return kelvin;
+};
+console.log(measureKelvin());
+
+*/
+
+// Coding Challenge #1
+
+const Data1 = [17, 21, 23];
+const Data2 = [12, 5, -5, 0, 4];
+
+const printForecast = function (arr) {
+  let result = '';
+  for (let i = 0; i < arr.length; i++) {
+    // console.log(`${arr[i]}`);
+    result = result + ` ${arr[i]}*C in ${i + 1} days ...`;
+  }
+  console.log('...' + result);
+  // return result;
+};
+
+printForecast(Data1);
+printForecast(Data2);
+// console.log(printForecast(Data1));
+
+const printForecast2 = function (arr) {
+  return (
+    arr
+      .map((item, index) => {
+        return `${item}*C in ${index + 1} days`;
+      })
+      .join(' ... ') + ' ...'
+  );
+};
+
+// console.log('... ' + printForecast2(Data1));
+
+// const fruits = ['Apple', 'Mango', 'Cherry'];
+// for (const fruit of fruits) {
+//   console.log(fruit);
+// }
+
+const printForecast1 = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(`${arr[i]} ${i + 1}`);
+  }
+};
+// console.log(printForecast1(Data1));
