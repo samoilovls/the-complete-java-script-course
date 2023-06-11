@@ -13,17 +13,34 @@ document.querySelector('.guess').value = 18; // .value with input field
 
 */
 
-const number = Math.trunc(Math.random() * 20) + 1;
+let number = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
-document.querySelector('.number').textContent = number;
+let highscore = 0;
+// const highscore = [0];
+// document.querySelector('.number').textContent = number;
 
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
-  console.log(typeof guess, guess);
+  // console.log(typeof guess, guess);
   if (!guess) {
     document.querySelector('.message').textContent = 'Empty...';
   } else if (guess === number) {
     document.querySelector('.message').textContent = 'Correct Number!';
+    document.querySelector('.number').textContent = number;
+
+    if (score > highscore) {
+      highscore = score;
+      document.querySelector('.highscore').textContent = highscore;
+    }
+
+    // if (score > highscore[highscore.length - 1]) {
+    //   highscore.push(score);
+    //   document.querySelector('.highscore').textContent =
+    //     highscore[highscore.length - 1];
+    // }
+
+    document.querySelector('body').style.backgroundColor = '#60b347';
+    document.querySelector('.number').style.width = '30rem';
   } else if (guess > number && guess > 0) {
     if (score > 1) {
       document.querySelector('.message').textContent = 'Too big!';
@@ -44,3 +61,17 @@ document.querySelector('.check').addEventListener('click', function () {
     }
   }
 });
+
+// Coding Challenge #1
+document.querySelector('.again').addEventListener('click', function () {
+  number = Math.trunc(Math.random() * 20) + 1;
+  document.querySelector('.number').textContent = '?';
+  score = 20;
+  document.querySelector('.score').textContent = score;
+  document.querySelector('.message').textContent = 'Start guessing...';
+  document.querySelector('.guess').value = '';
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
+});
+
+console.log(highscore);
