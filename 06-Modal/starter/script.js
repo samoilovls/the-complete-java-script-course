@@ -3,8 +3,7 @@
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.close-modal');
-const btnShowModal = document.querySelectorAll('.show-modal');
-console.log(btnShowModal);
+const btnShowModal = document.querySelectorAll('.show-modal'); // matches multiple elements
 
 // const openModal = function () {
 //   modal.classList.remove('hidden');
@@ -13,6 +12,8 @@ console.log(btnShowModal);
 // for (let i = 0; i < btnShowModal.length; i++)
 //   btnShowModal[i].addEventListener('click', openModal);
 
+// We use loop to have access to multiple elements with the same class name:
+console.log(btnShowModal); // Like an Array
 for (let i = 0; i < btnShowModal.length; i++) {
   btnShowModal[i].addEventListener('click', function () {
     console.log('Button clicked');
