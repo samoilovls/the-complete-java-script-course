@@ -75,7 +75,17 @@ var numProducts = 10;
 function deleteShoppingCart() {
   console.log('All products deleted!');
 }
-*/
+
+
+// Differences between var,let,const:
+var x = 1; // we get a property of x: 1 on a global window object 
+let y = 2;
+const z = 3;
+
+console.log(window.hasOwnProperty('x')); // true
+console.log(window.hasOwnProperty('y')); // false
+console.log(window.hasOwnProperty('z')); // false
+
 
 // This keyword:
 // this keyword or this variable is a special variable that is created for every execution context and therefore any function. Takes the value of (points to) the 'owner' of the function in which the this keyword is used.
@@ -121,3 +131,80 @@ matilda.calcAge();
 
 const f = jonas.calcAge;
 f(); // this = undefined
+
+*/
+
+// This keyword related to Regular functions and Arrow functions:
+
+// var firstName = 'Matilda';
+var x = 1; // Variables declared with var create a properties on a global window object
+console.log(window.hasOwnProperty('x'));
+
+// Checking whether an object has a certain property:
+// console.log('firstName' in jonas);
+// console.log(jonas.hasOwnProperty('firstName'));
+
+const jonas = {
+  firstName: 'Jonas',
+  year: 1991,
+  calcAge: function () {
+    console.log(2037 - this.year);
+    console.log(this);
+
+    const isMillennial = function () {
+      console.log(this); // undefined
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillennial(); // Cannot read properties of undefined
+  },
+
+  // Pre ES6 solution:
+  calcAgeOld: function () {
+    console.log(2037 - this.year);
+
+    const self = this; // self or that
+    console.log(self);
+
+    const isMillennial = function () {
+      console.log(self.year >= 1981 && self.year <= 1996);
+    };
+    isMillennial();
+  },
+
+  // ES6 solution:
+  calcAgeNew: function () {
+    console.log(2037 - this.year);
+
+    const isMillennial = () => {
+      console.log(this.year >= 1981 && this.year <= 1996);
+    };
+    isMillennial();
+  },
+
+  greet: () => {
+    console.log(`Hey ${this.firstName}`);
+    console.log(this); // window object
+  },
+};
+
+jonas.greet();
+console.log(this.firstName); // when we try to access a property that doesn't exist on a certain object, we get undefined
+
+// jonas.calcAge();
+jonas.calcAgeOld();
+jonas.calcAgeNew();
+
+// arguments keywords:
+
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr(2, 5);
+addExpr(2, 5, 8, 12);
+
+var addArrow = (a, b) => {
+  console.log(arguments); // arguments is not defined
+  return a + b;
+};
+addArrow(2, 5, 8);
