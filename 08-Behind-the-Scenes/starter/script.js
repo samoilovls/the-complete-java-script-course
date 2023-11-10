@@ -132,7 +132,6 @@ matilda.calcAge();
 const f = jonas.calcAge;
 f(); // this = undefined
 
-*/
 
 // This keyword related to Regular functions and Arrow functions:
 
@@ -208,3 +207,30 @@ var addArrow = (a, b) => {
   return a + b;
 };
 addArrow(2, 5, 8);
+*/
+
+// Primitives vs Objects(Reference types):
+// Objects or Reference types are stored in the memory HEAP of JS ENGINE.
+// Primitives or Primitive types are stored in the CALL STACK or execution contexts in which they are declared.
+
+// CALL STACK: JS will create unique identifier with the variable name. Then a piece of memory will be allocated with a certain address and the value would be stored in memory at the specified address.
+// Identifier (age) points to the address (0001) and NOT TO the value itself (30) : age = memory address 0001, which holds the value of 30.
+let age = 30; // age = memory address 0001
+let oldAge = age; // oldAge = age = memory address 0001, where age is still 30. They both point to the same memory address.
+age = 31; // The value at a certain memory address is immutable. So a new piece of memory is allocated and the age Identifier now points to the new address, which is holding the new value of 31.
+console.log(age);
+console.log(oldAge);
+
+// HEAP: Such as before there is a memory address and the value itself. But the me Identifier of the reference value in the CALL STACK does not point to this newly created memory address (D30F) in the HEAP, instead, it will point to a new piece of memory (memory address 0003) that is created in the CALL STACK. This new piece of memory (memory address 0003) will point to the object that's in the HEAP by using the HEAP's memory address (D30F) as its value.
+// The piece of memory in the CALL STACK has a reference to the piece of memory in the HEAP, which holds me object: me = memory address in the CALL STACK = value: memory address in the HEAP = value (object)
+const me = {
+  // me = memory address 0003 = D30F = object
+  name: 'Jonas',
+  age: 30,
+};
+
+const friend = me; // friend = me = memory address 0003 = D30F = value (object)
+// me and friend point to the exact same object in the memory heap
+friend.age = 27; // as a result we are changing value in the heap
+console.log(friend);
+console.log(me);
