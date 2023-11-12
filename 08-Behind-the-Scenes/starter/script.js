@@ -207,7 +207,7 @@ var addArrow = (a, b) => {
   return a + b;
 };
 addArrow(2, 5, 8);
-*/
+
 
 // Primitives vs Objects(Reference types):
 // Objects or Reference types are stored in the memory HEAP of JS ENGINE.
@@ -222,7 +222,7 @@ console.log(age);
 console.log(oldAge);
 
 // HEAP: Such as before there is a memory address and the value itself. But the me Identifier of the reference value in the CALL STACK does not point to this newly created memory address (D30F) in the HEAP, instead, it will point to a new piece of memory (memory address 0003) that is created in the CALL STACK. This new piece of memory (memory address 0003) will point to the object that's in the HEAP by using the HEAP's memory address (D30F) as its value.
-// The piece of memory in the CALL STACK has a reference to the piece of memory in the HEAP, which holds me object: me = memory address in the CALL STACK = value: memory address in the HEAP = value (object)
+// The piece of memory in the CALL STACK has a reference to the piece of memory in the HEAP, which holds me object: me = memory address in the CALL STACK = value: reference memory address of the HEAP = value (object)
 const me = {
   // me = memory address 0003 = D30F = object
   name: 'Jonas',
@@ -234,3 +234,40 @@ const friend = me; // friend = me = memory address 0003 = D30F = value (object)
 friend.age = 27; // as a result we are changing value in the heap
 console.log(friend);
 console.log(me);
+*/
+
+// Example:
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName);
+
+const jessica = {
+  firstName: 'Jessica',
+  lastName: ' Williams',
+  age: 27,
+};
+const marriedJessica = jessica; // they both point to the same memory address in the HEAP, because in the STACK they both hold the same memory address reference. They are just two different names for the same thing.
+marriedJessica.lastName = 'Davis'; // This is the reason why we can change a property on a variable declared with const, which is supposed to be constant, so that we cannot change. However, what actually needs to be constant, is the value in the STACK and in the stack the value only holds the reference, which we are not changing.
+console.log('Before marriage:', jessica);
+console.log('After marriage:', marriedJessica);
+
+// marriedJessica = {}; since it's a const, we cannot change that value in the stack, so we cannot change the value to a new memory address (with let we can)
+
+// Copying objects:
+const jessica2 = {
+  firstName: 'Jessica',
+  lastName: ' Williams',
+  age: 27,
+  family: ['Alice', 'Bob'],
+};
+
+// Merge two objects and return a new one:
+const jessicaCopy = Object.assign({}, jessica2);
+// Works only on the first level: if we have an object inside the object, then this inner object will actually still be the same. It will still point to the same place in memory. Only creates a shallow copy and not a deep clone. A shallow copy will only copy the properties in the first level:
+jessicaCopy.family.push('Mary');
+jessicaCopy.family.push('John');
+
+jessicaCopy.lastName = 'Davis';
+console.log('Before marriage:', jessica2);
+console.log('After marriage:', jessicaCopy);
