@@ -27,7 +27,7 @@ const restaurant = {
     },
   },
 };
-*/
+
 // Destructuring Arrays:
 
 const restaurant = {
@@ -77,5 +77,88 @@ const [i, , [j, k]] = nested;
 console.log(i, j, k);
 
 // Set default values:
-const [p = 1, q = 1, r = 1] = [8, 9]; // ??
+const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r);
+*/
+
+// Destructuring Objects:
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
+
+  orderDelivery: function ({
+    starterIndex = 1,
+    mainIndex = 0,
+    time = '20:00',
+    address,
+  }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+    );
+  },
+};
+
+// Object as an argument into the function:
+restaurant.orderDelivery({
+  time: '22:30',
+  address: 'Via del Sole, 21',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+restaurant.orderDelivery({
+  address: 'Via del Sole, 21',
+  starterIndex: 1,
+});
+
+// Property names:
+const { name, categories, openingHours } = restaurant;
+console.log(name, openingHours, categories);
+// We wanted the variable names to be different from property names :
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+console.log(restaurantName, hours, tags);
+
+// Default values:
+const { menu = [], starterMenu: starters = [] } = restaurant;
+console.log(menu, starters);
+
+// Mutating variables:
+let a = 111;
+let b = 999;
+const obj = { a: 23, b: 7, c: 14 };
+({ a, b } = obj); // wrap into parenthesis
+console.log(a, b);
+
+// Nested objects:
+const {
+  fri: { open: o, close },
+} = hours;
+console.log(o, close);
+
+const {
+  starterMenu: [c, d],
+} = restaurant;
+console.log(c, d);
