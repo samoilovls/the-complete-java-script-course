@@ -79,7 +79,7 @@ console.log(i, j, k);
 // Set default values:
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r);
-*/
+
 
 // Destructuring Objects:
 
@@ -162,3 +162,60 @@ const {
   starterMenu: [c, d],
 } = restaurant;
 console.log(c, d);
+*/
+
+// Spread operator
+// Takes all the elements from the array and doesn't create a new variables. We can only use it in places where we would write values separated by commas.
+// Multiple values separated by a comma are usually only expected when we pass arguments into a function or build a new array.
+// Create only shallow copies.
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+    );
+  },
+};
+
+const arr = [7, 8, 9];
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocchi'];
+console.log(newMenu);
+
+// Create shallow copies:
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Join two arrays or more together:
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu);
+
+// Iterables are most of the built in data structures, except objects.
+// Iterables: arrays, strings, maps, sets. NOT objects
+const str = 'Jonas';
+const letters = [...str, '', 'S.'];
+console.log(letters);
+
+// Function:
+const ingredients = [
+  // prompt("Let's make pasta! Ingredient 1?"),
+  // prompt("Let's make pasta! Ingredient 2?"),
+  // prompt("Let's make pasta! Ingredient 3?"),
+];
+restaurant.orderPasta(...ingredients);
+
+// Objects:
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Giuseppe' };
+console.log(newRestaurant);
+// Only shallow copy:
+newRestaurant.categories[0] = 0;
+console.log('Original:', restaurant, 'New:', newRestaurant);
