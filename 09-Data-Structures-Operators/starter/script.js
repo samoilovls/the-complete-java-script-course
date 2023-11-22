@@ -226,7 +226,7 @@ console.log(newRestaurant);
 const copyRestaurant = { ...restaurant };
 copyRestaurant.categories[0] = 0;
 console.log('Original:', restaurant, 'Copy:', copyRestaurant);
-*/
+
 
 // The Rest Pattern
 // Does the opposite of The Spread Operator:
@@ -273,3 +273,47 @@ const x = [23, 5, 7];
 add(...x);
 
 restaurant.orderPizza('cheese', 'onion', 'olives', 'spinach');
+*/
+
+// Short Circuiting
+
+// Logical operators can use ANY data type, return ANY data type, do short-circuiting (short circuit evaluation):
+
+// OR operator:
+// Will return the first truthy value of all the operands, or the last value if all of them are falsy.
+
+// If the first value(operand) is a truthy value, it will return that first value:
+console.log(3 || 'Jonas');
+console.log(true || 0);
+// If the first value is a falsy value, it will return the second operand:
+console.log('' || 'Jonas');
+console.log(undefined || null);
+
+// short circuit the entire evaluation and return value:
+console.log(undefined || 0 || '' || 'Hello' || 23 || null); // 'Hello' because the first truthy value in this chain of OR operations
+
+// Practical example:
+const guestsTernary = restaurant.numGuests ? restaurant.categories : 10;
+console.log(guestsTernary);
+
+const guests = restaurant.numGuests || 0;
+console.log(guests);
+
+// AND operator:
+// Will return the first falsy value of all the operands, or the last value if all of them truthy.
+
+// If the first value is a truthy value, it will return the second operand:
+console.log(7 && 'Jonas');
+console.log(7 && undefined);
+// If the first value is a falsy value, it will return the first operand:
+console.log(0 && 'Jonas');
+
+// short circuit the entire evaluation and return value:
+console.log('Hello' && 23 && null && 'Jonas'); // null because the first falsy value
+
+// Practical example:
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
+}
+
+restaurant.orderPizza && restaurant.orderPizza('bacon');
