@@ -370,7 +370,6 @@ console.log(rest1);
 console.log(rest2);
 console.log(rest3);
 
-*/
 
 // Coding Challenge #1
 
@@ -452,3 +451,63 @@ printGoalsScored(...game.scored);
 // game.odds.team1 > game.odds.team2 || console.log('Team1 is more likely to win');
 team1 > team2 || console.log('Team1 is more likely to win');
 team1 < team2 && console.log('Team1 is more likely to win');
+
+*/
+
+// Looping Arrays:
+// We can use the continue and break keywords in the for of loop
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+for (const item of menu) console.log(item);
+// Index:
+// old way:
+for (const item of menu.entries()) {
+  console.log(`${item[0] + 1}: ${item[1]}`);
+}
+// new way:
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+// console.log([...menu.entries()]);
+
+// ES6 OBJECT ENHANCEMENTS:
+
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+const openingHours = {
+  // ES6 compute property manes: [put any expression]
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const restaurantCopy = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  // ES6 enhanced object literals:
+  openingHours,
+  // openingHours: openingHours,
+
+  // ES6 method:
+  order(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderPizza: function (mainIngredient, ...optional) {
+    console.log(mainIngredient, optional);
+  },
+};
