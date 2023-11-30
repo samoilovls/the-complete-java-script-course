@@ -177,6 +177,7 @@ console.log(c, d);
 // Use to expand/unpack an array into individual elements
 // Takes all the elements from the array and doesn't create a new variables. We can only use it in places where we would write values separated by commas.
 // Multiple values separated by a comma are usually only expected when we pass arguments into a function or build a new array.
+// Works on all iterables.
 // Create only shallow copies.
 
 const restaurant = {
@@ -223,7 +224,7 @@ const ingredients = [
 ];
 restaurant.orderPasta(...ingredients);
 
-// Objects:
+// ES2018 Objects:
 const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Giuseppe' };
 console.log(newRestaurant);
 // Only shallow copy:
@@ -463,7 +464,9 @@ team1 < team2 && console.log('Team1 is more likely to win');
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 for (const item of menu) console.log(item);
+
 // Index:
+
 // old way:
 for (const item of menu.entries()) {
   console.log(`${item[0] + 1}: ${item[1]}`);
@@ -516,7 +519,6 @@ const restaurantCopy = {
   },
 };
 
-*/
 
 // Optional Chaining:
 
@@ -549,3 +551,44 @@ const users = [
 ];
 
 console.log(users[0]?.name ?? 'Users array empty');
+
+*/
+
+// Loop over objects:
+
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+// Loping over property names or keys:
+const properties = Object.keys(openingHours);
+console.log(properties);
+let openStr = `We are open on ${properties.length} days: `;
+for (const day of Object.keys(openingHours)) {
+  console.log(day);
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+// Loping over values:
+const values = Object.values(openingHours);
+console.log(values);
+
+// Loping over both together:
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
