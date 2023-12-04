@@ -552,7 +552,6 @@ const users = [
 
 console.log(users[0]?.name ?? 'Users array empty');
 
-*/
 
 // Loop over objects:
 
@@ -591,4 +590,126 @@ console.log(entries);
 
 for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+*/
+
+// Coding Challenge #2
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// 1.
+for (const [index, player] of game.scored.entries()) {
+  console.log(`Goal ${index + 1}: ${player}`);
+}
+
+// 2.
+const odds = Object.values(game.odds);
+console.log(odds);
+let sum = 0;
+for (const odd of odds) {
+  sum += odd;
+
+  // const average = odd === odds[odds.length - 1] && sum / 3;
+  // console.log(average);
+  // odd === odds[odds.length - 1] && console.log(sum / 3);
+
+  if (odd === odds[odds.length - 1]) {
+    const average = sum / odds.length;
+    console.log(average);
+  }
+}
+// sum /= odds.length;
+// console.log(sum);
+
+// 3.
+for (const [team, score] of Object.entries(game.odds)) {
+  // console.log(`Odd of victory ${team === 'x' ? 'draw' : game[team]}: ${score}`);
+  console.log(`Odd of victory ${game[team] ?? 'draw'}: ${score}`);
+}
+
+console.log(`${'John'}`);
+
+// BONUS
+
+const arr = [1, 1, 2, 3, 4, 5, 3, 2, 2, 0, 0, 0];
+
+const arrayCountValues = function (arr) {
+  let el;
+  const scorers = {};
+  for (let i = arr.length - 1; i >= 0; i--) {
+    el = arr[i];
+    if (scorers[el]) {
+      scorers[el] += 1;
+    } else {
+      scorers[el] = 1;
+    }
+  }
+  return console.log(scorers);
+};
+
+arrayCountValues(arr);
+arrayCountValues(game.scored);
+
+// const obj = {};
+// obj[1] = 3;
+// obj[1] = obj[1] + 1;
+// console.log(obj);
+// console.log(obj[1]);
+
+// let arr = [1, 3, 4, 1, 1, 3, 4, 5];
+// let count = {};
+
+// for (let elem of arr) {
+//   if (count[elem] === undefined) {
+//     count[elem] = 1;
+//   } else {
+//     count[elem]++;
+//   }
+// }
+// console.log(count);
+
+// So the solution is to loop over the array, and add the array elements as object properties, and then increase the count as we encounter a new occurrence of a certain element
+const scorers = {};
+for (const player of game.scored) {
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
 }
