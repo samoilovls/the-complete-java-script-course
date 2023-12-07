@@ -211,7 +211,7 @@ const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 console.log(menu);
 
 // Iterables are most of the built in data structures, except objects.
-// Iterables: arrays, strings, maps, sets. NOT objects
+// ITERABLES: arrays, strings, maps, sets. NOT objects
 const str = 'Jonas';
 const letters = [...str, '', 'S.'];
 console.log(letters);
@@ -592,7 +592,6 @@ for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}`);
 }
 
-*/
 
 // Coding Challenge #2
 
@@ -713,3 +712,54 @@ const scorers = {};
 for (const player of game.scored) {
   scorers[player] ? scorers[player]++ : (scorers[player] = 1);
 }
+
+*/
+
+// SETS:
+// Data structure
+// Collection of unique values, a set can never have any duplicates.
+// It's elements are unique and the order of them is irrelevant.
+// There is no indexes and no way of getting values out of set.
+// Sets are iterables
+
+// Set(iterable)
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+console.log(ordersSet); // all the duplicates are gone
+console.log(new Set('Jonas'));
+console.log(new Set()); // empty
+
+// Work with sets:
+
+// Size of a set:
+console.log(ordersSet.size);
+// Check if a certain element is in a set:
+console.log(ordersSet.has('Pizza'));
+console.log(ordersSet.has('Bread'));
+// Add new elements to the set:
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+console.log(ordersSet);
+// Delete elements:
+ordersSet.delete('Risotto');
+console.log(ordersSet);
+// ordersSet.clear() delete all the elements
+
+// Loop over sets:
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+// Remove duplicates values of arrays:
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = new Set(staff);
+console.log(staffUnique);
+// Conversion from a set to an array:
+const staffUniqueArray = [...staffUnique];
+console.log(staffUniqueArray);
