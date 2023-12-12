@@ -811,7 +811,6 @@ console.log(rest.get(arr));
 rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
 
-*/
 
 // Populating a new map without .set:
 const question = new Map([
@@ -870,3 +869,78 @@ console.log(question.get(question.get('correct') === answer));
 console.log([...question]); // same console.log(question.entries());
 console.log([...question.keys()]);
 console.log([...question.values()]);
+
+*/
+
+// Coding Challenge #3
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+// 1:
+const eventsSet = new Set(gameEvents.values());
+const events = [...eventsSet];
+console.log(eventsSet);
+console.log(events);
+
+// 2:
+gameEvents.delete(64);
+console.log(gameEvents);
+
+// 3:
+const time = [...gameEvents.keys()];
+console.log(time);
+for (const key of gameEvents.keys()) {
+}
+
+// for (let i = 0; i < time.length; i++) {
+//   // console.log(time[i]);
+
+//   if (i < time.length - 1) {
+//     let temp = time[i + 1];
+//     temp -= time[i];
+//     console.log(temp);
+//   }
+// }
+
+const difference = [];
+for (let i = 1; i < time.length; i++) {
+  // console.log(time[i]);
+  let temp = time[i];
+  temp -= time[i - 1];
+  // console.log(temp);
+  difference.push(temp);
+}
+console.log(difference);
+let sum = 0;
+for (const e of difference) {
+  sum += e;
+}
+console.log(sum);
+const average = Math.trunc(sum / difference.length);
+console.log(`An event happened, on 
+average, every ${average} minutes`);
+
+// Course solution:
+const lastElement = [...gameEvents.keys()].pop();
+console.log(lastElement);
+console.log(`An event happened, on 
+average, every ${lastElement / gameEvents.size} minutes`);
+
+// 4:
+for (const [key, value] of gameEvents) {
+  console.log(
+    `${key > 45 ? '[SECOND HALF]' : '[FIRST HALF]'} ${key}: ${value}`
+  );
+}
