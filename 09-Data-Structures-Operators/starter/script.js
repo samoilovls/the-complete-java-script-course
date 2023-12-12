@@ -763,7 +763,6 @@ console.log(staffUnique);
 const staffUniqueArray = [...staffUnique];
 console.log(staffUniqueArray);
 
-*/
 
 // MAPS:
 // Data structure to map values to keys. Data stored in key value pairs.
@@ -803,11 +802,71 @@ console.log(rest.size);
 // Objects and Arrays as a keys:
 rest.set([1, 2], 'Test #1');
 console.log(rest.get([1, 2])); // will not work because it is not the same object in the heap
-// In order to male it work:
+// In order to make it work:
 const arr = [1, 2];
 rest.set(arr, 'Test');
 console.log(rest.get(arr));
 
-// DOM elements (special type of object):
+// DOM elements (special type of objects):
 rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
+
+*/
+
+// Populating a new map without .set:
+const question = new Map([
+  ['question', 'What is the best programming language in the world ?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JS'],
+  ['correct', 3],
+  [true, 'Correct!'],
+  [false, 'Try again!'],
+]);
+console.log(question);
+
+// Convert object/array to map:
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+console.log(Object.entries(openingHours));
+console.log([...menu.entries()]);
+
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+const menuMap = new Map(menu.entries());
+console.log(menuMap);
+
+// Maps Iteration:
+// Quiz app
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
+// const answer = Number(prompt('Your answer'));
+const answer = 3;
+console.log(answer);
+
+console.log(question.get(question.get('correct') === answer));
+
+// Convert map to array:
+console.log([...question]); // same console.log(question.entries());
+console.log([...question.keys()]);
+console.log([...question.values()]);
