@@ -870,7 +870,7 @@ console.log([...question]); // same console.log(question.entries());
 console.log([...question.keys()]);
 console.log([...question.values()]);
 
-*/
+
 
 // Coding Challenge #3
 
@@ -887,14 +887,13 @@ const gameEvents = new Map([
   [80, '⚽️ GOAL'],
   [92, '🔶 Yellow card'],
 ]);
-/*
+
 // 1:
 const eventsSet = new Set(gameEvents.values());
 const events = [...eventsSet];
 console.log(eventsSet);
 console.log(events);
 
-*/
 // 2:
 gameEvents.delete(64);
 // console.log(gameEvents);
@@ -952,7 +951,6 @@ const lastElement = [...gameEvents.keys()].pop();
 console.log(lastElement);
 console.log(`An event happened, on 
 average, every ${lastElement / gameEvents.size} minutes`);
-/*
 
 // 4:
 for (const [key, value] of gameEvents) {
@@ -960,4 +958,55 @@ for (const [key, value] of gameEvents) {
     `${key > 45 ? '[SECOND HALF]' : '[FIRST HALF]'} ${key}: ${value}`
   );
 }
+
 */
+
+//// WORKING WITH STRINGS: ////
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+// Methods:
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal'));
+console.log(airline.indexOf('portugal')); // -1 not be found
+
+// extract part of a string, indexes as arguments, return a new string:
+console.log(airline.slice(4)); // 'Air Portugal'
+// END VALUE NOT INCLUDED:
+console.log(airline.slice(4, 7)); // 'Air'
+// the length of the extracted string = end - beginning (7 - 4 = 3)
+
+console.log(airline.slice(0, airline.indexOf(' '))); // 'TAP'
+console.log(airline.slice(airline.lastIndexOf(' ') + 1, airline.length)); // 'Portugal'
+
+console.log(airline.slice(-2)); // counting from the end
+console.log(airline.slice(1, -1)); // 'AP Air Portuga'
+// console.log(airline.slice(-2)); // counting from the end
+
+// Practice
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(seat.length - 1); // seat.slice(-1)
+  console.log(s);
+  if (s === 'B' || s === 'E') {
+    console.log("It's a middle seat!");
+  } else console.log('Not!');
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+// Boxing: JS behind the scenes converts string primitive to a string object, and it's on that object the methods are called:
+console.log(new String('jonas'));
+console.log(typeof new String('jonas')); // object
+// when the operation is done the object is converted back to a string primitive, all string methods return primitives:
+console.log(typeof new String('jonas').slice(1)); // string
