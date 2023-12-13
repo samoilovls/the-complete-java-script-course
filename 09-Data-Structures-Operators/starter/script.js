@@ -887,16 +887,17 @@ const gameEvents = new Map([
   [80, '⚽️ GOAL'],
   [92, '🔶 Yellow card'],
 ]);
-
+/*
 // 1:
 const eventsSet = new Set(gameEvents.values());
 const events = [...eventsSet];
 console.log(eventsSet);
 console.log(events);
 
+*/
 // 2:
 gameEvents.delete(64);
-console.log(gameEvents);
+// console.log(gameEvents);
 
 // 3:
 const time = [...gameEvents.keys()];
@@ -915,28 +916,43 @@ for (const key of gameEvents.keys()) {
 // }
 
 const difference = [];
-for (let i = 1; i < time.length; i++) {
+
+// for (let i = 0; i < time.length; i++) {
+//   // console.log(time[i]);
+//   let temp = time[i];
+//   if (temp === time[0]) {
+//     temp = time[i];
+//   } else temp -= time[i - 1];
+//   console.log(temp);
+//   difference.push(temp);
+// }
+
+for (let i = time.length; i--; ) {
   // console.log(time[i]);
   let temp = time[i];
-  temp -= time[i - 1];
-  // console.log(temp);
+  if (temp === time[0]) {
+    temp = time[i];
+  } else temp -= time[i - 1];
+  console.log(temp);
   difference.push(temp);
 }
+
 console.log(difference);
 let sum = 0;
 for (const e of difference) {
   sum += e;
 }
 console.log(sum);
+console.log(sum / difference.length);
 const average = Math.trunc(sum / difference.length);
 console.log(`An event happened, on 
 average, every ${average} minutes`);
-
 // Course solution:
 const lastElement = [...gameEvents.keys()].pop();
 console.log(lastElement);
 console.log(`An event happened, on 
 average, every ${lastElement / gameEvents.size} minutes`);
+/*
 
 // 4:
 for (const [key, value] of gameEvents) {
@@ -944,3 +960,4 @@ for (const [key, value] of gameEvents) {
     `${key > 45 ? '[SECOND HALF]' : '[FIRST HALF]'} ${key}: ${value}`
   );
 }
+*/
