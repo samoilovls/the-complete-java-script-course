@@ -1013,7 +1013,7 @@ console.log(typeof new String('jonas')); // object
 console.log(typeof new String('jonas').slice(1)); // string
 
 */
-
+/*
 // Changing the case of a string:
 
 console.log(airline.toLowerCase());
@@ -1081,3 +1081,54 @@ const checkBaggage = function (items) {
 checkBaggage('I have a laptop, some Food and a pocket Knife)');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection');
+
+*/
+
+// Split:
+console.log('a+very+nice+string'.split('+'));
+console.log('Jonas Schmedtmann'.split(' '));
+
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+console.log(firstName, lastName);
+
+// Join:
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+const passenger = 'jessica ann smith davis';
+const capitalizeName = function (string) {
+  const nameArr = string.split(' ');
+  console.log(nameArr);
+  const capName = [];
+  for (const name of nameArr) {
+    // const n = name[0].toUpperCase() + name.slice(1);
+    // capName.push(n);
+    capName.push(name.replace(name[0], name[0].toUpperCase()));
+  }
+  console.log(capName);
+  return console.log(capName.join(' '));
+};
+capitalizeName(passenger);
+
+// Padding a string:
+const message = 'Go to gate 23!';
+const newMessage = message.padStart(25, '+').padEnd(35, '+');
+console.log(newMessage);
+console.log(newMessage.length);
+
+const maskCreditCard = function (number) {
+  const str = number + ''; // const str = String(number);
+  console.log(str);
+  console.log(str.slice(-4).padStart(str.length, '*'));
+};
+
+maskCreditCard(43378463864647384);
+
+// Repeat:
+const messageWeather = 'Bad weather...';
+console.log(messageWeather.repeat(3));
+
+const planesInline = function (n) {
+  console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
+};
+planesInline(5);
