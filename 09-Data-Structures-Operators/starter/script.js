@@ -964,6 +964,7 @@ for (const [key, value] of gameEvents) {
 //// WORKING WITH STRINGS: ////
 
 const airline = 'TAP Air Portugal';
+/*
 const plane = 'A320';
 
 console.log(plane[0]);
@@ -1010,3 +1011,73 @@ console.log(new String('jonas'));
 console.log(typeof new String('jonas')); // object
 // when the operation is done the object is converted back to a string primitive, all string methods return primitives:
 console.log(typeof new String('jonas').slice(1)); // string
+
+*/
+
+// Changing the case of a string:
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Example: Fix the capitalization in a passenger name
+const passenger = 'jOnAS'; // Jonas
+const capital = passenger.slice(0, 1).toUpperCase();
+const lowercase = passenger.slice(1).toLowerCase();
+const passengerFix = capital + lowercase;
+console.log(passengerFix);
+
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+const fixCapitalization = function (string) {
+  return console.log(string[0].toUpperCase() + string.slice(1).toLowerCase());
+};
+fixCapitalization('mARIA');
+
+// Comparing emails
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.Io \n';
+const lowerEmail = loginEmail.toLowerCase();
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+
+// Get rid of whitespace:
+const trimmedEmail = lowerEmail.trim();
+console.log(trimmedEmail);
+
+// Replace parts of strings:
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
+console.log(announcement.replace('door', 'gate'));
+console.log(announcement.replaceAll('door', 'gate'));
+// old solution with a Regular Expression:
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Return Booleans:
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.startsWith('Air'));
+console.log(plane.endsWith('neo'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo'))
+  console.log('Part of the NEW Airbus family');
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes('gun') || baggage.includes('knife')) {
+    console.log('Not allowed');
+  } else console.log('Welcome');
+};
+
+checkBaggage('I have a laptop, some Food and a pocket Knife)');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
