@@ -1166,7 +1166,20 @@ document.querySelector('button').addEventListener('click', function () {
   const rows = text.split('\n');
 
   for (const [i, row] of rows.entries()) {
+    // let [first, second] = row.toLowerCase().trim().split('_');
+    // [first, second] = [
+    //   first,
+    //   second.replace(second[0], second[0].toUpperCase()),
+    // ];
+    // console.log([first, second].join(''));
+
+    // const output = `${first}${second}`;
     const [first, second] = row.toLowerCase().trim().split('_');
+    // const arr = [first, second.replace(second[0], second[0].toUpperCase())];
+    // console.log(arr.join(''));
+    // console.log(
+    //   [first, second.replace(second[0], second[0].toUpperCase())].join('')
+    // );
 
     const output = `${first}${second.replace(
       second[0],
