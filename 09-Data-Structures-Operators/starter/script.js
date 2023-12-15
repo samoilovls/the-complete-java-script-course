@@ -1082,7 +1082,6 @@ checkBaggage('I have a laptop, some Food and a pocket Knife)');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection');
 
-*/
 
 // Split:
 console.log('a+very+nice+string'.split('+'));
@@ -1132,3 +1131,47 @@ const planesInline = function (n) {
   console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
 };
 planesInline(5);
+
+*/
+
+// Coding Challenge #4
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click', function () {
+  const inputStr = document.querySelector('textarea').value;
+  const inputArr = inputStr.toLowerCase().split('\n');
+
+  for (const [i, el] of inputArr.entries()) {
+    const trimmed = el.trim();
+    const underscore = trimmed.indexOf('_');
+    const afterUnderscore = trimmed.slice(underscore + 1);
+    // console.log(afterUnderscore);
+    const camel = afterUnderscore.replace(
+      afterUnderscore[0],
+      afterUnderscore[0].toUpperCase()
+    );
+    // console.log(camel);
+    const camelCase = trimmed.slice(0, underscore) + camel;
+    // console.log(camelCase);
+
+    console.log(`${camelCase.padEnd(20, ' ')} ${'✅'.repeat(i + 1)}`);
+  }
+});
+
+// Course solution:
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n');
+
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${output.padEnd(20)} ${'✅'.repeat(i + 1)}`);
+  }
+});
