@@ -31,7 +31,7 @@ createBooking('LH123', 5);
 // Skip arguments that we want to leave as default when we called a function:
 createBooking('LH123', undefined, 1000);
 
-*/
+
 
 // How passing arguments works / How primitive types and reference types work in the context of functions
 // JS does not have passing by reference, only passing by value.
@@ -63,3 +63,35 @@ const newPassport = function (person) {
 };
 newPassport(jonas);
 checkIn(flight, jonas);
+
+*/
+
+// Functions accepting Callback Functions:
+
+const oneWord = function (str) {
+  return str.replaceAll(' ', '').toLowerCase();
+};
+
+const upperFirstWord = function (str) {
+  const [first, ...others] = str.split(' ');
+  // console.log(others);
+  return [first.toUpperCase(), ...others].join(' ');
+};
+
+// Higher-order function
+const transformer = function (str, fn) {
+  console.log(`Original string: ${str}`);
+  console.log(`Transformed string: ${fn(str)}`);
+
+  console.log(`Transformed by: ${fn.name}`); // functions can have properties and one of them is the name property.
+};
+transformer('JavaScript is the best!', upperFirstWord);
+transformer('JavaScript is the best!', oneWord);
+
+// JS uses callbacks all the time
+const high5 = function () {
+  console.log('👋');
+};
+document.body.addEventListener('click', high5);
+
+['Jonas', 'Martha', 'Adam'].forEach(high5);
