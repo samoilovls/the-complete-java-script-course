@@ -64,7 +64,6 @@ const newPassport = function (person) {
 newPassport(jonas);
 checkIn(flight, jonas);
 
-*/
 
 // Functions accepting Callback Functions:
 
@@ -95,3 +94,25 @@ const high5 = function () {
 document.body.addEventListener('click', high5);
 
 ['Jonas', 'Martha', 'Adam'].forEach(high5);
+
+*/
+
+// Functions returning Functions
+
+// works because of closure
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greeterHey = greet('Hey');
+greeterHey('Jonas');
+greeterHey('Steven');
+
+greet('Hello')('Jonas');
+
+// small challenge:
+// write with arrow functions
+const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
+greetArrow('Hi')('Jonas');
