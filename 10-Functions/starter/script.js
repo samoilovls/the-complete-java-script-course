@@ -95,9 +95,8 @@ document.body.addEventListener('click', high5);
 
 ['Jonas', 'Martha', 'Adam'].forEach(high5);
 
-*/
 
-// Functions returning Functions
+// Functions returning Functions:
 
 // works because of closure
 const greet = function (greeting) {
@@ -116,3 +115,59 @@ greet('Hello')('Jonas');
 // write with arrow functions
 const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
 greetArrow('Hi')('Jonas');
+
+*/
+
+// Functions' Methods:
+// Functions are just another "type" of objects
+// First-Class Functions means that functions are simply values
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  // book: function() {}
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on a ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: this.iataCode + flightNum, name });
+  },
+};
+
+lufthansa.book(249, 'Jonas');
+lufthansa.book(635, 'Mike Smith');
+console.log(lufthansa.bookings);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const book = lufthansa.book; // possible because JS has first class functions
+
+// Does NOT work
+// book(23, 'Vlad');
+// Set the this keyword explicitly/manually by three function's methods:
+
+// Call method:
+// The first argument is exactly what we want the this keyword to point to
+book.call(eurowings, 23, 'Vlad');
+console.log(eurowings.bookings);
+
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+book.call(swiss, 583, 'Mary Cooper');
+console.log(swiss.bookings);
+
+// Apply method:
+// does not receive a list of arguments after the this keyword
+// instead it's gonna take an array of the arguments:
+const flightData = [583, 'George Cooper'];
+book.apply(swiss, flightData);
+book.call(swiss, ...flightData);
