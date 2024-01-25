@@ -149,9 +149,11 @@ const book = lufthansa.book; // possible because JS has first class functions
 
 // Does NOT work
 // book(23, 'Vlad');
+
 // Set the this keyword explicitly/manually by three function's methods:
 
 // Call method:
+// immediately call the function
 // The first argument is exactly what we want the this keyword to point to
 book.call(eurowings, 23, 'Vlad');
 console.log(eurowings.bookings);
@@ -171,3 +173,55 @@ console.log(swiss.bookings);
 const flightData = [583, 'George Cooper'];
 book.apply(swiss, flightData);
 book.call(swiss, ...flightData);
+
+// Bind method:
+// DOES NOT immediately call the function
+// instead it returns a new function where the this keyword is bound
+
+// We need to use the book function for Eurowings all the time:
+// book.call(eurowings, 23, 'Vlad');
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEW(23, 'Steven Williams');
+console.log(eurowings.bookings);
+
+// Set in stone certain arguments, preset, predefined: Partial application
+const bookEW50 = book.bind(eurowings, 50);
+bookEW50('Jonas');
+bookEW50('Martha');
+
+// With Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+
+// In an event handler function the this keyword always points to the element on which that handler is attached to:
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
+document
+  .querySelector('.buy')
+  .addEventListener('click', lufthansa.buyPlane.bind(lufthansa)); // we need to pass in a function here and NOT to call it
+
+// Partial application
+// means we can preset parameters
+const addTax = (rate, value) => value + (value * rate) / 100;
+console.log(addTax(10, 200));
+
+const addVAT = addTax.bind(null, 23);
+// const addVAT = value => value + (value * 23) / 100;
+console.log(addVAT(200));
+
+// Challenge
+
+const addTaxRate = function (rate) {
+  return function (value) {
+    console.log(value + (value * rate) / 100);
+  };
+};
+const VAT23 = addTaxRate(23);
+VAT23(200);
