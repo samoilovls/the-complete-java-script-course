@@ -116,7 +116,6 @@ greet('Hello')('Jonas');
 const greetArrow = greeting => name => console.log(`${greeting} ${name}`);
 greetArrow('Hi')('Jonas');
 
-*/
 
 // Functions' Methods:
 // Functions are just another "type" of objects
@@ -225,3 +224,94 @@ const addTaxRate = function (rate) {
 };
 const VAT23 = addTaxRate(23);
 VAT23(200);
+
+*/
+
+// Coding Challenge #1
+
+const poll = {
+  question: 'What is your favourite programming language?',
+  options: ['0: JavaScript', '1: Python', '2: Rust', '3:C++'],
+  // This generates [0, 0, 0, 0]. More in the next section!
+  answers: new Array(4).fill(0),
+};
+
+poll.displayResults = function (type = 'array') {
+  if (type === 'array') {
+    console.log(this.answers);
+  } else if (type === 'string') {
+    console.log(`Poll results are ${this.answers.join(', ')}.`);
+  }
+};
+
+poll.registerNewAnswer = function () {
+  let question = `${this.question}`;
+  for (const option of this.options) {
+    const enterOp = `
+${option}`;
+    // console.log(enterOp);
+    question += enterOp;
+  }
+  // console.log(question);
+  const finalStr =
+    question +
+    `
+(Write option number)`;
+  const answer = Number(prompt(finalStr));
+  // console.log(answer, typeof answer);
+  if (
+    typeof answer === 'number' &&
+    answer > -1 &&
+    answer < this.answers.length
+  ) {
+    this.answers[answer]++;
+    console.log('correct input');
+  } else console.log('wrong input');
+  // console.log(this.answers);
+
+  this.displayResults();
+  this.displayResults('string');
+
+  // a();
+};
+
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+// a();
+// const a = function () {
+//   console.log('a');
+// };
+
+// poll.answers[-1] = 0;
+
+poll.registerNewAnswerCourseSolution = function () {
+  const input = Number(
+    prompt(
+      `${this.question}\n${this.options.join('\n')}\n(Write option number)`
+    )
+  );
+  const answer = -1;
+  typeof answer === 'number' &&
+    answer < this.answers.length &&
+    this.answers[answer]++;
+  console.log(this.answers);
+  typeof answer === 'number' && answer < this.answers.length
+    ? console.log('correct'.toUpperCase())
+    : console.log('wrong'.toUpperCase());
+};
+// poll.registerNewAnswerCourseSolution();
+
+// console.log(poll.answers);
+// console.log(poll.answers[-1]);
+
+// BONUS
+const data1 = [5, 2, 3];
+const data2 = [1, 5, 3, 9, 6, 1];
+
+poll.displayResults.call({ answers: data1 });
+poll.displayResults.call({ answers: data1 }, 'string');
+
+poll.displayResults.call({ answers: data2 });
+poll.displayResults.call({ answers: data2 }, 'string');
