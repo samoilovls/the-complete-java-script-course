@@ -186,6 +186,13 @@ const jonas = {
   },
 };
 
+// THIS IS NOT A CODE BLOCK, IT IS AN OBJECT LITERAL. IT DOES NOT CREATE ITS OWN SCOPE, IT IS IN THE GLOBAL SCOPE:
+const obj = {
+  firstName: 'Jonas',
+  year: 1991,
+  greet: () => console.log(`Hey ${this.firstName}`)// this keyword from the global scope = window object
+}
+
 jonas.greet();
 console.log(this.firstName); // when we try to access a property that doesn't exist on a certain object, we get undefined
 
