@@ -152,8 +152,9 @@ multiple
 lines`);
 
 
+// The if else statement:
 const age = 15;
-// Control structure
+// Control structure:
 if(age>= 18) {
     console.log('Sarah can start driving licence');
 } else {
@@ -215,6 +216,7 @@ console.log(Number('Jonas'));
 console.log(typeof NaN);
 
 console.log(String(23));
+
 // Type coercion
 console.log(`I'm ` + 23 + ' years old');
 console.log('23' - '10' - '3');
@@ -423,7 +425,7 @@ if(day === 'monday') {
     console.log("Not a valid day!");
 }
 
-// Conditional(Ternary) operator
+// Conditional(Ternary) operator:
 const age = 22;
 // age >= 18 ? console.log('I like to drink beer') : console.log('I like to drink water');
 
@@ -446,4 +448,3 @@ const bill = 430;
 const tip = bill >= 50 && bill <= 300 ? bill*15/100 : bill*20/100;
 console.log(`The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`);
 */
-
