@@ -140,11 +140,13 @@ const friend1 = 'Michael';
 const friend2 = 'Steven';
 const friend3 = 'Peter';
 
+// Literal syntax:
 const friends = ['Michael', 'Steven', 'Peter'];
 console.log(friends);
 
-// const years = new Array(1991, 1984, 2000, 2020);
-// console.log(years);
+// new Array() function:
+const newYears = new Array(1991, 1984, 2000, 2020);
+console.log(newYears);
 
 console.log(friends[0]); // 0 based
 console.log(friends[2]);
@@ -251,6 +253,7 @@ console.log(jonasArray[4][1]);
 const friends = jonasArray[4];
 console.log(friends[1]);
 
+// Objects Literal Syntax:
 const jonasObject = {
     firstName: 'Jonas',
     lastName: 'Schmedtmann',
