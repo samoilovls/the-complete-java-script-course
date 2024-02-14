@@ -211,7 +211,7 @@ document
 const addTax = (rate, value) => value + (value * rate) / 100;
 console.log(addTax(10, 200));
 
-const addVAT = addTax.bind(null, 23);
+const addVAT = addTax.bind(null, 23); // first argument is the this keyword, but here we don't need it at all, and so, we just say null. It's kind of a standard to use null.
 // const addVAT = value => value + (value * 23) / 100;
 console.log(addVAT(200));
 
@@ -225,7 +225,6 @@ const addTaxRate = function (rate) {
 const VAT23 = addTaxRate(23);
 VAT23(200);
 
-*/
 
 // Coding Challenge #1
 
@@ -315,3 +314,48 @@ poll.displayResults.call({ answers: data1 }, 'string');
 
 poll.displayResults.call({ answers: data2 });
 poll.displayResults.call({ answers: data2 }, 'string');
+
+
+// Immediately Invoked Function Expressions IIFE:
+// Function that is only executed once and then never again.
+// Function that disappears right after it's called once.
+
+// wrap into parenthesis
+(function () {
+  console.log('This will never run again');
+  const isPrivate = 23;
+})();
+
+// also work for an arrow function
+(() => console.log('This will ALSO never run again'))();
+
+// block scoped
+{
+  const isPrivate = 23;
+}
+
+*/
+
+// Closures:
+// Any function always has access to the variable environment of the execution context in which the function was created. Even after that execution context is gone.
+// The closure is then basically this variable environment attached to the function exactly as it was at the time and place that the function was created.
+// the scope chain is actually preserved through the closure, even when a scope has already been destroyed, because it's execution context is gone.
+// the variable environment somehow keeps living somewhere in the engine.
+// CLOSURE has priority over the scope chain.
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+booker(); // 1 passengers
+booker(); // 2 passengers
+booker(); // 3 passengers
+
+// take a look at internal property
+console.dir(booker);
