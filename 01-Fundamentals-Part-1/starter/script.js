@@ -425,7 +425,12 @@ if(day === 'monday') {
     console.log("Not a valid day!");
 }
 
+// Statements vs Expressions:
+// an expression is a piece of code that produces a value, including values itself
+// the statement is like a bigger piece of code that is executed and which does not produce a value on itself
+
 // Conditional(Ternary) operator:
+// an operator always produces a value/ an operator is an expression
 const age = 22;
 // age >= 18 ? console.log('I like to drink beer') : console.log('I like to drink water');
 
