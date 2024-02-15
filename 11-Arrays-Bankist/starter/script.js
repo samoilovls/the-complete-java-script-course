@@ -65,12 +65,6 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
@@ -89,6 +83,7 @@ console.log(arr.slice(1, -2));
 
 // Create shallow copy of the array:
 console.log(arr.slice());
+console.log([...arr]);
 
 // SPLICE:
 // mutates the original array
@@ -112,6 +107,7 @@ console.log(arr2); // mutate the original array
 // doesn't mutate the original array
 const letters = arr.concat(arr2);
 console.log(letters);
+console.log([...arr, ...arr2]);
 
 // JOIN:
 console.log(letters.join('-')); // string
@@ -130,7 +126,6 @@ console.log(arr3.at(-1));
 console.log('jonas'.at(0));
 console.log('jonas'.at(-1));
 
-*/
 
 // Looping Arrays :
 
@@ -160,4 +155,31 @@ movements.forEach(function (movement, index, array) {
   if (movement > 0) {
     console.log(`Movement ${index + 1}: You deposited ${movement}`);
   } else console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
+});
+
+*/
+
+// forEach With Maps and Sets
+
+// Map
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}`);
+});
+
+// Set
+const currenciesUnique = new Set(currencies);
+const currenciesArr = new Array(...currencies);
+console.log(currenciesUnique);
+console.log(currenciesArr);
+
+const currenciesSet = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']); // we need to pass an Iterable
+console.log(currenciesSet);
+currenciesSet.forEach(function (value, _, set) {
+  console.log(value, _, set);
 });
