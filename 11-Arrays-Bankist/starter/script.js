@@ -71,11 +71,13 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
 /*
+
+// Simple Array Methods :
 
 let arr = ['a', 'b', 'c', 'd', 'e'];
 
@@ -129,3 +131,33 @@ console.log('jonas'.at(0));
 console.log('jonas'.at(-1));
 
 */
+
+// Looping Arrays :
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// for (const movement of movements) {
+for (const [index, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${index + 1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+
+// forEach method
+// we cannot use continue and break statements
+// it does loop over the array and in each iteration it will execute callback function
+// in each iteration it will pass in the current element of the array as an argument
+// each time this callback function is called, it will receive the current el of the array as an argument:
+// 0: function(200)
+// 1: function(450)
+// 2: function(-400)
+// ...
+// in fact forEach passes in the current element, index and entire array that we are looping
+// the order does matter: current element, index, array
+movements.forEach(function (movement, index, array) {
+  if (movement > 0) {
+    console.log(`Movement ${index + 1}: You deposited ${movement}`);
+  } else console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
+});
