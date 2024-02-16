@@ -95,7 +95,7 @@ displayMovements(account1.movements);
 /////////////////////////////////////////////////
 // LECTURES
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
@@ -213,7 +213,6 @@ currenciesSet.forEach(function (value, _, set) {
   console.log(value, _, set);
 });
 
-*/
 
 // Coding Challenge #1
 
@@ -238,3 +237,49 @@ const checkDogs = function (arr1, arr2) {
 };
 checkDogs(dogsJulia, dogsKate);
 checkDogs(dogsJulia1, dogsKate2);
+
+*/
+
+// Array Methods for Data Transformations:
+// create new arrays based on transforming data from other arrays:
+
+// the map method used to loop over arrays, it returns a new array containing the results of applying an operation on all original array elements
+// it maps the values of the original array to a new array
+
+// the filter method used to filter for elements in the original array which satisfy a certain condition
+// it returns a new array containing the array elements that passed a specified condition
+
+// the reduce method boils(reduces) all array elements down to one single value (e.g. adding all elements together), returns value
+
+// the MAP
+
+const eurToUsd = 1.1;
+const movementsUSD = movements.map(function (value) {
+  // in the callback function we need to return the value that we want the new array to have in the current position
+  return value * eurToUsd;
+});
+console.log(movementsUSD);
+
+// simplify with arrow functions
+// .map(value =>)
+
+const movementsUSDfor = [];
+for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
+console.log(movementsUSDfor);
+
+const movementsDescriptions = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+      mov
+    )}`
+);
+// ({
+// it's completely acceptable to have two return statements or even more as long as only one of them is executed:
+// if (mov > 0) {
+//   return `Movement ${i + 1}: You deposited ${mov}`;
+// } else {
+//   return `Movement ${i + 1}: You withdrew ${Math.abs(mov)}`;
+// }
+// })
+
+console.log(movementsDescriptions);
