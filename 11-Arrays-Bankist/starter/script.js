@@ -123,11 +123,11 @@ console.log(arr); // extracted elements are gone
 // Delete elements from the array using splice:
 arr.splice(-1);
 console.log(arr);
-
 // second parameter is called deleteCount:
 // arr.splice(1, 2); number of elements we want to delete
 
 // REVERSE:
+// mutates the original array
 arr = ['a', 'b', 'c', 'd', 'e'];
 const arr2 = ['j', 'i', 'h', 'g', 'f'];
 console.log(arr2.reverse());
@@ -214,3 +214,27 @@ currenciesSet.forEach(function (value, _, set) {
 });
 
 */
+
+// Coding Challenge #1
+
+// Data 1
+const dogsJulia = [3, 5, 2, 12, 7];
+const dogsKate = [4, 1, 15, 8, 3];
+// Data 2
+const dogsJulia1 = [9, 16, 6, 8, 3];
+const dogsKate2 = [10, 5, 6, 1, 4];
+
+const checkDogs = function (arr1, arr2) {
+  const arrCopy = arr1.slice(1, -2);
+  // const arrCorrect = arr1.slice()
+  // arrCorrect.splice(0,1)
+  // arrCorrect.splice(-2);
+  const arrConcat = arrCopy.concat(arr2);
+  arrConcat.forEach(function (val, i) {
+    typeof val === 'number' && val >= 3
+      ? console.log(`Dog number ${i + 1} is an adult, and is ${val} years old`)
+      : console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+  });
+};
+checkDogs(dogsJulia, dogsKate);
+checkDogs(dogsJulia1, dogsKate2);
