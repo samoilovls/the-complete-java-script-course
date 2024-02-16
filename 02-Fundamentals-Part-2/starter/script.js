@@ -56,10 +56,12 @@ const age2 = calcAge2(1991);
 console.log(age2);
 
 // Arrow Function:
+// return happens implicitly
 const calcAge3 = birthYear => 2037 - birthYear;
 const age3 = calcAge3(1991);
 console.log(age3);
 
+// we need to return explicitly if there more than one line of code
 const yearsUntilRetirement = (birthYear, firstName) => {
     const age = 2037 - birthYear;
     const retirement = 65 - age;
