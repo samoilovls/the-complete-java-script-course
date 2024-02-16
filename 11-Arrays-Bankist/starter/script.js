@@ -61,6 +61,36 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Creating DOM elements:
+
+const displayMovements = function (movements) {
+  // innerHTML property
+  // empty the entire container:
+  // similar to textContent, the difference is that textContent returns the text itself, while innerHTML returns everything, including the HTML
+  // containerMovements.textContent = '';
+  containerMovements.innerHTML = '';
+
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    // creating HTML templates:
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+        <div class="movements__value">${mov}</div>
+      </div>
+    `;
+
+    // insertAdjacentHTML method
+    // adding HTML onto webpage, attach HTML into container:
+    // accepts two strings, the first is the position, second is element:
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+displayMovements(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -157,7 +187,6 @@ movements.forEach(function (movement, index, array) {
   } else console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
 });
 
-*/
 
 // forEach With Maps and Sets
 
@@ -183,3 +212,5 @@ console.log(currenciesSet);
 currenciesSet.forEach(function (value, _, set) {
   console.log(value, _, set);
 });
+
+*/
