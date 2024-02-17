@@ -364,3 +364,19 @@ for (const movement of movements) {
 console.log(sum);
 
 */
+
+// Maximum value:
+// accumulator is the value resulting from the previous call to callbackFn. On the first call, its value is initialValue if the latter is specified; otherwise its value is array[0].
+// currentValue is the value of the current element. On the first call, its value is array[0] if initialValue is specified; otherwise its value is array[1].
+// initialValue is a value to which accumulator is initialized the first time the callback is called. If initialValue is specified, callbackFn starts executing with the first value in the array as currentValue. If initialValue is not specified, accumulator is initialized to the first value in the array, and callbackFn starts executing with the second value in the array as currentValue.
+const max = movements.reduce(function (acc, mov) {
+  // console.log(acc);
+  // if (acc < mov) return mov;
+  // else return acc;
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(max);
+
+const maxModified = movements.reduce((acc, mov) => (acc > mov ? acc : mov));
+console.log(maxModified);
