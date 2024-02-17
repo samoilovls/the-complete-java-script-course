@@ -363,7 +363,6 @@ for (const movement of movements) {
 }
 console.log(sum);
 
-*/
 
 // Maximum value:
 // accumulator is the value resulting from the previous call to callbackFn. On the first call, its value is initialValue if the latter is specified; otherwise its value is array[0].
@@ -380,3 +379,41 @@ console.log(max);
 
 const maxModified = movements.reduce((acc, mov) => (acc > mov ? acc : mov));
 console.log(maxModified);
+
+*/
+
+// Coding Challenge #2
+
+const calcAverageHumanAge = function (ages) {
+  const average = ages
+    .map(age => (age > 2 ? 16 + age * 4 : 2 * age))
+    .filter(age => age >= 18)
+    .reduce((acc, age, _, arr) =>
+      age === arr.at(-1) ? (acc + age) / arr.length : acc + age
+    );
+  // complex way of average calculation
+  // 2 3. (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
+  // .reduce((acc, age, _, arr) => acc + age / arr.length, 0);
+
+  return average;
+};
+
+const averageJulia = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+const averageKate = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+console.log(averageJulia, averageKate);
+
+const calcAverageHumanAge2 = function (ages) {
+  const average = ages
+    .map(age => (age > 2 ? 16 + age * 4 : 2 * age))
+    .filter(age => age >= 18)
+    .reduce((acc, age, _, arr) => acc + age / arr.length, 0);
+
+  // 2 3. (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
+  // .reduce((acc, age, _, arr) => acc + age / arr.length, 0);
+
+  return average;
+};
+
+const average2 = calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]);
+const average3 = calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]);
+console.log(average2, average3);
