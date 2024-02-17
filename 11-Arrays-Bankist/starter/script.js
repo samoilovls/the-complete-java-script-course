@@ -91,6 +91,41 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+// Computing Usernames:
+
+const createUsernames = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(letter => letter[0])
+      .join('');
+  });
+};
+
+createUsernames(accounts);
+
+/*
+const createUsernames = function (user) {
+  const username = user
+    .toLowerCase()
+    .split(' ')
+    .map(letter => letter.slice(0, 1))
+    .join('');
+  return username;
+};
+
+console.log(createUsernames('Steven Thomas Williams'));
+
+const user = 'Steven Thomas Williams'; // stw
+const username = user
+  .toLowerCase()
+  .split(' ')
+  .map(letter => letter.slice(0, 1)) // letter => letter[0]
+  .join('');
+console.log(username);
+*/
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -238,7 +273,6 @@ const checkDogs = function (arr1, arr2) {
 checkDogs(dogsJulia, dogsKate);
 checkDogs(dogsJulia1, dogsKate2);
 
-*/
 
 // Array Methods for Data Transformations:
 // create new arrays based on transforming data from other arrays:
@@ -283,3 +317,5 @@ const movementsDescriptions = movements.map(
 // })
 
 console.log(movementsDescriptions);
+
+*/
