@@ -91,6 +91,15 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+// Calculate and Display the Balance:
+
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcDisplayBalance(account1.movements);
+
 // Computing Usernames:
 
 const createUsernames = function (accs) {
@@ -319,7 +328,6 @@ const movementsDescriptions = movements.map(
 
 console.log(movementsDescriptions);
 
-*/
 // the FILTER
 
 const deposits = movements.filter(function (value, i, arr) {
@@ -354,3 +362,5 @@ for (const movement of movements) {
   sum += movement;
 }
 console.log(sum);
+
+*/
