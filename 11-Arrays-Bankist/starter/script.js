@@ -216,10 +216,10 @@ for (const [index, movement] of movements.entries()) {
 // ...
 // in fact forEach passes in the current element, index and entire array that we are looping
 // the order does matter: current element, index, array
-movements.forEach(function (movement, index, array) {
-  if (movement > 0) {
-    console.log(`Movement ${index + 1}: You deposited ${movement}`);
-  } else console.log(`Movement ${index + 1}: You withdrew ${Math.abs(movement)}`);
+movements.forEach(function (element, index, array) {
+  if (element > 0) {
+    console.log(`Movement ${index + 1}: You deposited ${element}`);
+  } else console.log(`Movement ${index + 1}: You withdrew ${Math.abs(element)}`);
 });
 
 
@@ -244,6 +244,7 @@ console.log(currenciesArr);
 
 const currenciesSet = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']); // we need to pass an Iterable
 console.log(currenciesSet);
+
 currenciesSet.forEach(function (value, _, set) {
   console.log(value, _, set);
 });
@@ -319,3 +320,37 @@ const movementsDescriptions = movements.map(
 console.log(movementsDescriptions);
 
 */
+// the FILTER
+
+const deposits = movements.filter(function (value, i, arr) {
+  // return a boolean value
+  return value > 0;
+});
+console.log(deposits);
+
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+
+console.log(depositsFor);
+
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
+
+// the REDUCE
+// the second parameter of the reduce method is the initial value of the accumulator in the first loop iteration
+// In the callback function the first parameter is the accumulator
+
+// const balance = movements.reduce(function (accumulator, value, i, arr) {
+//   // return = updated accumulator
+//   return accumulator + value;
+// }, 0);
+// console.log(balance);
+
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+
+let sum = 0;
+for (const movement of movements) {
+  sum += movement;
+}
+console.log(sum);
