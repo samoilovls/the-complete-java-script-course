@@ -319,7 +319,7 @@ checkDogs(dogsJulia1, dogsKate2);
 
 // the reduce method boils(reduces) all array elements down to one single value (e.g. adding all elements together), returns value
 
-// the MAP
+////// the MAP //////
 
 const eurToUsd = 1.1;
 const movementsUSD = movements.map(function (value) {
@@ -352,7 +352,7 @@ const movementsDescriptions = movements.map(
 
 console.log(movementsDescriptions);
 
-// the FILTER
+////// the FILTER //////
 
 const deposits = movements.filter(function (value, i, arr) {
   // return a boolean value
@@ -368,7 +368,7 @@ console.log(depositsFor);
 const withdrawals = movements.filter(mov => mov < 0);
 console.log(withdrawals);
 
-// the REDUCE
+////// the REDUCE //////
 // the second parameter of the reduce method is the initial value of the accumulator in the first loop iteration
 // In the callback function the first parameter is the accumulator
 
@@ -458,7 +458,6 @@ const totalDepositsUSD = movements
   .reduce((acc, mov) => acc + mov);
 console.log(totalDepositsUSD);
 
-*/
 
 // Coding Challenge #3
 
@@ -471,3 +470,19 @@ const calcAverageHumanAgeArrow = ages =>
 const average2 = calcAverageHumanAgeArrow([5, 2, 4, 1, 15, 8, 3]);
 const average3 = calcAverageHumanAgeArrow([16, 6, 10, 5, 6, 1, 4]);
 console.log(average2, average3);
+
+*/
+
+////// the FIND //////
+// retrieve one element of an array based on a condition
+// return the first element in the array that satisfies a condition
+// return value
+// the find method needs a callback function returns a boolean
+
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
