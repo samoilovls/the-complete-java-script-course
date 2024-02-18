@@ -89,7 +89,7 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 // Calculate and Display the Balance:
 
@@ -97,32 +97,32 @@ const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance}€`;
 };
-calcDisplayBalance(account1.movements);
+// calcDisplayBalance(account1.movements);
 
 // Calculate and Display Statistics:
 
-const calcDisplaySummary = function (movements) {
+const calcDisplaySummary = function (account) {
   // All Deposits (incomes)
-  const incomes = movements
+  const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = `${incomes}€`;
   // All Withdrawals (outcomes)
-  const outcomes = movements
+  const outcomes = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   // .reduce((acc, mov) => acc - mov, 0); without minus sign
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
   // An Interest
   // const interest = (incomes * 1.2) / 100;
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
 
 // Computing Usernames:
 
@@ -135,8 +135,40 @@ const createUsernames = function (accs) {
       .join('');
   });
 };
-
 createUsernames(accounts);
+
+// Implementing Login:
+// Event handler
+let currentAccount;
+
+// In forms: whenever we hit enter in the field, a click event on the button automatically triggered
+// when we click on the button, the page reload, because this is the button in a form element. In HTML the default behavior, when we click the Submit button, is for the page to reload
+// we need to stop that from happening and for that, we need to give this function the EVENT PARAMETER:
+btnLogin.addEventListener('click', function (e) {
+  // Prevent form from submitting:
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = 100;
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur(); // makes field lose its focus
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+});
 
 /*
 const createUsernames = function (user) {
@@ -471,7 +503,6 @@ const average2 = calcAverageHumanAgeArrow([5, 2, 4, 1, 15, 8, 3]);
 const average3 = calcAverageHumanAgeArrow([16, 6, 10, 5, 6, 1, 4]);
 console.log(average2, average3);
 
-*/
 
 ////// the FIND //////
 // retrieve one element of an array based on a condition
@@ -486,3 +517,5 @@ console.log(accounts);
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+
+*/
