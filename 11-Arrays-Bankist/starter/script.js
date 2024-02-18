@@ -441,7 +441,6 @@ const average2 = calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]);
 const average3 = calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]);
 console.log(average2, average3);
 
-*/
 
 // Chaining Methods:
 
@@ -458,3 +457,17 @@ const totalDepositsUSD = movements
   // .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov);
 console.log(totalDepositsUSD);
+
+*/
+
+// Coding Challenge #3
+
+const calcAverageHumanAgeArrow = ages =>
+  ages
+    .map(age => (age > 2 ? 16 + age * 4 : 2 * age))
+    .filter(age => age >= 18)
+    .reduce((acc, age, _, arr) => acc + age / arr.length, 0);
+
+const average2 = calcAverageHumanAgeArrow([5, 2, 4, 1, 15, 8, 3]);
+const average3 = calcAverageHumanAgeArrow([16, 6, 10, 5, 6, 1, 4]);
+console.log(average2, average3);
