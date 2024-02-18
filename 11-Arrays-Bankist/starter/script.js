@@ -79,7 +79,7 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">${mov}€</div>
       </div>
     `;
 
@@ -95,10 +95,34 @@ displayMovements(account1.movements);
 
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${balance}€`;
 };
-
 calcDisplayBalance(account1.movements);
+
+// Calculate and Display Statistics:
+
+const calcDisplaySummary = function (movements) {
+  // All Deposits (incomes)
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+  // All Withdrawals (outcomes)
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  // .reduce((acc, mov) => acc - mov, 0); without minus sign
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+  // An Interest
+  // const interest = (incomes * 1.2) / 100;
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 
 // Computing Usernames:
 
@@ -380,7 +404,6 @@ console.log(max);
 const maxModified = movements.reduce((acc, mov) => (acc > mov ? acc : mov));
 console.log(maxModified);
 
-*/
 
 // Coding Challenge #2
 
@@ -417,3 +440,21 @@ const calcAverageHumanAge2 = function (ages) {
 const average2 = calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]);
 const average3 = calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]);
 console.log(average2, average3);
+
+*/
+
+// Chaining Methods:
+
+const eurToUsd = 1.1;
+
+// PIPELINE
+const totalDepositsUSD = movements
+  .filter(dep => dep > 0)
+  // check out the array in each of these steps:
+  .map((mov, i, arr) => {
+    // console.log(arr);
+    return mov * eurToUsd;
+  })
+  // .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov);
+console.log(totalDepositsUSD);
