@@ -601,7 +601,6 @@ console.log(accounts);
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
 
-*/
 
 // some and every:
 // return boolean
@@ -624,3 +623,32 @@ const deposit = mov => mov > 0;
 console.log(movements.some(deposit));
 console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
+
+*/
+
+// flat and flatMap:
+
+// nested array
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat()); // removed the nested arrays and flattened the array
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2)); // depth argument
+
+// const accountMovements = accounts.map(acc => acc.movements);
+// const allMovements = accountMovements.flat();
+// const overallBalance = allMovements.reduce((acc, mov) => acc + mov);
+
+// flat
+const overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((ac, mov) => ac + mov);
+console.log(overallBalance);
+
+// flatMap
+// only goes one level deep
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((ac, mov) => ac + mov);
+console.log(overallBalance2);
