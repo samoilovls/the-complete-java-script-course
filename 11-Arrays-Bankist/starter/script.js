@@ -163,8 +163,10 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
-// Implementing Login:
-// Event handler
+///////////////////////////////////////
+// Event handlers
+
+// Implementing Login
 let currentAccount;
 
 // In forms: whenever we hit enter in the field, a click event on the button automatically triggered
@@ -226,6 +228,31 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movements.push(amount);
     updateUI(currentAccount);
   }
+});
+
+// Close account
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    // findIndex is similar to find, but returns the index:
+    const index = accounts.findIndex(
+      acc => acc.username === inputCloseUsername.value
+    );
+    // console.log(index);
+
+    // Delete account
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  // Clear input fields
+  inputCloseUsername.value = inputClosePin.value = '';
+  inputLoginPin.blur();
 });
 
 /////////////////////////////////////////////////
