@@ -63,14 +63,17 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // Creating DOM elements:
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   // innerHTML property
   // empty the entire container:
   // similar to textContent, the difference is that textContent returns the text itself, while innerHTML returns everything, including the HTML
   // containerMovements.textContent = '';
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  // movements displayed from the bottom up
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     // creating HTML templates:
@@ -272,6 +275,13 @@ btnClose.addEventListener('click', function (e) {
   // Clear input fields
   inputCloseUsername.value = inputClosePin.value = '';
   inputLoginPin.blur();
+});
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -624,7 +634,6 @@ console.log(movements.some(deposit));
 console.log(movements.every(deposit));
 console.log(movements.filter(deposit));
 
-*/
 
 // flat and flatMap:
 
@@ -652,3 +661,34 @@ const overallBalance2 = accounts
   .flatMap(acc => acc.movements)
   .reduce((ac, mov) => ac + mov);
 console.log(overallBalance2);
+
+*/
+
+// Sorting Arrays:
+
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort()); // mutates array
+console.log(owners);
+
+// With Numbers
+
+// Sort in ascending order: small ---> large
+// a is the current value, b is the next value
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch order)
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// Sort in descending order: large ---> small
+movements.sort((a, b) => {
+  if (a > b) return -1;
+  if (a < b) return 1;
+});
+movements.sort((a, b) => b - a);
+
+console.log(movements);
