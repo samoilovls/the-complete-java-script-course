@@ -92,15 +92,13 @@ const displayMovements = function (movements) {
 // displayMovements(account1.movements);
 
 // Calculate and Display the Balance:
-
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (account) {
+  account.balance = account.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${account.balance}€`;
 };
 // calcDisplayBalance(account1.movements);
 
 // Calculate and Display Statistics:
-
 const calcDisplaySummary = function (account) {
   // All Deposits (incomes)
   const incomes = account.movements
@@ -126,8 +124,8 @@ const calcDisplaySummary = function (account) {
 
 // Computing Usernames:
 
-const createUsernames = function (accs) {
-  accs.forEach(acc => {
+const createUsernames = function (accts) {
+  accts.forEach(acc => {
     acc.username = acc.owner
       .toLowerCase()
       .split(' ')
@@ -136,6 +134,34 @@ const createUsernames = function (accs) {
   });
 };
 createUsernames(accounts);
+
+/*
+const createUsernames = function (user) {
+  const username = user
+    .toLowerCase()
+    .split(' ')
+    .map(letter => letter.slice(0, 1))
+    .join('');
+  return username;
+};
+
+console.log(createUsernames('Steven Thomas Williams'));
+
+const user = 'Steven Thomas Williams'; // stw
+const username = user
+  .toLowerCase()
+  .split(' ')
+  .map(letter => letter.slice(0, 1)) // letter => letter[0]
+  .join('');
+console.log(username);
+*/
+
+// Display UI:
+const updateUI = function (acc) {
+  displayMovements(acc.movements);
+  calcDisplayBalance(acc);
+  calcDisplaySummary(acc);
+};
 
 // Implementing Login:
 // Event handler
@@ -158,38 +184,49 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 100;
+
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur(); // makes field lose its focus
+
     // Display movements
-    displayMovements(currentAccount.movements);
+    // displayMovements(currentAccount.movements);
     // Display balance
-    calcDisplayBalance(currentAccount.movements);
+    // calcDisplayBalance(currentAccount);
     // Display summary
-    calcDisplaySummary(currentAccount);
+    // calcDisplaySummary(currentAccount);
+
+    // Update UI
+    updateUI(currentAccount);
   }
 });
 
-/*
-const createUsernames = function (user) {
-  const username = user
-    .toLowerCase()
-    .split(' ')
-    .map(letter => letter.slice(0, 1))
-    .join('');
-  return username;
-};
+// Implementing Transfers
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  console.log(amount, receiverAcc);
 
-console.log(createUsernames('Steven Thomas Williams'));
+  // Clear input fields
+  inputTransferTo.value = inputTransferAmount.value = '';
+  inputLoginPin.blur();
 
-const user = 'Steven Thomas Williams'; // stw
-const username = user
-  .toLowerCase()
-  .split(' ')
-  .map(letter => letter.slice(0, 1)) // letter => letter[0]
-  .join('');
-console.log(username);
-*/
+  if (
+    amount > 0 &&
+    currentAccount.balance >= amount &&
+    receiverAcc &&
+    currentAccount !== receiverAcc
+    // && receiverAcc?.username !== currentAccount.username
+  ) {
+    console.log('Transfer valid');
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    updateUI(currentAccount);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
