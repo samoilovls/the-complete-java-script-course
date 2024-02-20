@@ -662,7 +662,6 @@ const overallBalance2 = accounts
   .reduce((ac, mov) => ac + mov);
 console.log(overallBalance2);
 
-*/
 
 // Sorting Arrays:
 
@@ -685,10 +684,55 @@ movements.sort((a, b) => a - b);
 console.log(movements);
 
 // Sort in descending order: large ---> small
-movements.sort((a, b) => {
-  if (a > b) return -1;
-  if (a < b) return 1;
-});
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
 movements.sort((a, b) => b - a);
 
 console.log(movements);
+
+*/
+
+// Ways of Creating and Filling Arrays:
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// Generate arrays programmatically:
+
+// Array constructor function
+const x = new Array(7); // creates a new array with seven empty elements [empty × 7], whenever we only pass in one argument, it creates a new empty argument with that length
+console.log(x);
+// console.log(x.map(() => 5)); does not work
+
+// We can call the FILL method on this empty array:
+x.fill(1); // mutates the underlying array
+console.log(x);
+// besides the value that we want to fill the array with, we can specify where we want it to start to fill
+const x1 = new Array(7);
+x1.fill(1, 3, 5); // begin parameter: at index 3, end parameter: 5 the final index is not included like in a slice()
+console.log(x1);
+
+arr.fill(23, 2, 6);
+console.log(arr);
+
+// Array.from()
+// we are using method on the Array() constructor, on function object
+// second argument is a mapping callback function
+const y = Array.from({ length: 7 }, () => 1); // put a one in each of the array positions
+console.log(y);
+
+const z = Array.from({ length: 7 }, (currentElement, index) => index + 1);
+console.log(z);
+// Array like structures: querySelectorAll() returns NodeList, iterables to arrays:
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  // movementsUI.map(el => Number(el.textContent.replace('€', '')));
+  console.log(movementsUI);
+
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+});
