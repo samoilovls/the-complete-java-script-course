@@ -736,7 +736,6 @@ labelBalance.addEventListener('click', function () {
   const movementsUI2 = [...document.querySelectorAll('.movements__value')];
 });
 
-*/
 
 // Array Methods Practice
 
@@ -830,3 +829,94 @@ console.log(convertTitleCase('this is a LONG title but not too long'));
 console.log(
   convertTitleCase('and here is another title with an EXAMPLE and one more')
 );
+
+*/
+
+// Coding Challenge #4
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+// 1.
+dogs.forEach(dog => {
+  dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
+});
+console.log(dogs);
+
+// 2.
+const sarahDog = dogs.find(dog => dog.owners.includes('Sarah'));
+console.log(
+  `Sarah's dog is eating too ${
+    sarahDog.curFood > sarahDog.recommendedFood ? 'much' : 'little'
+  }`
+);
+
+const sarDog = dogs.reduce(
+  (acc, dog) =>
+    dog.owners.includes('Sarah')
+      ? `Sarah's dog is eating too ${
+          dog.curFood > dog.recommendedFood ? 'much' : 'little'
+        }`
+      : acc,
+  0
+);
+console.log(sarDog);
+
+// 3.
+const ownersEatTooMuch = dogs.reduce((acc, dog) => {
+  dog.curFood > dog.recommendedFood && acc.push(dog.owners);
+  return acc.flat();
+}, []);
+console.log(ownersEatTooMuch);
+
+const ownersEatTooLittle = dogs
+  .filter(dog => dog.curFood < dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+
+// 4.
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little`);
+
+// 5.
+console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
+
+// 6.
+console.log(
+  dogs.some(
+    dog =>
+      // (dog.curFood >= dog.recommendedFood - dog.recommendedFood * 0, 1) &&
+      // (dog.curFood <= dog.recommendedFood + dog.recommendedFood * 0, 1)
+      dog.curFood >= dog.recommendedFood * 0.9 && // 100% - 10% = 90%
+      dog.curFood <= dog.recommendedFood * 1.1 // 100% + 10% = 110%
+  )
+);
+// recPor - 10% =< dog.cur =< recPor + 10%
+
+// 7.
+
+const eatingOKre = dogs.reduce((acc, dog) => {
+  dog.curFood >= dog.recommendedFood * 0.9 &&
+    dog.curFood <= dog.recommendedFood * 1.1 &&
+    acc.push(dog);
+  return acc;
+}, []);
+console.log(eatingOKre);
+
+const checkEatingOK = dog =>
+  dog.curFood >= dog.recommendedFood * 0.9 &&
+  dog.curFood <= dog.recommendedFood * 1.1;
+
+const eatingOK = dogs.filter(checkEatingOK);
+console.log(eatingOK);
+
+// 8.
+
+const dogsCopy = dogs
+  .slice()
+  .sort((a, b) => a.recommendedFood - b.recommendedFood);
+console.log(dogsCopy);
