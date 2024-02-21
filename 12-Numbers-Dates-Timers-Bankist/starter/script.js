@@ -164,7 +164,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -223,7 +223,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -251,3 +251,45 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// Numbers:
+// all numbers are represented internally as floating point numbers
+// always as decimals
+console.log(23 === 23.0); // true
+// also, numbers are represented internally in a 64 base 2 format, means that numbers are always stored in a binary format: composed of zeros and ones.
+// Base 10 - 0 to 9
+// Binary is base 2 - 0 1
+// In binary form it is hard to represent some fractions:
+console.log(0.1 + 0.2); // 0.30000000000000004
+console.log(0.1 + 0.2 === 0.3); // false
+
+// convert string to a number:
+console.log(Number('23'));
+console.log(+'23'); // plus operator
+
+// Parsing
+// parseInt with integers
+// parseInt accepts a second argument, which is regex. The regex is the base of the numeral system we are using.
+console.log(Number.parseInt('30px', 10)); // string needs to start with a number
+// parseFloat for floating point numbers
+console.log(Number.parseFloat('2.5rem')); // 2.5
+console.log(Number.parseInt('2.5rem')); // 2
+
+// These are global functions, we do not have to call them on Number, but this is the more traditional and old-school way of doing it.
+// console.log(parseFloat('2.5rem')); also works
+// In modern JS it is more encouraged to call these functions on the Number object. Number provides a namespace.
+
+// Check if any value is Not a Number (NaN)
+console.log(Number.isNaN(+'20X')); // true
+console.log(Number.isNaN(20)); // false
+console.log(Number.isNaN('20')); // false
+console.log(Number.isNaN(23 / 0)); // infinity is not a Nan - false
+
+// Check if any value is a number (with floating point numbers)
+console.log(Number.isFinite(20)); // true
+console.log(Number.isFinite('20')); // false
+console.log(Number.isFinite(+'20X')); // false
+console.log(Number.isFinite(23 / 0)); // false
+
+// Check for integer:
+console.log(Number.isInteger(20)); //true
