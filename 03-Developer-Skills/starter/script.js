@@ -45,7 +45,7 @@ Array.prototype.max = function () {
 };
 
 Array.prototype.min = function () {
-  //   return Math.min(...);
+  return Math.min(...this);
   //   return Math.min.apply(null, this);
 };
 
