@@ -94,7 +94,7 @@ const displayMovements = function (movements, sort = false) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -104,19 +104,19 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +126,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = +inputLoanAmount.value;
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -252,6 +252,8 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
+/*
+
 // Numbers:
 // all numbers are represented internally as floating point numbers
 // always as decimals
@@ -292,4 +294,58 @@ console.log(Number.isFinite(+'20X')); // false
 console.log(Number.isFinite(23 / 0)); // false
 
 // Check for integer:
-console.log(Number.isInteger(20)); //true
+console.log(Number.isInteger(20)); // true
+
+*/
+
+// Math and Rounding:
+
+// Square root
+console.log(Math.sqrt(25));
+console.log(25 ** (1 / 2));
+// Cubic root
+console.log(8 ** (1 / 3));
+
+// Get the max value, does type coercion
+console.log(Math.max(5, 18, 23, 11, 2));
+console.log(Math.max(5, 18, '23', 11, 2));
+// Get the min value
+console.log(Math.min(5, 18, 23, 11, 2));
+
+// There are also constants on the Math object/namespace:
+// calculate the area of a circle
+console.log(Math.PI * Number.parseFloat('10px') ** 2);
+
+// random fn
+console.log(Math.trunc(Math.random() * 6) + 1);
+
+/////////////////////////////////////
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1) + min;
+// 0...1 -> 0...(max - min) -> min...(max - min + min)
+console.log(randomInt(-10, -5)); // NOT REALLY WORK
+/////////////////////////////////////
+
+// Rounding integers
+// do type coercion
+console.log(Math.trunc(23.3)); // remove decimal part
+// Round:
+console.log(Math.round(23.3)); // 23
+console.log(Math.round(23.5)); // 24
+// Round up:
+console.log(Math.ceil(23.3)); // 24
+console.log(Math.ceil(23.5)); // 24
+// Round down:
+console.log(Math.floor(23.3)); // 23
+console.log(Math.floor(23.5)); // 23
+
+// trunc and floor with negative numbers
+console.log(Math.trunc(-23.3)); // -23
+console.log(Math.floor(-23.3)); // -24
+
+// Rounding decimals
+// toFixed returns string, works because of boxing: JS transforms primitive to a number object and back
+console.log((2.7).toFixed(0)); // 3
+console.log((2.7).toFixed(3)); // 2.700
+console.log((2.345).toFixed(2)); // 2.35
+console.log(+(2.345).toFixed(2)); // convert to number
