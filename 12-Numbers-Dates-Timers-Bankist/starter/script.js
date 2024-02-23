@@ -384,7 +384,6 @@ labelBalance.addEventListener('click', function () {
   });
 });
 
-*/
 
 // Numeric Separators
 
@@ -403,3 +402,37 @@ const PI = 3.1415; // _3_._14__15_ not allowed
 // converting strings with underscores to numbers does not work
 console.log(Number('230_000')); // NaN
 console.log(parseInt('230_000')); // only 230
+
+*/
+
+// BigInt from ES2020
+// all numbers are represented internally as 64 bits
+// of these 64 bits only 53 are used to store the digits themselves, the rest are for storing the position of the decimal point and the sign
+// if there are only 53 bits to store the number, there is a limit of how big numbers can be:
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+
+console.log(4838430248342043823408394839483204n);
+console.log(BigInt(48384302)); // used with small numbers
+
+// Operations
+console.log(10000n + 10000n);
+console.log(38423423048038348984093834830483904n * 100000000000000n);
+// Math operations are not gonna work:
+// console.log(Math.sqrt(16n));
+// Not possible to mix BigInt with regular numbers
+const huge = 20283949349348938493849n;
+const num = 23;
+console.log(huge * BigInt(num));
+
+// Exceptions:
+// comparison operators
+console.log(20n > 15); // still works
+console.log(20n === 20); // not works, JS does not do type coercion
+console.log(20n == 20); // does type coercion
+// the plus operator with strings, string concatenations
+console.log(huge + ' is really big ');
+
+// Divisions
+console.log(10n / 3n); // 3n
+console.log(10 / 3);
