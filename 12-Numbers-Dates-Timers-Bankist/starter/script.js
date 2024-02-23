@@ -403,7 +403,6 @@ const PI = 3.1415; // _3_._14__15_ not allowed
 console.log(Number('230_000')); // NaN
 console.log(parseInt('230_000')); // only 230
 
-*/
 
 // BigInt from ES2020
 // all numbers are represented internally as 64 bits
@@ -436,3 +435,43 @@ console.log(huge + ' is really big ');
 // Divisions
 console.log(10n / 3n); // 3n
 console.log(10 / 3);
+
+*/
+
+// Dates and times:
+
+// Create a data
+// new date constructor
+const now = new Date();
+console.log(now);
+// parse from a date string
+console.log(new Date('Feb 23 2024 15:15:00'));
+console.log(new Date('December 24, 2015')); // can be quite unreliable
+console.log(new Date(account1.movementsDates[0]));
+
+console.log(new Date(2037, 10, 19, 15, 23, 5)); // the month is zero based => 10 is november
+console.log(new Date(2037, 10, 31)); // autocorrects the day
+
+// we can pass the amount of milliseconds passed since the beginning of the Unix time, January 1, 1970
+console.log(new Date(0));
+// 3 days after
+console.log(new Date(3 * 24 * 60 * 60 * 1000)); // timestamp
+
+// Working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear());
+console.log(future.getMonth()); // zero based
+console.log(future.getDate()); // Day of the month
+console.log(future.getDay()); // Day of the week
+console.log(future.getHours());
+console.log(future.getMinutes());
+console.log(future.getSeconds());
+console.log(future.toISOString());
+console.log(future.getTime()); // timestamp is the milliseconds have passed since Jan 1 1970
+console.log(new Date(2142246180000));
+console.log(Date.now()); // current timestamp
+
+// Set versions
+future.setFullYear(2040);
+console.log(future);
