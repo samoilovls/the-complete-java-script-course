@@ -296,7 +296,6 @@ console.log(Number.isFinite(23 / 0)); // false
 // Check for integer:
 console.log(Number.isInteger(20)); // true
 
-*/
 
 // Math and Rounding:
 
@@ -349,3 +348,40 @@ console.log((2.7).toFixed(0)); // 3
 console.log((2.7).toFixed(3)); // 2.700
 console.log((2.345).toFixed(2)); // 2.35
 console.log(+(2.345).toFixed(2)); // convert to number
+
+
+// Remainder Operator:
+// returns the remainder of a division
+console.log(5 % 2); // 1
+console.log(5 / 2); // 5 = 2 * 2 + 1
+
+console.log(8 % 3); // 2
+console.log(8 / 3); // 8 = 2 * 3 + 1
+
+// Check whether a certain number is even or odd
+console.log(6 % 2); // 0 => even
+console.log(6 / 2); // 6 = 3 * 2
+
+console.log(7 % 2); // 1 => odd
+console.log(7 / 2); // 7 = 3 * 2 + 1
+
+const isEven = n => n % 2 === 0;
+console.log(isEven(8)); // true
+console.log(isEven(23)); // false
+console.log(isEven(514)); // true
+
+// Check if any number is divisible by any other number
+// whenever the results of the remainder operator is zero, the first number is completely divisible by the second one.
+
+//////////////////////////////////////////
+// every Nth time
+labelBalance.addEventListener('click', function () {
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    // color every second row of the movements 0,2,4,6
+    if (i % 2 === 0) row.style.backgroundColor = 'orange';
+    // color every third 0,3,6
+    if (i % 3 === 0) row.style.backgroundColor = 'brown';
+  });
+});
+
+*/
