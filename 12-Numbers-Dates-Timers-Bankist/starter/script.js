@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2024-02-17T17:01:17.194Z',
+    '2024-02-20T23:36:17.929Z',
+    '2024-02-23T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -81,6 +81,25 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
+// Adding Dates
+const formatMovementDate = function (date) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+  console.log(daysPassed);
+
+  if (daysPassed === 0) return 'today';
+  if (daysPassed === 1) return 'yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  else {
+    const day = `${date.getDate()}`.padStart(2, '0');
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+};
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -92,10 +111,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    const day = `${date.getDate()}`.padStart(2, '0');
-    const month = `${date.getMonth() + 1}`.padStart(2, '0');
-    const year = date.getFullYear();
-    const displayDate = `${day}/${month}/${year}`;
+    const displayDate = formatMovementDate(date);
 
     const html = `
       <div class="movements__row">
@@ -168,8 +184,6 @@ let currentAccount;
 currentAccount = account1;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
-
-// Adding Dates
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -472,7 +486,7 @@ console.log(10 / 3);
 
 // Dates and times:
 
-// Create a data
+// Create a date
 // new date constructor
 const now = new Date(); // object
 console.log(now);
@@ -509,3 +523,18 @@ future.setFullYear(2040);
 console.log(future);
 
 */
+
+// Operations with dates
+
+// calculations
+// whenever we attempt to convert a date to a number, the result is going to be the timestamp in milliseconds
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(+future);
+console.log(future);
+
+const calcDaysPassed = (date1, date2) =>
+  Math.abs(date2 - date1) / 1000 / 60 / 60 / 24;
+const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 4));
+console.log(days1);
+
+// if we need really precise calculations, we should use a date library like moment.js
