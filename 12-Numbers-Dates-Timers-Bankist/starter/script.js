@@ -292,14 +292,17 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    // Add timer
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add loan Date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan Date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -577,7 +580,6 @@ console.log(days1);
 
 // if we need really precise calculations, we should use a date library like moment.js
 
-*/
 
 // Internationalizing numbers
 const num = 3884764.23;
@@ -595,3 +597,31 @@ console.log(
   'Browser:',
   new Intl.NumberFormat(navigator.language, options).format(num)
 );
+
+*/
+
+// Timers:
+
+// setTimeout timer runs just once, after a defined time
+// all the arguments that we pass after the delay will be arguments to the function:
+// setTimeout(
+//   (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
+//   3000,
+//   'olives',
+//   'bacon'
+// );
+const ingredients = ['olives', 'bacon'];
+const orderPizza = setTimeout(
+  (ing1, ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}`),
+  3000,
+  ...ingredients
+);
+console.log('Waiting...');
+// cancel the timer:
+if (ingredients.includes('bacon')) clearTimeout(orderPizza);
+
+// setInterval timer keeps running basically forever, until we stop it
+// setInterval(function () {
+//   const now = new Date();
+//   console.log(now);
+// }, 1000);
