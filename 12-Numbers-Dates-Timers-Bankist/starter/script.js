@@ -101,6 +101,13 @@ const formatMovementDate = function (date, locale) {
   }
 };
 
+const formatCurrency = function (value, locale, cur) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: cur,
+  }).format(value);
+};
+
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -114,13 +121,16 @@ const displayMovements = function (acc, sort = false) {
     const date = new Date(acc.movementsDates[i]);
     const displayDate = formatMovementDate(date, acc.locale);
 
+    // Internationalizing numbers
+    const formattedMov = formatCurrency(mov, acc.locale, acc.currency);
+
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${mov.toFixed(2)}€</div>
+        <div class="movements__value">${formattedMov}</div>
       </div>
     `;
 
@@ -130,19 +140,24 @@ const displayMovements = function (acc, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
+  labelBalance.textContent = formatCurrency(
+    acc.balance,
+    acc.locale,
+    acc.currency
+  );
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = formatCurrency(incomes, acc.locale, acc.currency);
 
-  const out = acc.movements
-    .filter(mov => mov < 0)
-    .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+  const out = acc.movements.reduce(
+    (acc, mov) => (mov < 0 ? acc - mov : acc),
+    0
+  );
+  labelSumOut.textContent = formatCurrency(out, acc.locale, acc.currency);
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -152,7 +167,11 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+  labelSumInterest.textContent = formatCurrency(
+    interest,
+    acc.locale,
+    acc.currency
+  );
 };
 
 const createUsernames = function (accs) {
@@ -542,7 +561,6 @@ console.log(Date.now()); // current timestamp
 future.setFullYear(2040);
 console.log(future);
 
-*/
 
 // Operations with dates
 
@@ -558,3 +576,22 @@ const days1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 4));
 console.log(days1);
 
 // if we need really precise calculations, we should use a date library like moment.js
+
+*/
+
+// Internationalizing numbers
+const num = 3884764.23;
+const options = {
+  style: 'currency', // 'unit' 'percent' 'currency'
+  unit: 'celsius', // 'mile-per-hour'
+  currency: 'EUR', // not determined by the locale
+  // useGrouping: true,
+};
+console.log('US:', new Intl.NumberFormat('en-US', options).format(num));
+console.log('Germany:', new Intl.NumberFormat('de-DE', options).format(num));
+console.log('RU:', new Intl.NumberFormat('ru-RU', options).format(num));
+console.log('PT:', new Intl.NumberFormat('pt-PT', options).format(num));
+console.log(
+  'Browser:',
+  new Intl.NumberFormat(navigator.language, options).format(num)
+);
