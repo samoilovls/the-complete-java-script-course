@@ -196,14 +196,52 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+// Implementing a Countdown Timer:
+const startLogOutTimer = function () {
+  // Set time to 5 min
+  let time = 300;
+  // Call the timer every second
+  const timer = setInterval(timeLabel, 1000);
+
+  function timeLabel() {
+    const min = String(Math.trunc(time / 60)).padStart(2, '0');
+    const sec = String(time % 60).padStart(2, '0');
+    // In each call, print the remaining time to UI
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // It needs to be before we decrease the time to zero
+    if (time === 0) {
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+      clearInterval(timer);
+    }
+
+    // Decrease 1s
+    time && time--;
+  }
+  timeLabel();
+
+  return timer;
+
+  // When 0 seconds, stop timer and log out user
+  // setTimeout(() => {
+  //   if (time === 0) {
+  //     labelWelcome.textContent = 'Log in to get started';
+  //     containerApp.style.opacity = 0;
+  //     clearInterval(timer);
+  //     console.log(time);
+  //   }
+  // }, time * 1000 + 1000);
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // FAKE ALWAYS LOGGED IN
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -254,6 +292,10 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // Timer:
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -283,6 +325,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Reset the Timer:
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -302,6 +348,10 @@ btnLoan.addEventListener('click', function (e) {
 
       // Update UI
       updateUI(currentAccount);
+
+      // Reset the Timer:
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 2500);
   }
   inputLoanAmount.value = '';
@@ -445,7 +495,7 @@ console.log(5 % 2); // 1
 console.log(5 / 2); // 5 = 2 * 2 + 1
 
 console.log(8 % 3); // 2
-console.log(8 / 3); // 8 = 2 * 3 + 1
+console.log(8 / 3); // 8 = 2 * 3 + 2
 
 // Check whether a certain number is even or odd
 console.log(6 % 2); // 0 => even
@@ -598,7 +648,6 @@ console.log(
   new Intl.NumberFormat(navigator.language, options).format(num)
 );
 
-*/
 
 // Timers:
 
@@ -625,3 +674,5 @@ if (ingredients.includes('bacon')) clearTimeout(orderPizza);
 //   const now = new Date();
 //   console.log(now);
 // }, 1000);
+
+*/
