@@ -29,3 +29,61 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+///////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////////
+
+// LECTURES
+
+///////////////////////////////////////
+// Selecting, Creating, and Deleting Elements:
+
+// Selecting elements
+console.log(document.documentElement); // DOM element
+console.log(document.head);
+console.log(document.body);
+
+const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section');
+console.log(allSections);
+document.getElementById('section--1');
+
+// HTMLCollection is a life collection, if the DOM changes then the collection is also immediately updated automatically:
+// The same does not happen with a NodeList, it does not update itself
+const allButtons = document.getElementsByTagName('button');
+console.log(allButtons);
+
+console.log(document.getElementsByClassName('btn'));
+
+// Creating and inserting elements
+// .insertAdjacentHTML
+
+const message = document.createElement('div'); // DOM object
+// It is not yet anywhere in the DOM, but we can do smth on it:
+message.classList.add('cookie-message');
+// message.textContent = 'We use cookies for improved functionality.';
+message.innerHTML =
+  'We use cookies for improved functionality. <button class="btn btn--close-cookie">OK</button>';
+// Now we need to manually insert it into the DOM:
+header.append(message); // adds the element as the last child
+
+// We can use prepend and append methods not only to insert elements, but also to move them, because a DOM element is unique.
+// header.prepend(message); // adds the element as the first child
+
+// If we want to insert multiple copies of the same element, we have to first copy the element:
+// header.append(message.cloneNode(true)); // true means that all the child elements will also be copied
+
+// adds the element as a sibling:
+// header.before(message);
+// header.after(message);
+
+// Delete elements
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    // message.remove();
+    // before the remove method existed we could only remove child elements:
+    // The way of moving up and down in the DOM tree like selecting the parentElement is called DOM traversing:
+    message.parentElement.removeChild(message); // move up in a DOM tree
+  });
