@@ -87,3 +87,18 @@ document
     // The way of moving up and down in the DOM tree like selecting the parentElement is called DOM traversing:
     message.parentElement.removeChild(message); // move up in a DOM tree
   });
+
+// Styles, Attributes and Classes:
+
+// Styles
+// these styles are set as inline styles, directly in the DOM:
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+// reading styles using the style property only works for inline styles that we set ourselves also using the style property:
+console.log(message.style.backgroundColor);
+
+// If we want to get the styles:
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 23 + 'px';
