@@ -35,7 +35,7 @@ document.addEventListener('keydown', function (e) {
 ///////////////////////////////////////
 
 // LECTURES
-
+/*
 ///////////////////////////////////////
 // Selecting, Creating, and Deleting Elements:
 
@@ -139,3 +139,47 @@ console.log(logo.dataset.versionNumber); // camelCase
 
 // Don't use this, because it will override all the existing classes:
 // logo.className = 'jonas'; set a class
+
+*/
+
+// Implementing Smooth Scrolling
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.getElementById('section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  // get the coordinates of the element that we want to scroll to:
+  const s1coords = section1.getBoundingClientRect();
+  console.log('Section1 coordinates:', s1coords);
+  // get rectangle for the button:
+  // e.target is the element that was clicked
+  // getBoundingClientRect() is relative to visible view port
+  console.log('BtnScroll coordinates:', e.target.getBoundingClientRect());
+
+  // get the current scroll position:
+  console.log('Current scroll (X/Y):', window.pageXOffset, window.pageYOffset);
+  // read the height and width of the view port:
+  console.log(
+    'height/width of viewport:',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // Scrolling
+  // first argument is the left position, second one is a top
+  // s1coords.top is relative to the viewport, but not to the document - to the top of the page
+  // the absolute position of the element relative to the document:
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // Old school way:
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  // Modern:
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
