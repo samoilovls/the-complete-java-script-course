@@ -102,3 +102,40 @@ console.log(getComputedStyle(message).color);
 console.log(getComputedStyle(message).height);
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height) + 23 + 'px';
+
+/////////////////////////////////////////
+// CSS custom properties or CSS variables
+
+document.documentElement.style.setProperty('--color-primary', 'yellow');
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+const link = document.querySelector('.nav__link--btn');
+// read
+console.log(logo.alt);
+console.log(logo.className);
+console.log(logo.src); // absolute URL
+console.log(logo.getAttribute('src')); // relative URL
+console.log(link.href);
+console.log(link.getAttribute('href'));
+// set
+logo.alt = 'Minimalistic logo';
+
+// Non-standard
+console.log(logo.designer); // does not work like this
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+// Data attributes
+// are stored in the dataset object
+// use when we need to store data in the user interface, basically in the HTML code
+console.log(logo.dataset.versionNumber); // camelCase
+
+// Classes
+// logo.classList.add('c','j'); can add multiple classes by passing in multiple values
+// logo.classList.remove('c','j');
+// logo.classList.toggle();
+// logo.classList.contains();
+
+// Don't use this, because it will override all the existing classes:
+// logo.className = 'jonas'; set a class
