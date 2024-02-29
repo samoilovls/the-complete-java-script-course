@@ -207,3 +207,49 @@ h1.addEventListener('mouseenter', alertH1);
 // h1.onmouseenter = function () {
 //   alert('onmouseenter');
 // };
+
+// Event Propagation: Bubbling phase and Capturing phase:
+
+// Event is generated at the root of the document.
+// And from there the capturing phase happens, where the event travels all the way down from the document root to the target element, during this the event will pass through every single parent element of the target el.
+// As soon as the event reaches the target, the target phase begins, where events can be handled right at the target. We do that with event listeners: As soon as the event occurs, it runs the attached callback function.
+// After reaching the target, the event travels back to the top, to the document root, in the bubbling phase. Events bubble up from the target to the document root. And just like in the capturing phase, the event passes through all its parent elements.
+// Bubbling phase: It's as if the event also happened in each of the parent elements. As the event bubbles through a parent element, it's as if the event had happened right in that very element. If we attach the same event listener also to the parent element, event will occur for the parent element as well. So, we would have handled the exact same event twice, once at it's target and once at one of it's parent elements.
+// By default events can only be handled in the target and in the bubbling phase. However, we can set up event listeners in a way that they listen to events in the capturing phase instead.
+
+// Not all types of events have a capturing and bubbling phase, some of them are created right on the target element and we can only handle them there.
+
+// Event Propagation in Practice:
+
+// rgb(255,255,255)
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  // target is where the event originated, where the event first happened, this is NOT the element on which the handler is attached.
+  // currentTarget is the element on which the handler is attached.
+  // this points to the element on which the handler is attached to.
+  console.log('LINK:', e.target, e.currentTarget);
+  console.log(e.currentTarget === this);
+
+  // Stop propagation:
+  // e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER:', e.target, e.currentTarget);
+});
+
+document.querySelector('.nav').addEventListener(
+  'click',
+  function (e) {
+    this.style.backgroundColor = randomColor();
+    console.log('NAV:', e.target, e.currentTarget);
+  }
+  // true // use capture parameter
+);
