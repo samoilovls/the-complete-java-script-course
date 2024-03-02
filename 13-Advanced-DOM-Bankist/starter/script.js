@@ -70,6 +70,38 @@ linksContainer.addEventListener('click', function (e) {
 });
 // Important use case of event delegation is when we are working with elements that are not yet on the page on runtime, that are added dynamically while using the application. It's not possible to add event handlers on to elements that do not exist.
 
+// Implementing a Tabbed Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause: more modern way without any additional blocks
+  if (!clicked) return; // prevent null
+
+  // if (clicked) {do smth} more traditional way
+
+  // [...clicked.parentElement.children].forEach(
+  //   el =>
+  //     el.classList.contains('operations__tab--active') &&
+  //     el.classList.remove('operations__tab--active')
+  // );
+
+  // Activate tab
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  const content = document.querySelector(
+    `.operations__content--${clicked.dataset.tab}`
+  );
+
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+  content.classList.add('operations__content--active');
+});
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -295,7 +327,6 @@ document.querySelector('.nav').addEventListener(
   // true // use capture parameter
 );
 
-*/
 
 // DOM Traversing:
 // is walking through the DOM
@@ -318,6 +349,8 @@ console.log(h1.parentElement);
 // selects the closest header to h1 element, the closest parent element that has this class
 // receives a query string like querySelector
 h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// if this selector matches the element on which we're calling closest, it will return that element:
+h1.closest('h1')
 
 // Going sideways: siblings
 console.log(h1.previousElementSibling);
@@ -327,3 +360,5 @@ console.log(h1.parentElement.children); // HTML Collection
 [...h1.parentElement.children].forEach(el => {
   if (el !== h1) el.style.transform = 'scale(0.5)';
 });
+
+*/
