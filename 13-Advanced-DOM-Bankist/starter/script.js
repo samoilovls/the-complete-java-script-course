@@ -296,3 +296,34 @@ document.querySelector('.nav').addEventListener(
 );
 
 */
+
+// DOM Traversing:
+// is walking through the DOM
+// we can select an element based on another element.
+// sometimes we need to select elements relative to a certain other element.
+
+const h1 = document.querySelector('h1');
+
+// Going downwards: child
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children); // HTML Collection
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// selects the closest header to h1 element, the closest parent element that has this class
+// receives a query string like querySelector
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+// all siblings
+console.log(h1.parentElement.children); // HTML Collection
+[...h1.parentElement.children].forEach(el => {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
