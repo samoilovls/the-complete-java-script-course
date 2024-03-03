@@ -102,6 +102,27 @@ tabsContainer.addEventListener('click', function (e) {
   content.classList.add('operations__content--active');
 });
 
+// Menu fade animation
+// Passing Arguments to Event Handlers:
+// we use the bind method to pass an "argument" into a handler function
+// it will set the this keyword to whatever value we pass into
+// if we want multiple values, we could pass in like an array or an object instead of just one value
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+    logo.style.opacity = this;
+    siblings.forEach(el => el !== link && (el.style.opacity = this));
+  }
+};
+
+const nav = document.querySelector('.nav');
+// 'mouseenter' does not bubble
+// opposite events: 'mouseenter' - 'mouseleave' , 'mouseover' - 'mouseout'
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
