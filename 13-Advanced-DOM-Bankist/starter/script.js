@@ -123,6 +123,18 @@ const nav = document.querySelector('.nav');
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+// Implementing a Sticky Navigation
+// The Scroll Event is available on window
+// the scroll event is not really efficient and usually it should be avoided, because of bad performance
+const absolutePosition = section1.getBoundingClientRect().top + window.scrollY;
+
+window.addEventListener('scroll', function () {
+  console.log(window.scrollY); // scroll position from the top point in the viewport to the very top of the page
+  window.scrollY >= absolutePosition
+    ? nav.classList.add('sticky')
+    : nav.classList.remove('sticky');
+});
+
 ///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
