@@ -124,6 +124,7 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 // Implementing a Sticky Navigation
+/*
 // The Scroll Event is available on window
 // the scroll event is not really efficient and usually it should be avoided, because of bad performance
 const absolutePosition = section1.getBoundingClientRect().top + window.scrollY;
@@ -134,6 +135,60 @@ window.addEventListener('scroll', function () {
     ? nav.classList.add('sticky')
     : nav.classList.remove('sticky');
 });
+*/
+
+// A Better Way: The Intersection Observer API
+// this API allows our code to observe changes to the way that a certain target element intersects another element, or the way it intersects the viewport.
+/*
+// Creating a new intersection observer
+const obsCallback = function (entries, observer) {
+  // the callback function will be called when the threshold is passed when moving into the view and when moving out of the view.
+  // this callback function will get called each time that the observed element is intersecting the root element at the threshold
+  // it will get called with two arguments: entries and observer object itself
+  // entries are an array of the threshold entries
+  entries.forEach(entry => console.log(entry));
+};
+
+const viewportPercentage =
+  document.documentElement.clientHeight /
+  Number.parseFloat(getComputedStyle(section1).height);
+console.log(viewportPercentage);
+
+const obsOptions = {
+  root: null, // is the element that the target is intersecting, null for the entire viewport
+  threshold: viewportPercentage, // is the percentage of intersection at which the observer callback will be called. percentage of the target
+  // we can have multiple thresholds : array
+};
+const observer = new IntersectionObserver(obsCallback, obsOptions); // pass in a callback function and an object of options
+// Observe a certain target
+observer.observe(section1);
+*/
+const header = document.querySelector('.header');
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const navPercentage =
+  Number.parseFloat(getComputedStyle(nav).height) /
+  document.documentElement.clientHeight;
+console.log(navPercentage);
+
+const headerObserver = new IntersectionObserver(
+  function (entries) {
+    const [entry] = entries;
+    console.log(entry);
+    !entry.isIntersecting
+      ? nav.classList.add('sticky')
+      : nav.classList.remove('sticky');
+  },
+  {
+    root: null,
+    threshold: 0, // navPercentage
+    // rootMargin is applied outside of the target element
+    rootMargin: `-${getComputedStyle(nav).height}`, // '-90px',
+    // `-${navHeight}px`
+  }
+);
+headerObserver.observe(header);
 
 ///////////////////////////////////////
 ///////////////////////////////////////
