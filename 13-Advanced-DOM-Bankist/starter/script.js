@@ -167,15 +167,14 @@ const header = document.querySelector('.header');
 
 const navHeight = nav.getBoundingClientRect().height;
 
-const navPercentage =
-  Number.parseFloat(getComputedStyle(nav).height) /
-  document.documentElement.clientHeight;
-console.log(navPercentage);
+// const navPercentage =
+//   Number.parseFloat(getComputedStyle(nav).height) /
+//   document.documentElement.clientHeight;
 
 const headerObserver = new IntersectionObserver(
   function (entries) {
-    const [entry] = entries;
-    console.log(entry);
+    const [entry] = entries; // same as entries[0]
+
     !entry.isIntersecting
       ? nav.classList.add('sticky')
       : nav.classList.remove('sticky');
@@ -189,6 +188,25 @@ const headerObserver = new IntersectionObserver(
   }
 );
 headerObserver.observe(header);
+
+// Revealing Elements on Scroll
+
+const sections = document.querySelectorAll('.section');
+sections.forEach(s => s.classList.add('section--hidden'));
+
+const sectionsObserver = new IntersectionObserver(
+  function (entries, observer) {
+    const [entry] = entries;
+    console.log(entry);
+
+    if (!entry.isIntersecting) return;
+    entry.target.classList.remove('section--hidden');
+    observer.unobserve(entry.target);
+  },
+  { root: null, threshold: 0.15 }
+);
+// Observe multiple targets
+sections.forEach(s => sectionsObserver.observe(s));
 
 ///////////////////////////////////////
 ///////////////////////////////////////
