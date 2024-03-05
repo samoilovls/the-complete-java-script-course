@@ -197,16 +197,48 @@ sections.forEach(s => s.classList.add('section--hidden'));
 const sectionsObserver = new IntersectionObserver(
   function (entries, observer) {
     const [entry] = entries;
-    console.log(entry);
+    // console.log(entry);
 
     if (!entry.isIntersecting) return;
     entry.target.classList.remove('section--hidden');
     observer.unobserve(entry.target);
   },
-  { root: null, threshold: 0.15 }
+  {
+    root: null,
+    threshold: 0.15,
+  }
 );
 // Observe multiple targets
 sections.forEach(s => sectionsObserver.observe(s));
+
+// Lazy Loading Images
+// const imgTargets = document.querySelectorAll('.features__img');
+
+// Select for elements which contain a certain property:
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  // Replacing of the src attribute happens behind the scenes. JS finds the new image that it should load and display. And it does that behind the scenes. And once it's finished loading that image, it will emit the load event:
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(i => imgObserver.observe(i));
 
 ///////////////////////////////////////
 ///////////////////////////////////////
