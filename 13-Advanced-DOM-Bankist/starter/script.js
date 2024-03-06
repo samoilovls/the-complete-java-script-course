@@ -174,6 +174,7 @@ const navHeight = nav.getBoundingClientRect().height;
 const headerObserver = new IntersectionObserver(
   function (entries) {
     const [entry] = entries; // same as entries[0]
+    // console.log(entry);
 
     !entry.isIntersecting
       ? nav.classList.add('sticky')
@@ -183,8 +184,7 @@ const headerObserver = new IntersectionObserver(
     root: null,
     threshold: 0, // navPercentage
     // rootMargin is applied outside of the target element
-    rootMargin: `-${getComputedStyle(nav).height}`, // '-90px',
-    // `-${navHeight}px`
+    rootMargin: `-${getComputedStyle(nav).height}`, // '-90px 0px 0px 0px', `-${navHeight}px`
   }
 );
 headerObserver.observe(header);
@@ -218,8 +218,17 @@ sections.forEach(s => sectionsObserver.observe(s));
 const imgTargets = document.querySelectorAll('img[data-src]');
 
 const loadImg = function (entries, observer) {
+  console.log(entries);
+  entries.forEach(entry => {
+    console.log(entry);
+    // if (!entry.isIntersecting) return;
+    // entry.target.src = entry.target.dataset.src;
+    // entry.target.addEventListener('load', function () {
+    //   entry.target.classList.remove('lazy-img');
+    // });
+  });
   const [entry] = entries;
-  console.log(entry);
+  console.log('вне цикла:', entry);
 
   if (!entry.isIntersecting) return;
   // Replace src with data-src
@@ -232,13 +241,24 @@ const loadImg = function (entries, observer) {
   observer.unobserve(entry.target);
 };
 
+const preLoadImg =
+  +getComputedStyle(section1).height.slice(0, -2) -
+  +getComputedStyle(section1).paddingBottom.slice(0, -2) +
+  128;
+
+console.log(preLoadImg);
+
 const imgObserver = new IntersectionObserver(loadImg, {
   root: null,
   threshold: 0,
-  rootMargin: '200px',
+  rootMargin: '0px 0px 1383.69px 0px', // (top, right, bottom, left)
 });
 
 imgTargets.forEach(i => imgObserver.observe(i));
+
+console.log(
+  getComputedStyle(document.querySelector('.section--hidden')).transform
+);
 
 ///////////////////////////////////////
 ///////////////////////////////////////
