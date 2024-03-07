@@ -42,6 +42,12 @@ body {
   transition: transform 1s, opacity 1s;
 }
 
+.section--exp {
+  opacity: 0;
+  /* transform: scale(1.1) rotateY(7deg) translateZ(-1px); */
+  transform: translate(1rem, 2rem) translateY(8rem) scale(0.5);
+}
+
 .section--hidden {
   opacity: 0;
   transform: translateY(8rem);

@@ -241,24 +241,84 @@ const loadImg = function (entries, observer) {
   observer.unobserve(entry.target);
 };
 
-const preLoadImg =
+const preLoadImgHeight =
   +getComputedStyle(section1).height.slice(0, -2) -
   +getComputedStyle(section1).paddingBottom.slice(0, -2) +
-  128;
+  80;
 
-console.log(preLoadImg);
+console.log(preLoadImgHeight);
 
 const imgObserver = new IntersectionObserver(loadImg, {
   root: null,
   threshold: 0,
-  rootMargin: '0px 0px 1383.69px 0px', // (top, right, bottom, left)
+  rootMargin: `0px 0px ${preLoadImgHeight}px 0px`, // (top, right, bottom, left)
 });
 
-imgTargets.forEach(i => imgObserver.observe(i));
+// imgTargets.forEach(i => imgObserver.observe(i));
 
-console.log(
-  getComputedStyle(document.querySelector('.section--hidden')).transform
-);
+///////////////////
+
+const remSize = getComputedStyle(document.documentElement).fontSize;
+console.log(remSize);
+
+// Get transform style value:
+
+const someElement = document.querySelector('.section--exp');
+
+// computedStyleMap()
+const elementStyleMap = someElement.computedStyleMap();
+console.log(elementStyleMap);
+const getTransform = elementStyleMap.get('transform');
+console.log(getTransform); // CSSTransformValue
+const transformValue = getTransform[1].y.value;
+console.log(transformValue);
+
+// CSSTransformValue.toMatrix()
+const toMatrixObj = getTransform.toMatrix();
+// toMatrixObj.f = 150; // mutable
+console.log(toMatrixObj); // DOMMatrix
+
+// getComputedStyle(document.querySelector('.section--hidden')).WebkitTransform;
+const cssTransformMatrix = getComputedStyle(someElement).transform;
+console.log(cssTransformMatrix); // 'matrix(0.5, 0, 0, 0.5, 0, 80)'
+
+const valueFromMatrixStr = +cssTransformMatrix
+  .replace('matrix', '')
+  .replace('(', '')
+  .replace(')', '')
+  .split(',')[5];
+console.log(valueFromMatrixStr);
+
+const matrixString = window.getComputedStyle(someElement).transform;
+const matrix = matrixString
+  .split('(')[1]
+  .split(')')[0]
+  .split(',')
+  .map(parseFloat);
+console.log(matrixString);
+console.log(matrix);
+
+// Like an Array
+const x = [...someElement.computedStyleMap().get('transform')];
+const a = [...someElement.computedStyleMap().get('transform').entries()];
+const b = [...someElement.computedStyleMap().get('transform').values()];
+const c = [...someElement.computedStyleMap().get('transform').keys()];
+console.log(x);
+console.log(a);
+console.log(b);
+console.log(c);
+
+// .find(x => x instanceof CSSTranslate);
+// console.log(x);
+
+const matrixReadOnlyObj = new DOMMatrixReadOnly(cssTransformMatrix);
+// matrixReadOnlyObj.f = 200; not mutable
+console.log(matrixReadOnlyObj);
+const matrixObj = new DOMMatrix(cssTransformMatrix);
+matrixObj.f = 200; // mutable
+console.log(matrixObj);
+
+///////////////////
 
 ///////////////////////////////////////
 ///////////////////////////////////////
