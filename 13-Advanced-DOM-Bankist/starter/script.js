@@ -34,11 +34,25 @@ document.addEventListener('keydown', function (e) {
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.getElementById('section--1');
 
-btnScrollTo.addEventListener('click', () =>
-  section1.scrollIntoView({ behavior: 'smooth' })
-);
+const s1coords = section1.getBoundingClientRect();
+console.log(s1coords); // ??
+
+btnScrollTo.addEventListener('click', () => {
+  const s1coordsListener = section1.getBoundingClientRect();
+  console.log(s1coordsListener); // ??
+
+  section1.classList.contains('section--hidden')
+    ? window.scrollTo({
+        left: s1coords.left + window.scrollX,
+        top: s1coords.top + window.scrollY,
+        behavior: 'smooth',
+      })
+    : section1.scrollIntoView({ behavior: 'smooth' });
+  // section1.scrollIntoView({ behavior: 'smooth' });
+});
 
 // Implementing page navigation
+
 // const links = document.querySelectorAll('.nav__link');
 // links.forEach(link => {
 //   link.addEventListener('click', function (e) {
@@ -65,7 +79,17 @@ linksContainer.addEventListener('click', function (e) {
     const id = e.target.getAttribute('href');
     const section = document.querySelector(id);
     // console.log('CONTAINER:', e.target, e.currentTarget, id, section);
-    section?.scrollIntoView({ behavior: 'smooth' });
+
+    const sectionCoords = section.getBoundingClientRect();
+    console.log(sectionCoords);
+
+    section.classList.contains('section--hidden')
+      ? window.scrollTo({
+          left: sectionCoords.left + window.scrollX,
+          top: sectionCoords.top + window.scrollY - 80,
+          behavior: 'smooth',
+        })
+      : section?.scrollIntoView({ behavior: 'smooth' });
   }
 });
 // Important use case of event delegation is when we are working with elements that are not yet on the page on runtime, that are added dynamically while using the application. It's not possible to add event handlers on to elements that do not exist.
@@ -145,7 +169,7 @@ const obsCallback = function (entries, observer) {
   // the callback function will be called when the threshold is passed when moving into the view and when moving out of the view.
   // this callback function will get called each time that the observed element is intersecting the root element at the threshold
   // it will get called with two arguments: entries and observer object itself
-  // entries are an array of the threshold entries
+  // entries are an ARRAY of the threshold entries
   entries.forEach(entry => console.log(entry));
 };
 
@@ -163,16 +187,19 @@ const observer = new IntersectionObserver(obsCallback, obsOptions); // pass in a
 // Observe a certain target
 observer.observe(section1);
 */
+
 const header = document.querySelector('.header');
 
 const navHeight = nav.getBoundingClientRect().height;
 
+// How mach percent to work :
 // const navPercentage =
 //   Number.parseFloat(getComputedStyle(nav).height) /
 //   document.documentElement.clientHeight;
 
 const headerObserver = new IntersectionObserver(
   function (entries) {
+    // console.log('header:', entries);
     const [entry] = entries; // same as entries[0]
     // console.log(entry);
 
@@ -182,9 +209,9 @@ const headerObserver = new IntersectionObserver(
   },
   {
     root: null,
-    threshold: 0, // navPercentage
+    threshold: 0, // paste here: navPercentage instead of rootMargin
     // rootMargin is applied outside of the target element
-    rootMargin: `-${getComputedStyle(nav).height}`, // '-90px 0px 0px 0px', `-${navHeight}px`
+    rootMargin: '-90px 0px 0px 0px', // `-${navHeight}px`, `-${getComputedStyle(nav).height}`
   }
 );
 headerObserver.observe(header);
@@ -196,6 +223,7 @@ sections.forEach(s => s.classList.add('section--hidden'));
 
 const sectionsObserver = new IntersectionObserver(
   function (entries, observer) {
+    // console.log('sections', entries);
     const [entry] = entries;
     // console.log(entry);
 
@@ -218,27 +246,28 @@ sections.forEach(s => sectionsObserver.observe(s));
 const imgTargets = document.querySelectorAll('img[data-src]');
 
 const loadImg = function (entries, observer) {
-  console.log(entries);
+  // console.log('imgs:', entries);
   entries.forEach(entry => {
-    console.log(entry);
-    // if (!entry.isIntersecting) return;
-    // entry.target.src = entry.target.dataset.src;
-    // entry.target.addEventListener('load', function () {
-    //   entry.target.classList.remove('lazy-img');
-    // });
+    // console.log(entry);
+    if (!entry.isIntersecting) return;
+    entry.target.src = entry.target.dataset.src;
+    entry.target.addEventListener('load', function () {
+      entry.target.classList.remove('lazy-img');
+    });
+    observer.unobserve(entry.target);
   });
-  const [entry] = entries;
-  console.log('вне цикла:', entry);
+  // const [entry] = entries;
+  // console.log('вне цикла:', entry);
 
-  if (!entry.isIntersecting) return;
+  // if (!entry.isIntersecting) return;
   // Replace src with data-src
-  entry.target.src = entry.target.dataset.src;
+  // entry.target.src = entry.target.dataset.src;
   // Replacing of the src attribute happens behind the scenes. JS finds the new image that it should load and display. And it does that behind the scenes. And once it's finished loading that image, it will emit the load event:
-  entry.target.addEventListener('load', function () {
-    entry.target.classList.remove('lazy-img');
-  });
+  // entry.target.addEventListener('load', function () {
+  //   entry.target.classList.remove('lazy-img');
+  // });
 
-  observer.unobserve(entry.target);
+  // observer.unobserve(entry.target);
 };
 
 const preLoadImgHeight =
@@ -246,7 +275,7 @@ const preLoadImgHeight =
   +getComputedStyle(section1).paddingBottom.slice(0, -2) +
   80;
 
-console.log(preLoadImgHeight);
+// console.log(preLoadImgHeight);
 
 const imgObserver = new IntersectionObserver(loadImg, {
   root: null,
@@ -254,71 +283,7 @@ const imgObserver = new IntersectionObserver(loadImg, {
   rootMargin: `0px 0px ${preLoadImgHeight}px 0px`, // (top, right, bottom, left)
 });
 
-// imgTargets.forEach(i => imgObserver.observe(i));
-
-///////////////////
-
-const remSize = getComputedStyle(document.documentElement).fontSize;
-console.log(remSize);
-
-// Get transform style value:
-
-const someElement = document.querySelector('.section--exp');
-
-// computedStyleMap()
-const elementStyleMap = someElement.computedStyleMap();
-console.log(elementStyleMap);
-const getTransform = elementStyleMap.get('transform');
-console.log(getTransform); // CSSTransformValue
-const transformValue = getTransform[1].y.value;
-console.log(transformValue);
-
-// CSSTransformValue.toMatrix()
-const toMatrixObj = getTransform.toMatrix();
-// toMatrixObj.f = 150; // mutable
-console.log(toMatrixObj); // DOMMatrix
-
-// getComputedStyle(document.querySelector('.section--hidden')).WebkitTransform;
-const cssTransformMatrix = getComputedStyle(someElement).transform;
-console.log(cssTransformMatrix); // 'matrix(0.5, 0, 0, 0.5, 0, 80)'
-
-const valueFromMatrixStr = +cssTransformMatrix
-  .replace('matrix', '')
-  .replace('(', '')
-  .replace(')', '')
-  .split(',')[5];
-console.log(valueFromMatrixStr);
-
-const matrixString = window.getComputedStyle(someElement).transform;
-const matrix = matrixString
-  .split('(')[1]
-  .split(')')[0]
-  .split(',')
-  .map(parseFloat);
-console.log(matrixString);
-console.log(matrix);
-
-// Like an Array
-const x = [...someElement.computedStyleMap().get('transform')];
-const a = [...someElement.computedStyleMap().get('transform').entries()];
-const b = [...someElement.computedStyleMap().get('transform').values()];
-const c = [...someElement.computedStyleMap().get('transform').keys()];
-console.log(x);
-console.log(a);
-console.log(b);
-console.log(c);
-
-// .find(x => x instanceof CSSTranslate);
-// console.log(x);
-
-const matrixReadOnlyObj = new DOMMatrixReadOnly(cssTransformMatrix);
-// matrixReadOnlyObj.f = 200; not mutable
-console.log(matrixReadOnlyObj);
-const matrixObj = new DOMMatrix(cssTransformMatrix);
-matrixObj.f = 200; // mutable
-console.log(matrixObj);
-
-///////////////////
+imgTargets.forEach(i => imgObserver.observe(i));
 
 ///////////////////////////////////////
 ///////////////////////////////////////
@@ -580,3 +545,75 @@ console.log(h1.parentElement.children); // HTML Collection
 });
 
 */
+
+btnScrollTo.addEventListener('click', function () {
+  a();
+});
+
+const a = function () {
+  console.log(a);
+};
+
+///////////////////////////////////////
+/*
+const remSize = getComputedStyle(document.documentElement).fontSize;
+console.log(remSize);
+
+// Get transform style value:
+
+const someElement = document.querySelector('.section--exp');
+
+// computedStyleMap()
+const elementStyleMap = someElement.computedStyleMap();
+console.log(elementStyleMap);
+const getTransform = elementStyleMap.get('transform');
+console.log(getTransform); // CSSTransformValue
+const transformValue = getTransform[1].y.value;
+console.log(transformValue);
+
+// CSSTransformValue.toMatrix()
+const toMatrixObj = getTransform.toMatrix();
+// toMatrixObj.f = 150; // mutable
+console.log(toMatrixObj); // DOMMatrix
+
+// getComputedStyle(document.querySelector('.section--hidden')).WebkitTransform;
+const cssTransformMatrix = getComputedStyle(someElement).transform;
+console.log(cssTransformMatrix); // 'matrix(0.5, 0, 0, 0.5, 0, 80)'
+
+const valueFromMatrixStr = +cssTransformMatrix
+  .replace('matrix', '')
+  .replace('(', '')
+  .replace(')', '')
+  .split(',')[5];
+console.log(valueFromMatrixStr);
+
+const matrixString = window.getComputedStyle(someElement).transform;
+const matrix = matrixString
+  .split('(')[1]
+  .split(')')[0]
+  .split(',')
+  .map(parseFloat);
+console.log(matrixString);
+console.log(matrix);
+
+// Like an Array
+const x = [...someElement.computedStyleMap().get('transform')];
+const a = [...someElement.computedStyleMap().get('transform').entries()];
+const b = [...someElement.computedStyleMap().get('transform').values()];
+const c = [...someElement.computedStyleMap().get('transform').keys()];
+console.log(x);
+console.log(a);
+console.log(b);
+console.log(c);
+
+// .find(x => x instanceof CSSTranslate);
+// console.log(x);
+
+const matrixReadOnlyObj = new DOMMatrixReadOnly(cssTransformMatrix);
+// matrixReadOnlyObj.f = 200; not mutable
+console.log(matrixReadOnlyObj);
+const matrixObj = new DOMMatrix(cssTransformMatrix);
+matrixObj.f = 200; // mutable
+console.log(matrixObj);
+*/
+///////////////////////////////////////
