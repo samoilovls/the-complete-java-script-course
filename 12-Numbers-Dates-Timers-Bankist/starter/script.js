@@ -92,13 +92,13 @@ const formatMovementDate = function (date, locale) {
   if (daysPassed === 0) return 'today';
   if (daysPassed === 1) return 'yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
-  else {
-    // const day = `${date.getDate()}`.padStart(2, '0');
-    // const month = `${date.getMonth() + 1}`.padStart(2, '0');
-    // const year = date.getFullYear();
-    // return `${day}/${month}/${year}`;
-    return new Intl.DateTimeFormat(locale).format(date);
-  }
+  // else {
+  // const day = `${date.getDate()}`.padStart(2, '0');
+  // const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  // const year = date.getFullYear();
+  // return `${day}/${month}/${year}`;
+  return new Intl.DateTimeFormat(locale).format(date);
+  // }
 };
 
 const formatCurrency = function (value, locale, cur) {
