@@ -674,13 +674,32 @@ console.log(h1.parentElement.children); // HTML Collection
 
 */
 
-btnScrollTo.addEventListener('click', function () {
-  a();
+// Lifecycle DOM Events:
+
+// DOM content loaded event is fired by the document as soon as the HTML is completely parsed, which means that the HTML has been downloaded and been converted to the DOM tree. Also, all scripts must be downloaded and executed before the DOM content loaded event can happen.
+// Event does not wait for images and other external resources to load.
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built');
+  // We want all our code only to be executed after the DOM is ready.
+  // But in this case we don't need to wrap our entire code into this function, because we have the script tag, which is the one that imports our JS into the HTML, right at the end of the body. Basically it's the last thing that is going to be read in the HTML, so the browser will only find our script when the rest of the HTML is already parsed anyway. So when we have the script tag at the end of the HTML, then we do not need to listen for the DOMContentLoaded event.
+});
+// document.ready in jQuery is equivalent to the DOM content loaded in vanilla JavaScript.
+
+// The load event is fired by the window as soon as not only the HTML is parsed, but also all the images and external resources like CSS files are also loaded.
+// So this event gets fired when the complete page has finished loading.
+window.addEventListener('load', function (e) {
+  console.log('load');
 });
 
-const a = function () {
-  console.log(a);
-};
+// The before unload event gets fired on window
+// This event is created immediately before a user is about to leave a page.
+window.addEventListener('beforeunload', function (e) {
+  // We can use this event to ask users if they are sure want to leave
+  e.preventDefault(); // to make this work
+  console.log(e);
+  // to display a leaving confirmation we need to set the return value on the event to an empty string:
+  e.returnValue = ''; // nothing changes for me
+});
 
 ///////////////////////////////////////
 /*
