@@ -672,7 +672,6 @@ console.log(h1.parentElement.children); // HTML Collection
   if (el !== h1) el.style.transform = 'scale(0.5)';
 });
 
-*/
 
 // Lifecycle DOM Events:
 
@@ -700,6 +699,8 @@ window.addEventListener('beforeunload', function (e) {
   // to display a leaving confirmation we need to set the return value on the event to an empty string:
   e.returnValue = ''; // nothing changes for me
 });
+
+*/
 
 ///////////////////////////////////////
 /*
