@@ -32,3 +32,27 @@ const jack = new Person('Jack', 1975);
 console.log(matilda, jack);
 
 console.log(jonas instanceof Person);
+
+// Prototypes
+// Every function in JS automatically has a property called prototype.
+// Every object that is created by a certain constructor function will get access to all the methods and properties that we define on the constructors prototype property.
+Person.prototype.calcAge = function () {
+  return 2024 - this.birthYear;
+};
+
+console.log(Person.prototype);
+console.log(jonas.calcAge());
+
+// Any object always has access to the methods and properties from its prototype.
+// Person.prototype is not the prototype of Person, instead it is going to be used as the prototype of all the objects that are created with the Person constructor function.
+console.log(jonas.__proto__); // the new operator: step number three creates __proto__ property and sets its value to the prototype property of the function
+console.log(jonas.__proto__ === Person.prototype); // true
+console.log(Person.prototype.isPrototypeOf(jonas)); // true
+// .prototype of linked objects
+
+// Properties
+Person.prototype.species = 'Homo Sapiens';
+// property is not directly in the object, it is not its own property. Own properties are declared directly on the object itself, not including the inherited properties.
+console.log(jonas.hasOwnProperty('species')); // false
+console.log(jonas.species);
+console.log('species' in jonas); // including the inherited properties
