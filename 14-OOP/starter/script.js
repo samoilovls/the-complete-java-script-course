@@ -56,3 +56,11 @@ Person.prototype.species = 'Homo Sapiens';
 console.log(jonas.hasOwnProperty('species')); // false
 console.log(jonas.species);
 console.log('species' in jonas); // including the inherited properties
+
+// All objects in JS have a prototype.
+// Person.prototype is also an object, and the prototype of Person.prototype is Object.prototype
+// Object is the built-in object constructor function, and this function is called behind the scenes whenever we create an object literal:
+// {} === new Object()
+
+// Prototype chain is series of links between the objects, linked through prototypes.
+// Object.prototype is usually the top of the prototype chain, which means that it's prototype is null.
