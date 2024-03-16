@@ -64,3 +64,24 @@ console.log('species' in jonas); // including the inherited properties
 
 // Prototype chain is series of links between the objects, linked through prototypes.
 // Object.prototype is usually the top of the prototype chain, which means that it's prototype is null.
+
+// Prototypal Inheritance on Build-In Objects
+console.log(jonas.__proto__.__proto__);
+console.log(jonas.__proto__.__proto__.__proto__); // null
+
+// to inspect the function:
+console.dir(Person.prototype.constructor);
+
+// Prototype of Arrays
+const arr = [3, 6, 6, 5, 6, 9, 9]; // new Array() === []
+console.log(arr.__proto__); // object
+console.log(arr.__proto__ === Array.prototype);
+console.log(arr.__proto__.__proto__); // Object.prototype
+
+// Extending the prototype of a built-in object is not a good practice:
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+console.log(arr.unique());
+// The first reason is that the next version of JS might add a method with the same name, but it might work in a different way and will break your code.
+// The second reason is when you work on a team of developers.
