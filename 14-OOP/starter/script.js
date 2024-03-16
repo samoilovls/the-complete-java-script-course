@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 // Constructor functions
 // creating objects programmatically, using a function which will also set the new object's prototype
 
@@ -85,3 +85,29 @@ Array.prototype.unique = function () {
 console.log(arr.unique());
 // The first reason is that the next version of JS might add a method with the same name, but it might work in a different way and will break your code.
 // The second reason is when you work on a team of developers.
+
+*/
+
+// Coding Challenge #1
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(this.speed);
+};
+Car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(this.speed);
+};
+
+const car1 = new Car('BMW', 120);
+const car2 = new Car('Mercedes', 95);
+console.log(car1, car2);
+
+car1.accelerate();
+car1.brake();
+
+car2.accelerate();
+car2.brake();
