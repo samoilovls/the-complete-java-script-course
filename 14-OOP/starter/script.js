@@ -111,7 +111,6 @@ car1.brake();
 car2.accelerate();
 car2.brake();
 
-*/
 
 // ES6 Classes
 // "Synthetic sugar" over constructor functions
@@ -125,7 +124,7 @@ class PersonCl {
     this.firstName = firstName;
     this.birthYear = birthYear;
   }
-  // methods that we write in the class, outside of the constructor, will be added to .prototype property
+  // Methods that we write in the class, outside of the constructor, will be added to .prototype property
   calcAge() {
     console.log(2024 - this.birthYear);
   }
@@ -143,3 +142,60 @@ jessica.greet();
 // 1. Classes are NOT hoisted
 // 2. Classes are first-class citizens
 // 3. Classes are executed in strict mode
+
+*/
+
+// Setters and Getters
+// assessor properties
+
+const account = {
+  owner: 'Jonas',
+  movements: [200, 530, 120, 300],
+  get latest() {
+    return this.movements.at(-1);
+    // return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account);
+console.log(account.latest); // get
+account.latest = 50; // set
+
+// Classes also have getters and setters:
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName; // this code is going to execute the setter
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2024 - this.birthYear);
+  }
+  // Set on prototype:
+  get age() {
+    return 2024 - this.birthYear;
+  }
+
+  // Data validation
+  // Convention: when we have a setter which is trying to set a property that does already exist, we add an underscore: creating a new variable
+  set fullName(name) {
+    console.log(name);
+    if (name.includes(' ')) {
+      this._fullName = name; // create a new property name to avoid naming conflict
+    }
+  }
+  get fullName() {
+    return this._fullName;
+  }
+}
+const walter = new PersonCl('Walter White', 1965);
+console.log(walter.age);
+console.log(walter);
+// console.log(walter.fullName);
+
+const smb = new PersonCl('Name', 1964);
+console.log(smb); // does not have fullName property
