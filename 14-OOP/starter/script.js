@@ -86,7 +86,6 @@ console.log(arr.unique());
 // The first reason is that the next version of JS might add a method with the same name, but it might work in a different way and will break your code.
 // The second reason is when you work on a team of developers.
 
-*/
 
 // Coding Challenge #1
 const Car = function (make, speed) {
@@ -111,3 +110,36 @@ car1.brake();
 
 car2.accelerate();
 car2.brake();
+
+*/
+
+// ES6 Classes
+// "Synthetic sugar" over constructor functions
+
+// classes are special type of functions:
+// class expression
+// const PersonCl = class {}
+// class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+  // methods that we write in the class, outside of the constructor, will be added to .prototype property
+  calcAge() {
+    console.log(2024 - this.birthYear);
+  }
+}
+
+const jessica = new PersonCl('Jessica', 1996);
+console.log(jessica);
+jessica.calcAge();
+
+PersonCl.prototype.greet = function () {
+  console.log(`Hey ${this.firstName}`);
+};
+jessica.greet();
+
+// 1. Classes are NOT hoisted
+// 2. Classes are first-class citizens
+// 3. Classes are executed in strict mode
