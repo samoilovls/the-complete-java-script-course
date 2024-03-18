@@ -145,7 +145,6 @@ jessica.greet();
 // 2. Classes are first-class citizens
 // 3. Classes are executed in strict mode
 
-*/
 
 // Setters and Getters
 // assessor properties
@@ -177,6 +176,7 @@ class PersonCl {
   calcAge() {
     console.log(2024 - this.birthYear);
   }
+
   // Set on prototype:
   get age() {
     return 2024 - this.birthYear;
@@ -201,6 +201,7 @@ console.log(walter);
 
 const smb = new PersonCl('Name', 1964);
 console.log(smb); // does not have fullName property
+
 
 // Static methods
 // Methods that are attached to the constructor functions themselves and not to the prototype property of the constructor: Array.from() / Number.parseFloat()
@@ -233,3 +234,29 @@ class SomeClass {
 }
 
 SomeClass.hey();
+
+*/
+
+// Object.create
+// manually set the prototype of an object to any other object that we want
+
+const PersonProto = {
+  calcAge() {
+    console.log(2024 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+
+steven.init('Steven', 2002);
+steven.calcAge();
+
+console.log(steven);
+console.log(steven.__proto__);
+
+const sarah = Object.create(PersonProto);
