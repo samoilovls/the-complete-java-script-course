@@ -260,3 +260,34 @@ console.log(steven);
 console.log(steven.__proto__);
 
 const sarah = Object.create(PersonProto);
+
+// Coding Challenge #2
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed += 10;
+  }
+  brake() {
+    this.speed -= 5;
+  }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+const ford = new CarCl('Ford', 120);
+
+console.log(ford);
+
+ford.speedUS = 80;
+ford.accelerate();
+console.log(ford.speed);
+console.log(ford.speedUS);
