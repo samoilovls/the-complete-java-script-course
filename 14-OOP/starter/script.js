@@ -235,7 +235,6 @@ class SomeClass {
 
 SomeClass.hey();
 
-*/
 
 // Object.create
 // manually set the prototype of an object to any other object that we want
@@ -260,6 +259,7 @@ console.log(steven);
 console.log(steven.__proto__);
 
 const sarah = Object.create(PersonProto);
+
 
 // Coding Challenge #2
 
@@ -291,3 +291,41 @@ ford.speedUS = 80;
 ford.accelerate();
 console.log(ford.speed);
 console.log(ford.speedUS);
+
+*/
+
+// Inheritance Between Classes:
+
+// Constructor Functions
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  console.log(this);
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototypes
+// We have to create this connection before we add any more methods to the prototype property, because Object.create will return an empty object
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName}`);
+};
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+console.log(mike);
+mike.introduce();
+
+mike.calcAge();
+
+// Fix type
+Student.prototype.constructor = Student;
