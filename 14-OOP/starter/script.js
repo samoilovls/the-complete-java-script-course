@@ -124,6 +124,8 @@ class PersonCl {
     this.firstName = firstName;
     this.birthYear = birthYear;
   }
+
+  // Instance methods
   // Methods that we write in the class, outside of the constructor, will be added to .prototype property
   calcAge() {
     console.log(2024 - this.birthYear);
@@ -199,3 +201,35 @@ console.log(walter);
 
 const smb = new PersonCl('Name', 1964);
 console.log(smb); // does not have fullName property
+
+// Static methods
+// Methods that are attached to the constructor functions themselves and not to the prototype property of the constructor: Array.from() / Number.parseFloat()
+// NOT inherited
+
+// In Constructor function
+const PersonConstr = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+PersonConstr.hey = function () {
+  console.log('Hey');
+  console.log(this); // entire constructor function
+};
+
+PersonConstr.hey();
+
+// In Class
+class SomeClass {
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+
+  static hey() {
+    console.log('Hey');
+    console.log(this); // entire class
+  }
+}
+
+SomeClass.hey();
