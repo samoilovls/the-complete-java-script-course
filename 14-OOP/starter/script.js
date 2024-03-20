@@ -146,7 +146,7 @@ jessica.greet();
 // 3. Classes are executed in strict mode
 
 
-// Setters and Getters
+// Setters and Getters:
 // assessor properties
 
 const account = {
@@ -203,7 +203,7 @@ const smb = new PersonCl('Name', 1964);
 console.log(smb); // does not have fullName property
 
 
-// Static methods
+// Static methods:
 // Methods that are attached to the constructor functions themselves and not to the prototype property of the constructor: Array.from() / Number.parseFloat()
 // NOT inherited
 
@@ -292,7 +292,6 @@ ford.accelerate();
 console.log(ford.speed);
 console.log(ford.speedUS);
 
-*/
 
 // Inheritance Between Classes:
 
@@ -329,6 +328,7 @@ mike.calcAge();
 
 // Fix type
 Student.prototype.constructor = Student;
+
 
 // Coding Challenge #3
 
@@ -370,3 +370,56 @@ tesla.chargeBattery(90);
 tesla.brake();
 tesla.accelerate();
 console.log(tesla);
+
+*/
+
+// Inheritance Between Classes: ES6 Classes
+
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2024 - this.birthYear);
+  }
+
+  get age() {
+    return 2024 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(' ')) {
+      this._fullName = name;
+    }
+  }
+  get fullName() {
+    return this._fullName;
+  }
+}
+
+class StudentCl extends PersonCl {
+  // If we don't want extra properties, we don't need any constructor function at all, the super function will automatically be called.}
+
+  constructor(fullName, birthYear, course) {
+    // super is the constructor function of the parent class:
+    // call to the super function is responsible for creating the this keyword in subclass
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName}`);
+  }
+
+  // Polymorphism
+  calcAge() {
+    console.log(`I'am ${this.age}`);
+  }
+}
+
+const peter = new StudentCl('Peter Parker', 1999, 3);
+console.log(peter);
+peter.introduce();
+peter.calcAge();
