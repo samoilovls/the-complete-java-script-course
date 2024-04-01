@@ -461,52 +461,87 @@ console.log(jay);
 // encapsulation means to keep some properties and methods private inside the class
 
 class Account {
+  // Class Fields Proposal:
+  // Encapsulation: Private Class Fields and Methods
+  // (there are also the static versions)
+
+  // 1: Public fields
+  // We can think of a field as a property that will be on all instances.
+  // They are not on the prototype, they are on the instances.
+  locale = navigator.language;
+
+  // 2: Private fields
+  // truly encapsulation
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
 
+    this.#pin = pin; // redefine
+
     // fake encapsulation by using a convention:
     // Protected property
-    this._pin = pin;
-    this._movements = [];
+    // this._pin = pin;
+    // this._movements = [];
 
-    this.locale = navigator.language;
+    // this.locale = navigator.language;
 
     // we can execute any code in this constructor:
     console.log(`Thanks for opening an account, ${owner}`);
   }
 
+  // 3: Public methods
   // Public interface or API
 
   getMovements() {
-    return this._movements;
+    return this.#movements;
+    // return this._movements;
   }
 
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
+    // this._movements.push(val);
   }
 
   withdraw(val) {
     this.deposit(-val);
   }
 
-  _approveLoan(val) {
-    return true;
-  }
-
   requestLoan(val) {
-    if (this.approveLoan(val)) {
+    if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log(`Loan approved`);
     }
+    // if (this._approveLoan(val)) {
+    //   this.deposit(val);
+    //   console.log(`Loan approved`);
+    // }
   }
+
+  // 4: Private methods
+  #approveLoan(val) {
+    return true;
+  }
+
+  // _approveLoan(val) {
+  //   return true;
+  // }
 }
 
 const acc1 = new Account('Jonas', 'EUR', 1111);
 
 acc1.deposit(250);
 acc1.withdraw(140);
+acc1.requestLoan(500);
 
 console.log(acc1);
 
+console.log(acc1.getMovements());
+
+// console.log(acc1.#movements); not accessible outside by their property
+
+const mov = acc1.getMovements();
+mov.push(1000);
 console.log(acc1.getMovements());
