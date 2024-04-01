@@ -503,6 +503,7 @@ class Account {
   deposit(val) {
     this.#movements.push(val);
     // this._movements.push(val);
+    return this;
   }
 
   withdraw(val) {
@@ -544,4 +545,9 @@ console.log(acc1.getMovements());
 
 const mov = acc1.getMovements();
 mov.push(1000);
+console.log(acc1.getMovements());
+
+// Chaining Methods
+// return object itself at the end of the method that we want to be chainable
+acc1.deposit(300).deposit(600);
 console.log(acc1.getMovements());
