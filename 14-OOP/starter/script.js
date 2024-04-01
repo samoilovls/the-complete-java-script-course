@@ -206,6 +206,7 @@ console.log(smb); // does not have fullName property
 // Static methods:
 // Methods that are attached to the constructor functions themselves and not to the prototype property of the constructor: Array.from() / Number.parseFloat()
 // NOT inherited
+// They cannot access the instance properties nor the methods, but only the static ones.
 
 // In Constructor function
 const PersonConstr = function (firstName, birthYear) {
@@ -455,7 +456,6 @@ jay.introduce();
 jay.calcAge();
 console.log(jay);
 
-*/
 
 // Encapsulation: Protected Properties and Methods
 // encapsulation means to keep some properties and methods private inside the class
@@ -551,3 +551,52 @@ console.log(acc1.getMovements());
 // return object itself at the end of the method that we want to be chainable
 acc1.deposit(300).deposit(600);
 console.log(acc1.getMovements());
+
+*/
+
+// Coding Challenge #4
+
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+  }
+
+  brake() {
+    this.speed -= 5;
+    return this;
+  }
+}
+
+class EVCl extends CarCl {
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `${this.make} going at ${this.speed} km/h, with a charge of ${
+        this.#charge
+      }%`
+    );
+    return this;
+  }
+}
+
+const rivian = new EVCl('Rivian', 120, 23);
+rivian.accelerate().chargeBattery(100).brake().accelerate();
+console.log(rivian);
