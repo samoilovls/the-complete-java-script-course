@@ -457,29 +457,40 @@ console.log(jay);
 
 */
 
-// Class Example
+// Encapsulation: Protected Properties and Methods
+// encapsulation means to keep some properties and methods private inside the class
+
 class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
+
+    // fake encapsulation by using a convention:
+    // Protected property
+    this._pin = pin;
+    this._movements = [];
+
     this.locale = navigator.language;
 
     // we can execute any code in this constructor:
     console.log(`Thanks for opening an account, ${owner}`);
   }
 
-  // Public interface
+  // Public interface or API
+
+  getMovements() {
+    return this._movements;
+  }
+
   deposit(val) {
-    this.movements.push(val);
+    this._movements.push(val);
   }
 
   withdraw(val) {
     this.deposit(-val);
   }
 
-  approveLoan(val) {
+  _approveLoan(val) {
     return true;
   }
 
@@ -497,3 +508,5 @@ acc1.deposit(250);
 acc1.withdraw(140);
 
 console.log(acc1);
+
+console.log(acc1.getMovements());
