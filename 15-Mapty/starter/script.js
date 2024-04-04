@@ -13,6 +13,9 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 // Geolocation API
 // this function takes as an input two callback functions: the first one will be called on success, whenever the browser successfully got the coordinates, and the second is the error.
+
+let map, mapEvent;
+
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     function (position) {
@@ -26,7 +29,7 @@ if (navigator.geolocation) {
       const coords = [latitude, longitude];
 
       // Leaflet Library:
-      const map = L.map('map').setView(coords, 13);
+      map = L.map('map').setView(coords, 13);
       // console.log(map);
 
       L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
@@ -35,23 +38,11 @@ if (navigator.geolocation) {
       }).addTo(map);
 
       // leaflet event listener
-      map.on('click', function (mapEvent) {
-        console.log(mapEvent);
-        const { lat, lng } = mapEvent.latlng;
+      map.on('click', function (mapE) {
+        mapEvent = mapE;
 
-        L.marker([lat, lng])
-          .addTo(map)
-          .bindPopup(
-            L.popup({
-              maxWidth: 250,
-              minWidth: 100,
-              autoClose: false,
-              closeOnClick: false,
-              className: 'running-popup',
-            })
-          )
-          .setPopupContent('Workout')
-          .openPopup();
+        form.classList.remove('hidden');
+        inputDistance.focus();
       });
     },
     function () {
@@ -59,6 +50,42 @@ if (navigator.geolocation) {
     }
   );
 }
+
+const clearInputs = function () {
+  inputDistance.value =
+    inputDuration.value =
+    inputCadence.value =
+    inputElevation.value =
+      '';
+};
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  // Display marker:
+
+  const { lat, lng } = mapEvent.latlng;
+
+  L.marker([lat, lng])
+    .addTo(map)
+    .bindPopup(
+      L.popup({
+        maxWidth: 250,
+        minWidth: 100,
+        autoClose: false,
+        closeOnClick: false,
+        className: 'running-popup',
+      })
+    )
+    .setPopupContent('Workout')
+    .openPopup();
+
+  clearInputs();
+});
+
+inputType.addEventListener('change', function () {
+  inputElevation.parentElement.classList.toggle('form__row--hidden');
+  inputCadence.parentElement.classList.toggle('form__row--hidden');
+});
 
 // Any variable that is global in any script will be available to all the other scripts as long as they appear after that script:
 // console.log(firstName);
