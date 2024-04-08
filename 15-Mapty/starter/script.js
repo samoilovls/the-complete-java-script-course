@@ -97,6 +97,9 @@ class App {
   constructor() {
     this.#getPosition();
 
+    // Get data from local storage
+    this.#getLocalStorage();
+
     form.addEventListener('submit', this.#newWorkout.bind(this));
 
     inputType.addEventListener('change', this.#toggleInput); //.bind(this));
@@ -133,6 +136,10 @@ class App {
 
     // leaflet event listener
     this.#map.on('click', this.#showForm.bind(this));
+
+    this.#workouts.forEach(work => {
+      this.#renderWorkoutMarker(work);
+    });
   }
 
   #showForm(mapE) {
@@ -234,6 +241,9 @@ class App {
     // Hide form and clear input fields:
     // this.clearInputs();
     this.#hideForm();
+
+    // Set local storage to all workouts
+    this.#setLocalStorage();
   }
 
   #renderWorkoutMarker(workout) {
@@ -309,11 +319,11 @@ class App {
   #moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
     if (!workoutEl) return;
-    console.log(workoutEl);
+    // console.log(workoutEl);
     const workout = this.#workouts.find(
       work => work.id === workoutEl.dataset.id
     );
-    console.log(workout);
+    // console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
@@ -322,6 +332,32 @@ class App {
 
     // using the public interface
     workout.click();
+  }
+
+  #setLocalStorage() {
+    // local storage is blocking
+    // key-value store: ('name','str we want to store')
+    // convert obj to a string: JSON.stringify()
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+  }
+
+  #getLocalStorage() {
+    // convert str back to obj: JSON.parse()
+    // object coming from local storage will lost their prototype chain
+    const data = JSON.parse(localStorage.getItem('workouts'));
+    // console.log(data);
+
+    if (!data) return;
+    this.#workouts = data;
+    this.#workouts.forEach(work => {
+      this.#renderWorkout(work);
+    });
+  }
+
+  reset() {
+    localStorage.removeItem('workouts');
+    // reload the page programmatically
+    location.reload();
   }
 
   // _someMethod() {}
