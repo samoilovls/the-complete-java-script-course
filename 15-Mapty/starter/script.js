@@ -206,7 +206,7 @@ class App {
         !validInputs(distance, duration, cadence) ||
         !allPositive(distance, duration, cadence)
       ) {
-        return alert('Positive number required');
+        return alert('Positive number required'); // alert window blocks the code execution, until we click OK button
       }
       workout = new Running([lat, lng], distance, duration, cadence);
     }
