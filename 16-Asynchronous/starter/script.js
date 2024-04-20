@@ -73,7 +73,6 @@ const getCountryData = function (country) {
 getCountryData('portugal');
 getCountryData('usa');
 getCountryData('russia');
-*/
 
 // if we want requests to be made in a specific, predefined order, we have to chain the requests:
 
@@ -149,3 +148,27 @@ setTimeout(() => {
     }, 1000);
   }, 1000);
 }, 1000);
+
+*/
+
+// Promises and the Fetch API
+// Promises are an ES6 feature
+// Promise is an obj that is used as a placeholder for the future result of an asynchronous operation.
+// We no longer need to rely on events and callbacks passed into asynchronous functions to handle asynchronous results
+// Instead of nesting callbacks, we can chain promises for a sequence of asynchronous operations - escaping callback hell
+
+// Promises are time sensitive, so they can be in different states:
+// The life cycle of a promise:
+// Promise is pending, this is before any value resulting from the asynchronous task is available. During this time, the asynchronous task is still doing its work in the background.
+// Then when the task finishes, the promise is settled and there are two types of settled promises: fulfilled and rejected.
+// We are able to handle these different states in our code.
+// Promise is only settled once. The state will remain unchanged forever.
+// These different states are relevant and useful when we use a promise to get a result - to consume a promise.
+// We consume a promise when we already have a promise, e.g. the promise that was returned from the fetch function.
+// In order for a promise to exist in the first place, it must be built.
+// Fetch function builds the promise and returns it for us to consume.
+
+// Modern way of making AJAX calls:
+// can take in an obj of options
+const request = fetch(`https://restcountries.com/v2/name/portugal`);
+console.log(request);
