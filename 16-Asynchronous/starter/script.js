@@ -74,7 +74,7 @@ getCountryData('portugal');
 getCountryData('usa');
 getCountryData('russia');
 
-// if we want requests to be made in a specific, predefined order, we have to chain the requests:
+*/
 
 const renderCountry = function (data, className = '') {
   const html = `
@@ -95,6 +95,10 @@ const renderCountry = function (data, className = '') {
   countriesContainer.insertAdjacentHTML('beforeend', html);
   countriesContainer.style.opacity = 1;
 };
+
+/*
+
+// if we want requests to be made in a specific, predefined order, we have to chain the requests:
 
 const getCountryAndNeighbour = function (country) {
   // AJAX call 1
@@ -170,5 +174,21 @@ setTimeout(() => {
 
 // Modern way of making AJAX calls:
 // can take in an obj of options
+// immediately return a promise
 const request = fetch(`https://restcountries.com/v2/name/portugal`);
 console.log(request);
+
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(function (response) {
+      console.log(response);
+      // in order to be able to read the data from the body, we need to call the json method on the response. Json is a method that is available on all responses of the fetch method. Json is an asynchronous function, and it will also return a new promise:
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      renderCountry(data[0]);
+    });
+};
+
+getCountryData('portugal');
