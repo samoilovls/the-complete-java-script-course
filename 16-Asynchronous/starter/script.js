@@ -153,7 +153,6 @@ setTimeout(() => {
   }, 1000);
 }, 1000);
 
-*/
 
 // Promises and the Fetch API
 // Promises are an ES6 feature
@@ -189,6 +188,33 @@ const getCountryData = function (country) {
       console.log(data);
       renderCountry(data[0]);
     });
+};
+
+getCountryData('portugal');
+
+*/
+
+// Chaining Promises
+
+// Flat chain of promises:
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => response.json())
+    .then(data => {
+      renderCountry(data[0]);
+
+      const neighbour = data[0].borders?.[0];
+
+      if (!neighbour) return; // this is NOT going to work
+
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+
+      // .then method always returns a promise, no matter if we actually return anything or not. But if we do return a value, that value will become the fulfillment value of the return promise:
+      // return 23; // fulfilled value
+    })
+    // .then(data => alert(data)) // 23
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'));
 };
 
 getCountryData('portugal');
