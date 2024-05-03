@@ -93,7 +93,7 @@ const renderCountry = function (data, className = '') {
     `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
+  // countriesContainer.style.opacity = 1;
 };
 
 /*
@@ -192,7 +192,6 @@ const getCountryData = function (country) {
 
 getCountryData('portugal');
 
-*/
 
 // Chaining Promises
 
@@ -218,3 +217,45 @@ const getCountryData = function (country) {
 };
 
 getCountryData('portugal');
+
+*/
+
+// Handling Rejected Promises
+// the fetch promise only rejects when there is no internet connection, with other errors it still will be fulfilled
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
+};
+
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(
+      response => response.json()
+      // err => alert(err) // second callback function will be called for the rejected promise
+    )
+    .then(data => {
+      renderCountry(data[0]);
+
+      const neighbour = data[0].borders?.[0];
+
+      if (!neighbour) return; // this is NOT going to work
+
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'))
+    // handle all the errors globally:
+    .catch(err => {
+      console.error(err);
+      renderError(err.message); // JS object
+    })
+    // finally method: callback function will always be called whatever happens with the promise: fulfilled or rejected
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+btn.addEventListener('click', function () {
+  getCountryData('portugal');
+});
