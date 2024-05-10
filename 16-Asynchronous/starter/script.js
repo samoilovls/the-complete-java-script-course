@@ -3,6 +3,31 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
+const renderCountry = function (data, className = '') {
+  const html = `
+      <article class="country ${className}">
+          <img class="country__img" src="${data.flag}" />
+          <div class="country__data">
+          <h3 class="country__name">${data.name}</h3>
+          <h4 class="country__region">${data.region}</h4>
+          <p class="country__row"><span>👫</span>${(
+            +data.population / 1000000
+          ).toFixed(1)}</p>
+          <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
+          <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
+          </div>
+      </article>
+    `;
+
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  // countriesContainer.style.opacity = 1;
+};
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
+};
+
 ///////////////////////////////////////
 
 // Asynchronous JavaScript, AJAX and APIs:
@@ -74,29 +99,6 @@ getCountryData('portugal');
 getCountryData('usa');
 getCountryData('russia');
 
-*/
-
-const renderCountry = function (data, className = '') {
-  const html = `
-      <article class="country ${className}">
-          <img class="country__img" src="${data.flag}" />
-          <div class="country__data">
-          <h3 class="country__name">${data.name}</h3>
-          <h4 class="country__region">${data.region}</h4>
-          <p class="country__row"><span>👫</span>${(
-            +data.population / 1000000
-          ).toFixed(1)}</p>
-          <p class="country__row"><span>🗣️</span>${data.languages[0].name}</p>
-          <p class="country__row"><span>💰</span>${data.currencies[0].name}</p>
-          </div>
-      </article>
-    `;
-
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
-};
-
-/*
 
 // if we want requests to be made in a specific, predefined order, we have to chain the requests:
 
@@ -218,21 +220,15 @@ const getCountryData = function (country) {
 
 getCountryData('portugal');
 
-*/
 
 // Handling Rejected Promises
 // the fetch promise only rejects when there is no internet connection, with other errors it still will be fulfilled
-
-const renderError = function (msg) {
-  countriesContainer.insertAdjacentText('beforeend', msg);
-  // countriesContainer.style.opacity = 1;
-};
 
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
     .then(
       response => response.json()
-      // err => alert(err) // second callback function will be called for the rejected promise
+      // ,err => alert(err) // second callback function will be called for the rejected promise
     )
     .then(data => {
       renderCountry(data[0]);
@@ -259,3 +255,90 @@ const getCountryData = function (country) {
 btn.addEventListener('click', function () {
   getCountryData('portugal');
 });
+
+*/
+
+// Throwing Errors Manually
+// throw keyword will immediately terminate the current function. The effect of creating and throwing an error in any of then methods is that the promise will immediately reject.
+// any error that happens in any then handler will immediately terminate then handler
+// any error will cause any promise to reject
+
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    console.log(response);
+
+    if (!response.ok) throw new Error(`${errorMsg}: ${response.status}`);
+    // `Country not found: ${response.status}`
+
+    return response.json();
+  });
+};
+
+const getCountryData = function (country) {
+  getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
+    .then(data => {
+      renderCountry(data[0]);
+
+      const neighbour = data[0].borders?.[0];
+      // const neighbour = 'smth';
+      // console.log(neighbour);
+      // console.log(`https://restcountries.com/v2/alpha/${neighbour}`);
+
+      if (!neighbour) throw new Error('No neighbour found');
+
+      return getJSON(
+        `https://restcountries.com/v2/alpha/${neighbour}`,
+        'Neighbour not found'
+      );
+    })
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      console.error(err);
+      renderError(err.message);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+
+/*
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v2/name/${country}`)
+    .then(response => {
+      console.log(response);
+
+      if (!response.ok)
+        throw new Error(`Country not found: ${response.status}`);
+
+      return response.json();
+    })
+    .then(data => {
+      renderCountry(data[0]);
+
+      // const neighbour = data[0].borders?.[0];
+      const neighbour = 'smth';
+
+      if (!neighbour) return; // this is NOT going to work
+
+      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+    })
+    .then(response => {
+      response.json();
+      if (!response.ok)
+        throw new Error(`Country not found: ${response.status}`);
+    })
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      console.error(err);
+      renderError(err.message);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
+};
+*/
+
+btn.addEventListener('click', function () {
+  getCountryData('portugal');
+});
+getCountryData('australia');
