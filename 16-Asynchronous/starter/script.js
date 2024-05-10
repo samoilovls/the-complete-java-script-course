@@ -301,6 +301,11 @@ const getCountryData = function (country) {
     });
 };
 
+btn.addEventListener('click', function () {
+  getCountryData('portugal');
+});
+// getCountryData('australia');
+
 /*
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
@@ -338,7 +343,28 @@ const getCountryData = function (country) {
 };
 */
 
-btn.addEventListener('click', function () {
-  getCountryData('portugal');
-});
-getCountryData('australia');
+// Coding Challenge #1
+
+const whereAmI = function (lat, lng) {
+  // fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+  fetch(
+    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+  )
+    .then(res => {
+      console.log(res);
+      if (!res.ok) throw new Error(`${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.address.city}, ${data.address.country}`);
+      getCountryData(data.address.country);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+whereAmI(52.508, 13.381);
+// whereAmI(19.037, 72.873);
+// whereAmI(-33.933, 18.474);
