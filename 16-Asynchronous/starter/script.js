@@ -342,7 +342,7 @@ const getCountryData = function (country) {
     });
 };
 */
-
+/*
 // Coding Challenge #1
 
 const whereAmI = function (lat, lng) {
@@ -368,3 +368,16 @@ const whereAmI = function (lat, lng) {
 whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
+
+*/
+
+// Asynchronous Behind the Scenes: The Event Loop
+
+// Everything related to the DOM is not part of JavaScript, but of the WEB APIs. The asynchronous tasks related to the DOM will run in the WEB APIs environment of the browser: timers, AJAX calls and all other asynchronous tasks.
+// To do smth we listen to the events: attach an event listener means to register callback in the WEB APIs environment, callback will stay there until the event is emitted. When the event is emitted, the callback for this event is put into callback queue.
+
+// Callback queue is an ordered list of tasks, of all the callback functions that are in line to be executed. It affects on the execution time of the timers.
+
+// The event loop looks into the call stack and determines whether it's empty or not(except for the global execution context). If the stack is empty, which means there's currently no code being executed, it will take the first callback from the callback queue and put it on the call stack to be executed. And this is called an event loop tick.
+
+// Callbacks related to promises do not go into the callback queue. Instead, callbacks of promises have a special queue called microtasks queue. Microtasks queue has priority over the callback queue. So, at the end of an event loop tick, after a callback has been taken from the callback queue, the event loop will check if there're any callbacks in the microtasks queue. And if there are, it will run all of them before it will run any more callbacks from the callback queue.
