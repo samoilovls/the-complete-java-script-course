@@ -369,7 +369,6 @@ whereAmI(52.508, 13.381);
 // whereAmI(19.037, 72.873);
 // whereAmI(-33.933, 18.474);
 
-*/
 
 // Asynchronous Behind the Scenes: The Event Loop
 
@@ -381,3 +380,49 @@ whereAmI(52.508, 13.381);
 // The event loop looks into the call stack and determines whether it's empty or not(except for the global execution context). If the stack is empty, which means there's currently no code being executed, it will take the first callback from the callback queue and put it on the call stack to be executed. And this is called an event loop tick.
 
 // Callbacks related to promises do not go into the callback queue. Instead, callbacks of promises have a special queue called microtasks queue. Microtasks queue has priority over the callback queue. So, at the end of an event loop tick, after a callback has been taken from the callback queue, the event loop will check if there're any callbacks in the microtasks queue. And if there are, it will run all of them before it will run any more callbacks from the callback queue.
+
+console.log('Test start');
+setTimeout(() => console.log('0 sec timer'), 0);
+// build a promise that resolves immediately:
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+});
+console.log('Test end');
+
+*/
+
+// Building a Simple Promise
+// the promise constructor takes one argument: executor function
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('Lottery');
+  setTimeout(() => {
+    if (Math.random() >= 0.5) {
+      resolve('You Win');
+    } else {
+      reject(new Error('You Lose'));
+    }
+  }, 2000);
+});
+
+lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    // Here we can run any code that we want to be executed after two seconds
+    console.log('I waited for 2 seconds');
+    return wait(1);
+  })
+  .then(() => console.log('I waited for 1 second'));
+
+// Create a fulfilled or a rejected promise immediately
+Promise.resolve('Fulfilled').then(x => console.log(x));
+Promise.reject('Rejected').catch(x => console.error(x));
