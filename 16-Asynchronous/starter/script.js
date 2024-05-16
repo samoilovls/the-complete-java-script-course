@@ -426,7 +426,6 @@ wait(2)
 Promise.resolve('Fulfilled').then(x => console.log(x));
 Promise.reject('Rejected').catch(x => console.error(x));
 
-*/
 
 // Promisifying the Geolocation API
 
@@ -475,3 +474,51 @@ const whereAmI = function () {
 };
 
 whereAmI();
+
+*/
+
+// Coding Challenge #2
+// load img => displayed img => after 2 sec it disappears => sec img load => displayed => disappears
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+    img.addEventListener('load', function () {
+      console.log(this);
+      // this.classList.add('images');
+      document.querySelector('div.images').append(this);
+      resolve(this);
+    });
+    img.addEventListener(
+      'error',
+      reject.bind(null, new Error('load has failed'))
+    );
+  });
+};
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+let currentImg;
+
+createImage('img/img-1.jpg')
+  .then(el => {
+    currentImg = el;
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
+    return createImage('img/img-2.jpg');
+  })
+  .then(el => {
+    currentImg = el;
+    return wait(2);
+  })
+  .then(() => {
+    currentImg.style.display = 'none';
+  })
+  .catch(err => console.error(err));
