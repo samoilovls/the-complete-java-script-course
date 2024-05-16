@@ -391,7 +391,6 @@ Promise.resolve('Resolved promise 2').then(res => {
 });
 console.log('Test end');
 
-*/
 
 // Building a Simple Promise
 // the promise constructor takes one argument: executor function
@@ -426,3 +425,53 @@ wait(2)
 // Create a fulfilled or a rejected promise immediately
 Promise.resolve('Fulfilled').then(x => console.log(x));
 Promise.reject('Rejected').catch(x => console.error(x));
+
+*/
+
+// Promisifying the Geolocation API
+
+navigator.geolocation.getCurrentPosition(
+  position => console.log(position),
+  err => console.error(err)
+);
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+getPosition()
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
+
+//////////////////////////////////////
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      console.log(lat, lng);
+      return fetch(
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+      );
+    })
+    .then(res => {
+      console.log(res);
+      if (!res.ok) throw new Error(`${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.address.city}, ${data.address.country}`);
+      getCountryData(data.address.country);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+whereAmI();
