@@ -20,7 +20,7 @@ const renderCountry = function (data, className = '') {
     `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const renderError = function (msg) {
@@ -181,6 +181,7 @@ console.log(request);
 
 const getCountryData = function (country) {
   fetch(`https://restcountries.com/v2/name/${country}`)
+    // Consuming Promises:
     .then(function (response) {
       console.log(response);
       // in order to be able to read the data from the body, we need to call the json method on the response. Json is a method that is available on all responses of the fetch method. Json is an asynchronous function, and it will also return a new promise:
@@ -256,7 +257,6 @@ btn.addEventListener('click', function () {
   getCountryData('portugal');
 });
 
-*/
 
 // Throwing Errors Manually
 // throw keyword will immediately terminate the current function. The effect of creating and throwing an error in any of then methods is that the promise will immediately reject.
@@ -306,43 +306,44 @@ btn.addEventListener('click', function () {
 });
 // getCountryData('australia');
 
-/*
-const getCountryData = function (country) {
-  fetch(`https://restcountries.com/v2/name/${country}`)
-    .then(response => {
-      console.log(response);
+//////////////////////////////////////////////
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.com/v2/name/${country}`)
+//     .then(response => {
+//       console.log(response);
 
-      if (!response.ok)
-        throw new Error(`Country not found: ${response.status}`);
+//       if (!response.ok)
+//         throw new Error(`Country not found: ${response.status}`);
 
-      return response.json();
-    })
-    .then(data => {
-      renderCountry(data[0]);
+//       return response.json();
+//     })
+//     .then(data => {
+//       renderCountry(data[0]);
 
-      // const neighbour = data[0].borders?.[0];
-      const neighbour = 'smth';
+//       // const neighbour = data[0].borders?.[0];
+//       const neighbour = 'smth';
 
-      if (!neighbour) return; // this is NOT going to work
+//       if (!neighbour) return; // this is NOT going to work
 
-      return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
-    })
-    .then(response => {
-      response.json();
-      if (!response.ok)
-        throw new Error(`Country not found: ${response.status}`);
-    })
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(err => {
-      console.error(err);
-      renderError(err.message);
-    })
-    .finally(() => {
-      countriesContainer.style.opacity = 1;
-    });
-};
-*/
-/*
+//       return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
+//     })
+//     .then(response => {
+//       response.json();
+//       if (!response.ok)
+//         throw new Error(`Country not found: ${response.status}`);
+//     })
+//     .then(data => renderCountry(data, 'neighbour'))
+//     .catch(err => {
+//       console.error(err);
+//       renderError(err.message);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+//////////////////////////////////////////////
+
+
 // Coding Challenge #1
 
 const whereAmI = function (lat, lng) {
@@ -475,7 +476,6 @@ const whereAmI = function () {
 
 whereAmI();
 
-*/
 
 // Coding Challenge #2
 // load img => displayed img => after 2 sec it disappears => sec img load => displayed => disappears
@@ -522,3 +522,50 @@ createImage('img/img-1.jpg')
     currentImg.style.display = 'none';
   })
   .catch(err => console.error(err));
+
+*/
+
+// Consuming Promises: Async Await
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// async function
+const whereAmI = async function () {
+  const {
+    coords: { latitude: lat, longitude: lng },
+  } = await getPosition();
+  const resPosition = await fetch(
+    `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+  );
+  const dataPosition = await resPosition.json();
+  console.log(dataPosition);
+  console.log(
+    `You are in ${dataPosition.address.city}, ${dataPosition.address.country}`
+  );
+
+  // await promise
+  // await will stop the code execution at this point of the function until the promise is fulfilled
+  // as soon as promise is resolved, the value of this whole await expression is going to be the resolved value of the promise
+
+  // async await is a syntactic sugar over the then method:
+  // fetch(`https://restcountries.com/v2/name/${country}`).then(res =>
+  //   console.log(res)
+  // );
+  const res = await fetch(
+    `https://restcountries.com/v2/name/${dataPosition.address.country}`
+  );
+  console.log(res);
+  const data = await res.json();
+  console.log(data);
+  renderCountry(data[0]);
+};
+whereAmI();
+console.log('FIRST');
