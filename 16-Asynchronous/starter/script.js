@@ -25,7 +25,7 @@ const renderCountry = function (data, className = '') {
 
 const renderError = function (msg) {
   countriesContainer.insertAdjacentText('beforeend', msg);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -523,7 +523,6 @@ createImage('img/img-1.jpg')
   })
   .catch(err => console.error(err));
 
-*/
 
 // Consuming Promises: Async Await
 
@@ -569,3 +568,49 @@ const whereAmI = async function () {
 };
 whereAmI();
 console.log('FIRST');
+
+*/
+
+// Error Handling: try...catch statement
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 3;
+// } catch (err) {
+//   console.error(err);
+// }
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  try {
+    const {
+      coords: { latitude: lat, longitude: lng },
+    } = await getPosition();
+    const resPosition = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+    );
+    if (!resPosition.ok) throw new Error(`${resPosition.status}`);
+    const dataPosition = await resPosition.json();
+    console.log(dataPosition);
+    console.log(
+      `You are in ${dataPosition.address.city}, ${dataPosition.address.country}`
+    );
+    const res = await fetch(
+      `https://restcountries.com/v2/name/${dataPosition.address.country}`
+    );
+    if (!res.ok) throw new Error(`${res.status}`);
+    console.log(res);
+    const data = await res.json();
+    console.log(data);
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(err);
+    renderError(err.message);
+  }
+};
+whereAmI();
