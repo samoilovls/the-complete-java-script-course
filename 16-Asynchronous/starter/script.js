@@ -537,6 +537,7 @@ const getPosition = function () {
 };
 
 // async function
+// async function always returns a promise
 const whereAmI = async function () {
   const {
     coords: { latitude: lat, longitude: lng },
@@ -588,29 +589,54 @@ const getPosition = function () {
 
 const whereAmI = async function () {
   try {
+    // Getting current position
     const {
       coords: { latitude: lat, longitude: lng },
     } = await getPosition();
-    const resPosition = await fetch(
+
+    // Reverse geocoding
+    const resPos = await fetch(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
     );
-    if (!resPosition.ok) throw new Error(`${resPosition.status}`);
-    const dataPosition = await resPosition.json();
-    console.log(dataPosition);
-    console.log(
-      `You are in ${dataPosition.address.city}, ${dataPosition.address.country}`
-    );
+    if (!resPos.ok) throw new Error(`${resPos.status}`);
+    const dataPos = await resPos.json();
+
+    // Country data
     const res = await fetch(
-      `https://restcountries.com/v2/name/${dataPosition.address.country}`
+      `https://restcountries.com/v2/name/${dataPos.address.country}`
     );
     if (!res.ok) throw new Error(`${res.status}`);
-    console.log(res);
     const data = await res.json();
-    console.log(data);
     renderCountry(data[0]);
+
+    // Returning Values from Async Functions
+    // even though there is an error in async function, returned promise is still fulfilled
+    // to fix that we need to rethrow error
+    return `You are in ${dataPos.address.country}`;
   } catch (err) {
     console.error(err);
     renderError(err.message);
+
+    // Reject promise returned from async function
+    throw err;
   }
 };
-whereAmI();
+
+console.log('1: Will get location');
+
+whereAmI()
+  .then(res => console.log(`2: ${res}`))
+  .catch(err => console.error(`2: ${err.message}`))
+  .finally(() => console.log('3: Finished getting location'));
+
+// IIFE
+(async function () {
+  try {
+    const res = await whereAmI();
+    console.log(`2: ${res}`);
+  } catch (err) {
+    console.error(`2: ${err.message}`);
+  }
+  // outside of the try...catch block: always gonna be executed
+  console.log('3: Finished getting location');
+})();
