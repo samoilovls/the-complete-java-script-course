@@ -28,6 +28,16 @@ const renderError = function (msg) {
   countriesContainer.style.opacity = 1;
 };
 
+const getJSON = function (url, errorMsg = 'Something went wrong') {
+  return fetch(url).then(response => {
+    // console.log(response);
+    if (!response.ok) throw new Error(`${errorMsg}: ${response.status}`);
+    // `Country not found: ${response.status}`
+
+    return response.json();
+  });
+};
+
 ///////////////////////////////////////
 
 // Asynchronous JavaScript, AJAX and APIs:
@@ -570,7 +580,6 @@ const whereAmI = async function () {
 whereAmI();
 console.log('FIRST');
 
-*/
 
 // Error Handling: try...catch statement
 // try {
@@ -640,3 +649,31 @@ whereAmI()
   // outside of the try...catch block: always gonna be executed
   console.log('3: Finished getting location');
 })();
+
+*/
+
+// Running Promises in Parallel
+
+const getThreeCountries = async function (c1, c2, c3) {
+  try {
+    // const [data1] = await getJSON(`https://restcountries.com/v2/name/${c1}`);
+    // const [data2] = await getJSON(`https://restcountries.com/v2/name/${c2}`);
+    // const [data3] = await getJSON(`https://restcountries.com/v2/name/${c3}`);
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    // Promise.all combinator function: takes in an array of promises and returns a new promise array
+    // if one of the promises rejects, the whole Promise.all rejects as well
+    // work with then as well
+    const data = await Promise.all([
+      getJSON(`https://restcountries.com/v2/name/${c1}`),
+      getJSON(`https://restcountries.com/v2/name/${c2}`),
+      getJSON(`https://restcountries.com/v2/name/${c3}`),
+    ]);
+    console.log(data);
+    console.log(data.map(d => d[0].capital));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+getThreeCountries('portugal', 'canada', 'tanzania');
