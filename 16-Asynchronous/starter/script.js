@@ -650,7 +650,6 @@ whereAmI()
   console.log('3: Finished getting location');
 })();
 
-*/
 
 // Running Promises in Parallel
 
@@ -677,3 +676,55 @@ const getThreeCountries = async function (c1, c2, c3) {
 };
 
 getThreeCountries('portugal', 'canada', 'tanzania');
+
+*/
+
+// Promise Combinators:
+// receives an array of promises and returns a promise
+
+// Promise.race
+// promise returned by Promise.rase is settled as soon as one of the input promises settles.
+// if the winning promise is a fulfilled promise, then the fulfillment value of the whole race promise is gonna be the fulfillment value of the winning promise.
+(async function () {
+  const [res] = await Promise.race([
+    getJSON(`https://restcountries.com/v2/name/italy`),
+    getJSON(`https://restcountries.com/v2/name/egypt`),
+    getJSON(`https://restcountries.com/v2/name/mexico`),
+  ]);
+  console.log(res);
+})();
+
+// Promise.race is very useful to prevent against never ending promises or very long running promises
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(() => reject(new Error('Request took too long')), 1000 * sec);
+  });
+};
+
+// timeout(10)
+//   .then(res => console.log(res))
+//   .catch(err => console.error(err));
+
+Promise.race([
+  getJSON(`https://restcountries.com/v2/name/tanzania`),
+  timeout(10),
+])
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// Promise.allSettled
+// returns an array of all the settled promises
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.reject('ERROR'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res));
+
+// Promise.any
+// returns the first fulfilled promise and ignores rejected promises, unless all of them reject
+Promise.any([
+  Promise.resolve('Success'),
+  Promise.reject('ERROR'),
+  Promise.resolve('Another success'),
+]).then(res => console.log(res));
