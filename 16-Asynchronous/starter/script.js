@@ -618,20 +618,25 @@ const whereAmI = async function () {
     const data = await res.json();
     renderCountry(data[0]);
 
-    // Returning Values from Async Functions
-    // even though there is an error in async function, returned promise is still fulfilled
-    // to fix that we need to rethrow error
+    // Returning Values from Async Functions:
+    
+    // An Async Function always returns a promise!!!
     return `You are in ${dataPos.address.country}`;
   } catch (err) {
     console.error(err);
     renderError(err.message);
 
-    // Reject promise returned from async function
+    // Even though there is an error in async function, returned promise is still fulfilled
+    // to fix that we need to rethrow error:
+    // Reject promise returned from async function:
     throw err;
   }
 };
 
 console.log('1: Will get location');
+
+const info = whereAmI();
+console.log(info); // Promise pending
 
 whereAmI()
   .then(res => console.log(`2: ${res}`))
@@ -677,7 +682,6 @@ const getThreeCountries = async function (c1, c2, c3) {
 
 getThreeCountries('portugal', 'canada', 'tanzania');
 
-*/
 
 // Promise Combinators:
 // receives an array of promises and returns a promise
@@ -728,3 +732,102 @@ Promise.any([
   Promise.reject('ERROR'),
   Promise.resolve('Another success'),
 ]).then(res => console.log(res));
+
+*/
+
+// Coding Challenge #3
+
+// load img => displayed img => after 2 sec it disappears => sec img load => displayed => disappears
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+    img.addEventListener('load', function () {
+      console.log(this);
+
+      document.querySelector('.images').append(this);
+      resolve(this);
+    });
+    img.addEventListener(
+      'error',
+      reject.bind(null, new Error('load has failed'))
+    );
+  });
+};
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+// let currentImg;
+
+// createImage('img/img-1.jpg')
+//   .then(el => {
+//     currentImg = el;
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImg.style.display = 'none';
+//     return createImage('img/img-2.jpg');
+//   })
+//   .then(el => {
+//     currentImg = el;
+//     return wait(2);
+//   })
+//   .then(() => {
+//     currentImg.style.display = 'none';
+//   })
+//   .catch(err => console.error(err));
+
+const loadNPause = async function (img1, img2) {
+  try {
+    const firstImg = await createImage(img1);
+    await wait(2);
+    firstImg.style.display = 'none';
+    const secondImg = await createImage(img2);
+    await wait(2);
+    secondImg.style.display = 'none';
+
+    // Another solution
+    let img = await createImage(img1);
+    await wait(2);
+    img.style.display = 'none';
+    img = await createImage(img2);
+    await wait(2);
+    img.style.display = 'none';
+  } catch (
+    err // we can use the catch keyword without the error
+  ) {
+    console.error(err);
+  }
+};
+
+// loadNPause('img/img-1.jpg', 'img/img-2.jpg');
+
+const loadAll = async function (imgArr) {
+  try {
+    // const imgs = [];
+    // for (const img of imgArr) {
+    //   imgs.push(await createImage(img));
+    // }
+    // console.log(imgs);
+    // imgs.forEach(img => img.classList.add('parallel'));
+
+    const imgs = imgArr.map(async img => await createImage(img));
+    console.log(imgs);
+    const imgsEl = await Promise.all(imgs);
+    console.log(imgsEl);
+    imgsEl.forEach(img => img.classList.add('parallel'));
+
+    // const imgs2 = imgArr.map(img => createImage(img));
+    // console.log(imgs2);
+    // const imgsEl2 = await Promise.all(imgs2);
+    // console.log(imgsEl2);
+  } catch (err) {
+    console.error(err);
+  }
+};
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
