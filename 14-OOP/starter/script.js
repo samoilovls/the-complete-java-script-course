@@ -554,6 +554,34 @@ console.log(acc1.getMovements());
 
 */
 
+// Private field and Reference type in Class
+class TestCl {
+  pubInst = 'not on prototype';
+  #movements = [1, 2];
+
+  constructor(smth) {
+    this.smth = smth;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+  }
+
+  getMovements() {
+    return this.#movements;
+  }
+  #privateMeth() {}
+}
+
+const test = new TestCl('test');
+test.deposit(23);
+console.log(test);
+
+const mov = test.getMovements();
+mov.push(42); // affects the original array
+console.log(mov);
+console.log(test.getMovements());
+
 // Coding Challenge #4
 
 class CarCl {
