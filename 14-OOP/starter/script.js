@@ -543,8 +543,8 @@ console.log(acc1.getMovements());
 
 // console.log(acc1.#movements); not accessible outside by their property
 
-const mov = acc1.getMovements();
-mov.push(1000);
+const mov = acc1.getMovements(); // Reference type
+mov.push(1000); // changes the original array
 console.log(acc1.getMovements());
 
 // Chaining Methods
