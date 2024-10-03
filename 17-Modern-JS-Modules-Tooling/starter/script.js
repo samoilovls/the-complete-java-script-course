@@ -1,5 +1,3 @@
-'use strict';
-
 // Native JS ES6 built-in module system:
 // Modules are stored in files, exactly one module per file
 
@@ -29,3 +27,36 @@
 // 4.After a module arrives, it's also parsed and the module's exports are linked to the imports in the main module. And this connection is a life connection, so exported values are not copied to imports, the import is basically a reference to the exported value.
 // 5.The code in the imported modules is executed.
 // 6.Executing Main Module
+
+//////////////////////////////////////////////////////////////////////////
+// Import a module without any value
+// import './shoppingCart.js';
+// VS Code omits the .js, because ES modules also work without the extension
+
+console.log('Importing module');
+// console.log(shippingCost); shippingCost is not defined
+
+// Named Imports
+// We can change the name of imports as well
+// import { addToCart, totalPrice as price, quantity } from './shoppingCart.js';
+
+// addToCart('bread', 5);
+// console.log(price, quantity);
+
+// We can import all the exports of a module at the same time
+// this will create a namespace for all of the values, exported from module
+// import * as ShoppingCart from './shoppingCart.js';
+// ShoppingCart.addToCart('bread', 5);
+// console.log(ShoppingCart.totalPrice);
+
+// Default Imports
+import add from './shoppingCart.js';
+add('pizza', 2);
+add('bread', 5);
+add('apples', 4);
+// Imports are a life connection to Exports:
+import { cart } from './shoppingCart.js';
+console.log(cart); // not empty array
+
+// Mix Default and Named Imports in one statement, should not use it
+// import add, { addToCart, totalPrice as price, quantity } from './shoppingCart.js';
