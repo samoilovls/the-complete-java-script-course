@@ -60,3 +60,29 @@ console.log(cart); // not empty array
 
 // Mix Default and Named Imports in one statement, should not use it
 // import add, { addToCart, totalPrice as price, quantity } from './shoppingCart.js';
+
+// ES2022 Top-Level await
+// We can use the await keyword outside of async functions in modules
+// This blocks the execution of the entire module now
+console.log('Start fetching');
+const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+const data = await res.json();
+console.log(data);
+console.log('End');
+
+// Real World Example
+
+const getLastPost = async function () {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const data = await res.json();
+  console.log(data);
+  return { title: data.at(-1).title, text: data.at(-1).body };
+};
+const lastPost = await getLastPost();
+console.log(lastPost);
+
+// Not very clean
+// const lastPost = getLastPost();
+// lastPost.then(last => console.log(last));
+
+// If one module imports a module which has a top-level await, then the importing module will wait for the imported module to finish the blocking code.

@@ -1,3 +1,9 @@
+// Blocking code:
+
+// console.log('Start fetching');
+// const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+// console.log('Finish fetching');
+
 // Exporting module
 console.log('Exporting module');
 
