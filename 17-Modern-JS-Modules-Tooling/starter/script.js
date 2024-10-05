@@ -7,6 +7,8 @@
 // The this keyword is always undefined at the top-level while in Scripts it points at the window object
 // We can export and import values between Modules with ES6 syntax
 
+// We can not access anything from a module in the console, because this is basically the global scope
+
 // Imports and Exports can only happen at the top-level !
 // Imports are hoisted !
 // Importing values is always the first thing that happens in a module.
@@ -35,6 +37,8 @@
 
 console.log('Importing module');
 // console.log(shippingCost); shippingCost is not defined
+
+/*
 
 // Named Imports
 // We can change the name of imports as well
@@ -86,3 +90,37 @@ console.log(lastPost);
 // lastPost.then(last => console.log(last));
 
 // If one module imports a module which has a top-level await, then the importing module will wait for the imported module to finish the blocking code.
+
+*/
+
+// The Module Pattern
+// main goal is to encapsulate functionality to have private data and to expose public API
+// Assign the result of IIFE to a new variable:
+const ShoppingCart2 = (function () {
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(
+      `${quantity} ${product} added to cart (shipping cost is ${shippingCost})`
+    );
+    console.log(cart);
+  };
+  const orderStock = function (product, quantity) {
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+ShoppingCart2.addToCart('apple', 4);
+ShoppingCart2.addToCart('pizza', 2);
+console.log(ShoppingCart2.cart);
+console.log(ShoppingCart2);
