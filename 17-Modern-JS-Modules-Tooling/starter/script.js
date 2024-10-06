@@ -91,9 +91,9 @@ console.log(lastPost);
 
 // If one module imports a module which has a top-level await, then the importing module will wait for the imported module to finish the blocking code.
 
-*/
 
 // The Module Pattern
+// used to be used before in order to implement modules in JS
 // main goal is to encapsulate functionality to have private data and to expose public API
 // Assign the result of IIFE to a new variable:
 const ShoppingCart2 = (function () {
@@ -124,3 +124,26 @@ ShoppingCart2.addToCart('apple', 4);
 ShoppingCart2.addToCart('pizza', 2);
 console.log(ShoppingCart2.cart);
 console.log(ShoppingCart2);
+
+
+// Not Native JS Module Systems
+
+// AMD Modules
+
+// CommonJS Modules
+// Have been used in Node.js for almost all of its existence
+// The consequence of this is that almost all the modules in the npm repository still use the CommonJS module system.
+
+// This is not going to work in the browser, but it would work in Node.js
+// export is an important object in Node.js
+export.addToCart =  function (product, quantity) {
+  cart.push({ product, quantity });
+  console.log(
+    `${quantity} ${product} added to cart (shipping cost is {shippingCost})`
+  );
+};
+
+// Import
+const { addToCart } = require('./shoppingCart.js');
+
+*/
