@@ -38,8 +38,6 @@
 console.log('Importing module');
 // console.log(shippingCost); shippingCost is not defined
 
-/*
-
 // Named Imports
 // We can change the name of imports as well
 // import { addToCart, totalPrice as price, quantity } from './shoppingCart.js';
@@ -64,6 +62,9 @@ console.log(cart); // not empty array
 
 // Mix Default and Named Imports in one statement, should not use it
 // import add, { addToCart, totalPrice as price, quantity } from './shoppingCart.js';
+
+/*
+
 
 // ES2022 Top-Level await
 // We can use the await keyword outside of async functions in modules
@@ -150,7 +151,9 @@ const { addToCart } = require('./shoppingCart.js');
 
 // NPM
 
-import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from './node_modules/lodash-es/cloneDeep.js';
+// import cloneDeep from 'lodash-es/cloneDeep.js';
+import { cloneDeep } from 'lodash-es';
 
 console.log(cloneDeep);
 
@@ -162,6 +165,11 @@ const state = {
   user: { loggedIn: true },
 };
 const stateClone = cloneDeep(state);
-
+console.log(stateClone);
 stateClone.cart.push({ product: 'tomato', quantity: 5 });
 console.log(state, stateClone);
+
+// parcel hot module replacement, the state is maintained whenever we save
+if (module.hot) {
+  module.hot.accept();
+}
